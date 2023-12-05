@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-PHONE_SERVICE-7078ba76-1d2d-44aa-9df0-28d2bd08aa1d</UserSecretsId>
+    <RootNamespace>PHONE_SERVICE</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.25" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.25" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.25" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\DTO\" />
+  </ItemGroup>
+
+</Project>
