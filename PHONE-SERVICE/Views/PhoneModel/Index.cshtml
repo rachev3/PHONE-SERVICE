@@ -15,16 +15,15 @@
                 <td>@phoneModel.Name</td>
                 <td>@phoneModel.PhoneBrand</td>
 
-                @if (User.IsInRole("Admin"))
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@phoneModel.PhoneModelId" class="btn btn-primary">Edit</a>
-                        <form asp-action="Delete" asp-route-id="@phoneModel.PhoneModelId" method="post"
-                              onsubmit="return confirm('Are you sure you want to delete this PhoneModel?');">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                }
+                <td>
+                    <a asp-action="Edit" asp-route-id="@phoneModel.PhoneModelId" class="btn btn-primary">Edit</a>
+                    <form asp-action="DeleteConfirm" method="post">
+                        <input type="hidden" name="id" value="@phoneModel.PhoneModelId" />
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+
+                </td>
+
             </tr>
         }
     </tbody>

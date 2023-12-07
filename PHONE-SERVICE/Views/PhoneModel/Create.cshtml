@@ -1,7 +1,7 @@
 ﻿@model PHONE_SERVICE.Models.PhoneModelModels.PhoneModelViewModel
 
 <h2>Add PhoneModel</h2>
-<form asp-action="Add">
+<form asp-action="Create">
     <div class="form-control">
         <label asp-for="Name" class="form-label"></label>
         <input asp-for="Name" class="form-control" />
@@ -17,5 +17,5 @@
         </select>
         <span asp-validation-for="PhoneBrand" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary" asp-controller="PhoneModel">Add</button>
+    <button type="submit" class="btn btn-primary" asp-controller="PhoneModel">Create</button>
 </form>

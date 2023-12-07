@@ -73,7 +73,11 @@ namespace PHONE_SERVICE.Controllers
 
             await phoneModelService.Update(phoneModel.PhoneModelId, dto);
 
-            return View("Index", Returner());
+            var data = await phoneModelService.GetAll();
+            var phoneModels = data.Select(x => new PhoneModelViewModel(x)).ToList();
+            var viewModel = new PhoneModelPageViewModel(phoneModels);
+
+            return View("Index",viewModel);
         }
 
         [HttpGet]
@@ -104,16 +108,12 @@ namespace PHONE_SERVICE.Controllers
 
             await phoneModelService.Delete(phoneModelId);
 
-            return View("Index", Returner());
-        }
-
-        public async Task<PhoneModelPageViewModel> Returner()
-        {
             var data = await phoneModelService.GetAll();
             var phoneModels = data.Select(x => new PhoneModelViewModel(x)).ToList();
             var viewModel = new PhoneModelPageViewModel(phoneModels);
 
-            return viewModel;
+            return View("Index",viewModel);
         }
+
     }
 }
