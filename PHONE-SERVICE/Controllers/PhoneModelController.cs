@@ -39,11 +39,7 @@ namespace PHONE_SERVICE.Controllers
            
             await phoneModelService.Add(dbo);
 
-            var data = await phoneModelService.GetAll();
-            var phoneModels = data.Select(x => new PhoneModelViewModel(x)).ToList();
-            var viewModel = new PhoneModelPageViewModel(phoneModels);
-
-            return View("Index", viewModel);
+            return RedirectToAction("Index");
         }
 
         //[Authorize(Roles = "Admin")]
@@ -73,11 +69,7 @@ namespace PHONE_SERVICE.Controllers
 
             await phoneModelService.Update(phoneModel.PhoneModelId, dto);
 
-            var data = await phoneModelService.GetAll();
-            var phoneModels = data.Select(x => new PhoneModelViewModel(x)).ToList();
-            var viewModel = new PhoneModelPageViewModel(phoneModels);
-
-            return View("Index",viewModel);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -108,11 +100,7 @@ namespace PHONE_SERVICE.Controllers
 
             await phoneModelService.Delete(phoneModelId);
 
-            var data = await phoneModelService.GetAll();
-            var phoneModels = data.Select(x => new PhoneModelViewModel(x)).ToList();
-            var viewModel = new PhoneModelPageViewModel(phoneModels);
-
-            return View("Index",viewModel);
+            return RedirectToAction("Index");
         }
 
     }

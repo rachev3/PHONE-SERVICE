@@ -1,0 +1,29 @@
+﻿@model RepairPageViewModel
+
+<h2>Repairs List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>RepairType</th>
+            <th>PhoneModel</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var repair in Model.Repairs)
+        {
+            <tr>
+                <td>@repair.RepairType</td>
+                <td>@repair.PhoneModel.PhoneBrand @repair.PhoneModel.Name</td>
+                <td>@repair.Price</td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@repair.RepairId" class="btn btn-primary">Edit</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" asp-controller="Repair" class="btn btn-success">Add New Repair</a>
