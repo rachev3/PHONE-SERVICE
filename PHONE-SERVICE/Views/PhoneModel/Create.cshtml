@@ -1,0 +1,21 @@
+﻿@model PHONE_SERVICE.Models.PhoneModelModels.PhoneModelViewModel
+
+<h2>Add PhoneModel</h2>
+<form asp-action="Add">
+    <div class="form-control">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneBrand" class="control-label"></label>
+        <select asp-for="PhoneBrand" class="form-control">
+            <option value="">Select Type</option>
+            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.PhoneBrand)))
+            {
+                <option value="@value">@value</option>
+            }
+        </select>
+        <span asp-validation-for="PhoneBrand" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary" asp-controller="PhoneModel">Add</button>
+</form>

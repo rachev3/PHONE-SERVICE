@@ -1,16 +1,15 @@
-﻿using PHONE_SERVICE.Data.Enums;
-using PHONE_SERVICE.Models.PhoneModelModels;
-using System.ComponentModel.DataAnnotations;
+﻿using PHONE_SERVICE.Data.DTO;
+using PHONE_SERVICE.Data.Enums;
 
-namespace PHONE_SERVICE.Data.DTO
+namespace PHONE_SERVICE.Models.PhoneModelModels
 {
-    public class PhoneModel
+    public class PhoneModelViewModel
     {
-        public PhoneModel()
+        public PhoneModelViewModel()
         {
             
         }
-        public PhoneModel(PhoneModelViewModel phoneModel)
+        public PhoneModelViewModel(PhoneModel phoneModel)
         {
             PhoneModelId = phoneModel.PhoneModelId;
             Name = phoneModel.Name;
@@ -18,12 +17,10 @@ namespace PHONE_SERVICE.Data.DTO
             Repairs = phoneModel.Repairs;
             RepairRequests = phoneModel.RepairRequests;
         }
-
-        [Key]
         public int PhoneModelId { get; set; }
         public string Name { get; set; }
         public PhoneBrand PhoneBrand { get; set; }
-        public virtual List<Repair> Repairs { get; set; }
-        public virtual List<RepairRequest> RepairRequests { get; set; }
+        public List<Repair> Repairs { get; set; }
+        public List<RepairRequest> RepairRequests { get; set; } 
     }
 }

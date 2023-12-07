@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data;
+using PHONE_SERVICE.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IPhoneModelService, PhoneModelService>();
+builder.Services.AddScoped<IRepairRequestService, RepairRequestService>();
+builder.Services.AddScoped<IRepairService, RepairService>();
 
 var app = builder.Build();
 
