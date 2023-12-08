@@ -1,8 +1,8 @@
 ﻿namespace PHONE_SERVICE.Models.RepairRequestModels
 {
-    public class RepairRquestPageViewModel
+    public class RepairRequestPageViewModel
     {
-        public RepairRquestPageViewModel(List<RepairRequestViewModel> repairRequests)
+        public RepairRequestPageViewModel(List<RepairRequestViewModel> repairRequests)
         {
             RepairRequests = repairRequests;
         }

@@ -21,12 +21,14 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
             Status = repairRequest.Status;
             Rating = repairRequest.Rating;
             Price = repairRequest.Price;
+            PhoneModelId =  repairRequest.PhoneModelId;
         }
 
         public int RepairRequestId { get; set; }
         public RepairRequestType RepairRequestType { get; set; }
         public DateOnly DateOnly { get; set; }
         public RepairType RepairType { get; set; }
+        public int PhoneModelId { get; set; }
         public PhoneModel PhoneModel { get; set; }
         public string? Descripion { get; set; }
         public RepairRequestStatus Status { get; set; }

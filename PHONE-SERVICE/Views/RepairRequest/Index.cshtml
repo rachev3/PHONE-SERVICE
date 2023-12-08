@@ -1,0 +1,43 @@
+﻿@model RepairRequestPageViewModel
+
+<h2>RepairRequest List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>RepairRequestType</th>
+            <th>Date</th>
+            <th>RepairType</th>
+            <th>PhoneModel</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Rating</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var repairRequest in Model.RepairRequests)
+        {
+            <tr>
+                <td>@repairRequest.RepairRequestType</td>
+                <td>@repairRequest.DateOnly</td>
+                <td>@repairRequest.RepairType</td>
+                <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
+                <td>@repairRequest.Descripion</td>
+                <td>@repairRequest.Status</td>
+                <td>@repairRequest.Rating</td>
+                <td>@repairRequest.Price</td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Edit</a>
+                    <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this Repair Request?');">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Add New RepairRequest</a>

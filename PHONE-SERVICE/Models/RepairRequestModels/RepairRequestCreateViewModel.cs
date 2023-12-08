@@ -1,47 +1,44 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Enums;
-using PHONE_SERVICE.Models.RepairRequestModels;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PHONE_SERVICE.Data.DTO
+namespace PHONE_SERVICE.Models.RepairRequestModels
 {
-    public class RepairRequest
+    public class RepairRequestCreateViewModel
     {
-        public RepairRequest()
+        public RepairRequestCreateViewModel()
         {
 
         }
-        public RepairRequest(RepairRequestCreateViewModel repairRequest)
+        public RepairRequestCreateViewModel(List<PhoneModel> phoneModels)
         {
+
+            PhoneModels = phoneModels;
+
+        }
+
+        public RepairRequestCreateViewModel(RepairRequest repairRequest, List<PhoneModel> phoneModels)
+        {
+            RepairRequestId = repairRequest.RepairRequestId;
             RepairRequestType = repairRequest.RepairRequestType;
             DateOnly = repairRequest.DateOnly;
             RepairType = repairRequest.RepairType;
             PhoneModel = repairRequest.PhoneModel;
-            Description = repairRequest.Descripion;
+            Descripion = repairRequest.Description;
             Status = repairRequest.Status;
             Rating = repairRequest.Rating;
             Price = repairRequest.Price;
+            PhoneModels = phoneModels;
             PhoneModelId = repairRequest.PhoneModelId;
         }
-        [Key]
+
         public int RepairRequestId { get; set; }
         public RepairRequestType RepairRequestType { get; set; }
-
-        //User
-
-        public DateTime Date
-        {
-            get => new DateTime(DateOnly.Year, DateOnly.Month, DateOnly.Day);
-            set => DateOnly = new DateOnly(value.Year, value.Month, value.Day);
-        }
-
-        [NotMapped]
         public DateOnly DateOnly { get; set; }
         public RepairType RepairType { get; set; }
         public int PhoneModelId { get; set; }
-        public virtual PhoneModel? PhoneModel { get; set; }
-        public string? Description { get; set; }
+        public PhoneModel PhoneModel { get; set; }
+        public List<PhoneModel> PhoneModels { get; set; }
+        public string? Descripion { get; set; }
         public RepairRequestStatus Status { get; set; }
         public int Rating { get; set; }
         public double Price { get; set; }
