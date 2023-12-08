@@ -19,6 +19,10 @@
 
                 <td>
                     <a asp-action="Edit" asp-route-id="@repair.RepairId" class="btn btn-primary">Edit</a>
+                    <form asp-action="DeleteConfirm" asp-route-id="@repair.RepairId" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this movie?');">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
 
             </tr>

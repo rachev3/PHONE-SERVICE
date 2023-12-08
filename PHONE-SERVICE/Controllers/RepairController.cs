@@ -95,16 +95,16 @@ namespace PHONE_SERVICE.Controllers
 
         [HttpPost]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteConfirm(int repairId)
+        public async Task<IActionResult> DeleteConfirm(int id)
         {
-            var repair = await repairService.GetById(repairId);
+            var repair = await repairService.GetById(id);
 
             if (repair == null)
             {
                 return View("404");
             }
 
-            await repairService.Delete(repairId);
+            await repairService.Delete(id);
 
           return RedirectToAction("Index");
         }

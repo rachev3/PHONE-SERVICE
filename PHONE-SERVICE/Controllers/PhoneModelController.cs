@@ -89,16 +89,16 @@ namespace PHONE_SERVICE.Controllers
 
         [HttpPost]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteConfirm(int phoneModelId)
+        public async Task<IActionResult> DeleteConfirm(int id)
         {
-            var phoneModel = await phoneModelService.GetById(phoneModelId);
+            //var phoneModel = await phoneModelService.GetById(phoneModelId);
 
-            if (phoneModel == null)
-            {
-                return View("404");
-            }
+            //if (phoneModel == null)
+            //{
+            //    return View("404");
+            //}
 
-            await phoneModelService.Delete(phoneModelId);
+            await phoneModelService.Delete(id);
 
             return RedirectToAction("Index");
         }
