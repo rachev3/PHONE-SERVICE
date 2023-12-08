@@ -8,7 +8,7 @@ namespace PHONE_SERVICE.Data.DTO
         public string LastName { get; set; }
         public string Address { get; set; }
 
-        public List<Repair> Repairs { get; set; }
-        public List<RepairRequest> RepairRequests { get; set; }
+        public RepairRequest ClientRepairRequest { get; set; }
+        public List<RepairRequest> WorkerRepairRequests { get; set; }
     }
 }
