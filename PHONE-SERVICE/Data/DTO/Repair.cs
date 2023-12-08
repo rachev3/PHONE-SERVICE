@@ -1,6 +1,8 @@
-﻿using PHONE_SERVICE.Data.Enums;
+﻿using Microsoft.AspNetCore.Components.Server.Circuits;
+using PHONE_SERVICE.Data.Enums;
 using PHONE_SERVICE.Models.RepairModels;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PHONE_SERVICE.Data.DTO
 {
@@ -26,6 +28,10 @@ namespace PHONE_SERVICE.Data.DTO
         [Key]
         public int RepairId { get; set; }
         public RepairType RepairType { get; set; }
+
+        public string? UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public virtual User? User { get; set; }
 
         public int PhoneModelId { get; set; }
         public virtual PhoneModel? PhoneModel { get; set; }

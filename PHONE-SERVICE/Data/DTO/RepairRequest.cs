@@ -39,6 +39,9 @@ namespace PHONE_SERVICE.Data.DTO
         [NotMapped]
         public DateOnly DateOnly { get; set; }
         public RepairType RepairType { get; set; }
+        public string? UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public virtual User? User { get; set; }
         public int PhoneModelId { get; set; }
         public virtual PhoneModel? PhoneModel { get; set; }
         public string? Description { get; set; }

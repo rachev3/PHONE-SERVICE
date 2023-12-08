@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace PHONE_SERVICE.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -19,8 +19,17 @@ namespace PHONE_SERVICE.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            
+            modelBuilder.Entity<User>()
+                .HasMany(r => r.Repairs)
+                .WithOne(r => r.User)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<User>()
+                .HasMany(r => r.RepairRequests)
+                .WithOne(r => r.User)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
