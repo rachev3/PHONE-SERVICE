@@ -8,7 +8,6 @@ namespace PHONE_SERVICE.Controllers
 {
     public class RepairRequestController : Controller
     {
-        //
         private readonly IRepairRequestService repairRequestService;
         private readonly IPhoneModelService phoneModelService;
 

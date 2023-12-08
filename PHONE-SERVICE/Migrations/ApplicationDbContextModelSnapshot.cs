@@ -172,7 +172,7 @@ namespace PHONE_SERVICE.Migrations
 
                     b.HasKey("PhoneModelId");
 
-                    b.ToTable("PhoneModels");
+                    b.ToTable("PhoneModels", (string)null);
                 });
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.Repair", b =>
@@ -201,7 +201,7 @@ namespace PHONE_SERVICE.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Repairs");
+                    b.ToTable("Repairs", (string)null);
                 });
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.RepairRequest", b =>
@@ -245,7 +245,7 @@ namespace PHONE_SERVICE.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RepairRequests");
+                    b.ToTable("RepairRequests", (string)null);
                 });
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.User", b =>
