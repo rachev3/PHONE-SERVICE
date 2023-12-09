@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data;
 using PHONE_SERVICE.Data.DTO;
+using PHONE_SERVICE.Data.Seeders;
 using PHONE_SERVICE.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +44,15 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await RolesSeeder.Initialize(userManager, roleManager);
+}
+
 
 app.MapControllerRoute(
     name: "default",
