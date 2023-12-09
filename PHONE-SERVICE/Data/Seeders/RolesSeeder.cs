@@ -7,7 +7,7 @@ namespace PHONE_SERVICE.Data.Seeders
     {
         public static async Task Initialize(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            string[] roleNames = { "Admin", "Worker", "Client" }; // Add your desired roles
+            string[] roleNames = { "Admin", "Worker", "Client" };
 
             IdentityResult roleResult;
 
@@ -22,8 +22,7 @@ namespace PHONE_SERVICE.Data.Seeders
                 }
             }
 
-            // Create a super user who will maintain the web app
-            var poweruser = new User
+            var adminUser = new User
             {
                 FirstName = "Admin",
                 LastName = "Adminov",
@@ -32,18 +31,55 @@ namespace PHONE_SERVICE.Data.Seeders
                 Email = "admin@example.com",
 
             };
-
-            string userPassword = "Admin@123";
-
-            var user = await userManager.FindByEmailAsync("admin@example.com");
-
-            if (user == null)
+            var workerUser = new User
             {
-                var createPowerUser = await userManager.CreateAsync(poweruser, userPassword);
+                FirstName = "Worker",
+                LastName = "Workerov",
+                Address = "PMG",
+                UserName = "worker@example.com",
+                Email = "worker@example.com",
+
+            };
+            var clientUser = new User
+            {
+                FirstName = "Client",
+                LastName = "Client",
+                Address = "PMG",
+                UserName = "client@example.com",
+                Email = "client@example.com",
+
+            };
+
+            string adminPassword = "Admin@123";
+            string workerPassword = "Worker@123";
+            string clientPassword = "Client@123";
+
+            var admin = await userManager.FindByEmailAsync("admin@example.com");
+            var worker = await userManager.FindByEmailAsync("worker@example.com");
+            var client = await userManager.FindByEmailAsync("client@example.com");
+
+            if (admin == null)
+            {
+                var createPowerUser = await userManager.CreateAsync(adminUser, adminPassword);
                 if (createPowerUser.Succeeded)
                 {
-                    // Assign the new user to the Admin role
-                    await userManager.AddToRoleAsync(poweruser, "Admin");
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
+            if (worker == null)
+            {
+                var createWorkerUser = await userManager.CreateAsync(workerUser, workerPassword);
+                if (createWorkerUser.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(workerUser, "Worker");
+                }
+            }
+            if (client == null)
+            {
+                var createClientUser = await userManager.CreateAsync(clientUser, clientPassword);
+                if (createClientUser.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(clientUser, "Client");
                 }
             }
         }
