@@ -58,7 +58,6 @@ namespace PHONE_SERVICE.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Redirect to the returnUrl if provided; otherwise, go to the home page
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -66,6 +65,13 @@ namespace PHONE_SERVICE.Controllers
             }
 
             return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
