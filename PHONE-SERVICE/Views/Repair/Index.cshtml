@@ -16,18 +16,22 @@
                 <td>@repair.RepairType</td>
                 <td>@repair.PhoneModel.PhoneBrand @repair.PhoneModel.Name</td>
                 <td>@repair.Price</td>
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@repair.RepairId" class="btn btn-primary">Edit</a>
-                    <form asp-action="DeleteConfirm" asp-route-id="@repair.RepairId" method="post"
-                          onsubmit="return confirm('Are you sure you want to delete this movie?');">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@repair.RepairId" class="btn btn-primary">Edit</a>
+                        <form asp-action="DeleteConfirm" asp-route-id="@repair.RepairId" method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this movie?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                }
 
             </tr>
         }
     </tbody>
 </table>
-
-<a asp-action="Create" asp-controller="Repair" class="btn btn-success">Add New Repair</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Create" asp-controller="Repair" class="btn btn-success">Add New Repair</a>
+}

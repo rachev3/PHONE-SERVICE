@@ -26,18 +26,9 @@
                 <td>@repairRequest.Status</td>
                 <td>@repairRequest.Rating</td>
                 <td>@repairRequest.Price</td>
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Edit</a>
-                    <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post"
-                          onsubmit="return confirm('Are you sure you want to delete this Repair Request?');">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-
             </tr>
         }
     </tbody>
 </table>
 
-<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Add New RepairRequest</a>          
+       

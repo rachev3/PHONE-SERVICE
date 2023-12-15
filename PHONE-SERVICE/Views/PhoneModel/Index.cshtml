@@ -14,19 +14,22 @@
             <tr>
                 <td>@phoneModel.PhoneBrand</td>
                 <td>@phoneModel.Name</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@phoneModel.PhoneModelId" class="btn btn-primary">Edit</a>
+                        <form asp-action="DeleteConfirm" asp-route-id="@phoneModel.PhoneModelId" method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this movie?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@phoneModel.PhoneModelId" class="btn btn-primary">Edit</a>
-                    <form asp-action="DeleteConfirm" asp-route-id="@phoneModel.PhoneModelId" method="post"
-                          onsubmit="return confirm('Are you sure you want to delete this movie?');">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-
-                </td>
-
+                    </td>
+                }
             </tr>
         }
     </tbody>
 </table>
-
-<a asp-action="Create" asp-controller="PhoneModel" class="btn btn-success">Add New PhoneModel</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Create" asp-controller="PhoneModel" class="btn btn-success">Add New PhoneModel</a>
+}

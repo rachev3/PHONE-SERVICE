@@ -31,18 +31,30 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Repair" asp-action="Index">Repairs</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RepairRequest" asp-action="Index">RepairRequests</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RepairRequest" asp-action="WorkerRepairRequests">WrokerRepairRequests</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RepairRequest" asp-action="ClientRepairRequests">ClientRepairRequests</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Dashboard">AdminDashboard</a>
-                        </li>
+                        @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="RepairRequest" asp-action="Index">RepairRequests</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Worker"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="RepairRequest" asp-action="WorkerRepairRequests">WrokerRepairRequests</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Client"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="RepairRequest" asp-action="ClientRepairRequests">ClientRepairRequests</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Dashboard">AdminDashboard</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
