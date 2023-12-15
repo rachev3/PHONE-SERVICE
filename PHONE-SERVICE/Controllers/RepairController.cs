@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Services;
 using PHONE_SERVICE.Models.PhoneModelModels;
@@ -27,7 +28,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             //if there are 0 phoneModels???
@@ -38,7 +39,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(RepairCreateViewModel repair)
         {
             var dbo = new Repair(repair);
@@ -47,8 +48,8 @@ namespace PHONE_SERVICE.Controllers
 
             return RedirectToAction("Index");
         }
-
-        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var repair = await repairService.GetById(id);
@@ -64,7 +65,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(RepairCreateViewModel repair)
         {
             var dto = await repairService.GetById(repair.RepairId);
@@ -79,7 +80,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var repair = await repairService.GetById(id);
@@ -94,7 +95,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirm(int id)
         {
             var repair = await repairService.GetById(id);

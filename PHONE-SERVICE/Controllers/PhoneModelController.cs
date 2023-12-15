@@ -25,14 +25,14 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View("Create");
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(PhoneModelViewModel phoneModel)
         {
             var dbo = new PhoneModel(phoneModel);
@@ -42,7 +42,7 @@ namespace PHONE_SERVICE.Controllers
             return RedirectToAction("Index");
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var phoneModel = await phoneModelService.GetById(id);
@@ -57,7 +57,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(PhoneModelViewModel phoneModel)
         {
             var dto = await phoneModelService.GetById(phoneModel.PhoneModelId);
@@ -73,7 +73,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var phoneModel = await phoneModelService.GetById(id);
@@ -88,16 +88,9 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirm(int id)
         {
-            //var phoneModel = await phoneModelService.GetById(phoneModelId);
-
-            //if (phoneModel == null)
-            //{
-            //    return View("404");
-            //}
-
             await phoneModelService.Delete(id);
 
             return RedirectToAction("Index");

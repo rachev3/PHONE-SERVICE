@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data.DTO;
@@ -19,17 +20,20 @@ namespace PHONE_SERVICE.Controllers
             this.roleManager = roleManager;
         }
 
-
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();
         }
         [HttpGet]
+        
         public IActionResult Register()
         {
             return View();
         }
         [HttpPost]
+       
         public async Task<IActionResult> Register(UserRegisterViewModel model)
         {
             User newUser = new(model);
@@ -77,6 +81,7 @@ namespace PHONE_SERVICE.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Dashboard()
         {
             var usersWithRoles = new UserPageViewModel();
@@ -96,6 +101,7 @@ namespace PHONE_SERVICE.Controllers
             return View(usersWithRoles);
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Promote(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
@@ -104,6 +110,7 @@ namespace PHONE_SERVICE.Controllers
             return RedirectToAction("Dashboard");
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Demote(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);

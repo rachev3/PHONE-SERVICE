@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Services;
 using PHONE_SERVICE.Models.RepairModels;
@@ -17,7 +18,7 @@ namespace PHONE_SERVICE.Controllers
             this.repairRequestService = repairRequestService;
             this.phoneModelService = phoneModelService;
         }
-
+        [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Index()
         {
             var data = await repairRequestService.GetAll();
@@ -27,6 +28,7 @@ namespace PHONE_SERVICE.Controllers
             return View("Index", viewModel);
         }
         [HttpGet]
+        [Authorize(Roles = "Client")]
         public async Task<IActionResult> ClientRepairRequests()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -38,6 +40,7 @@ namespace PHONE_SERVICE.Controllers
             return View(viewModel);
         }
         [HttpGet]
+        [Authorize(Roles = "Worker")]
         public async Task<IActionResult> WorkerRepairRequests()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -49,7 +52,7 @@ namespace PHONE_SERVICE.Controllers
             return View(viewModel);
         }
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Create()
         {
             //if there are 0 phoneModels???
@@ -60,7 +63,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Create(RepairRequestCreateViewModel repairRequest)
         {
             var dbo = new RepairRequest(repairRequest);
@@ -69,8 +72,8 @@ namespace PHONE_SERVICE.Controllers
 
             return RedirectToAction("Index");
         }
-
-        //[Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Edit(int id)
         {
             var repairRequest = await repairRequestService.GetById(id);
@@ -86,7 +89,7 @@ namespace PHONE_SERVICE.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Edit(RepairRequestCreateViewModel repairRequest)
         {
             var dto = await repairRequestService.GetById(repairRequest.RepairRequestId);
@@ -109,7 +112,7 @@ namespace PHONE_SERVICE.Controllers
        
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> DeleteConfirm(int id)
         {
             var repair = await repairRequestService.GetById(id);
