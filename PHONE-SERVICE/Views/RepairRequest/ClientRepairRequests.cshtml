@@ -26,9 +26,54 @@
                 <td>@repairRequest.Status</td>
                 <td>@repairRequest.Rating</td>
                 <td>@repairRequest.Price</td>
+                @if (repairRequest.Status == PHONE_SERVICE.Data.Enums.RepairRequestStatus.Completed)
+                {
+                    <td>
+                        <div class="rating" id="rating-container-@repairRequest.RepairRequestId">
+                            <button class="btn btn-primary" onclick="toggleRatingScale(@repairRequest.RepairRequestId)">Rate</button>
+                            <div class="rating-scale" style="display:none;">
+                                <input type="range" min="1" max="10" value="@repairRequest.Rating" class="slider" id="rating-@repairRequest.RepairRequestId" oninput="updateRatingValue(@repairRequest.RepairRequestId)" />
+                                <span id="rating-value-@repairRequest.RepairRequestId">@repairRequest.Rating</span>
+                                <!-- The form for submitting the rating -->
+                                <button type="button" class="btn btn-success" onclick="submitRating(@repairRequest.RepairRequestId)">Submit</button>
+                            </div>
+                        </div>
+                    </td>
+                }
             </tr>
         }
     </tbody>
 </table>
+@section scripts {
+    <script>
+        function toggleRatingScale(repairRequestId) {
+            var ratingScale = document.getElementById('rating-container-' + repairRequestId).getElementsByClassName('rating-scale')[0];
+            ratingScale.style.display = (ratingScale.style.display === 'none' || ratingScale.style.display === '') ? 'block' : 'none';
+        }
 
-       
+        function updateRatingValue(repairRequestId) {
+            var ratingValue = document.getElementById('rating-' + repairRequestId).value;
+            document.getElementById('rating-value-' + repairRequestId).textContent = ratingValue;
+        }
+
+        function submitRating(repairRequestId) {
+            var ratingValue = document.getElementById('rating-' + repairRequestId).value;
+            // You can now send the ratingValue to the controller using Ajax
+            $.ajax({
+                type: 'POST',
+                url: '/RepairRequest/Rate',
+                data: { repairRequestId: repairRequestId, rating: ratingValue },
+                success: function (result) {
+                    // Optionally, handle the success result
+                    console.log('Rating submitted successfully');
+                    // Hide the rating scale after submitting
+                    toggleRatingScale(repairRequestId);
+                },
+                error: function (error) {
+                    // Optionally, handle the error
+                    console.error('Error submitting rating', error);
+                }
+            });
+        }
+    </script>
+}

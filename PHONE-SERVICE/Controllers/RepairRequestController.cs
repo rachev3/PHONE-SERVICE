@@ -39,6 +39,18 @@ namespace PHONE_SERVICE.Controllers
             var viewModel = new RepairRequestPageViewModel(repairRequests);
             return View(viewModel);
         }
+        [HttpPost]
+        [Authorize(Roles = "Client")]
+        public async Task<IActionResult> Rate(int repairRequestId, int rating)
+        {
+            var dto = await repairRequestService.GetById(repairRequestId);
+
+            dto.Rating = rating;
+
+            await repairRequestService.Update(repairRequestId, dto);
+            return Json(new { success = true });
+        }
+
         [HttpGet]
         [Authorize(Roles = "Worker")]
         public async Task<IActionResult> WorkerRepairRequests()
