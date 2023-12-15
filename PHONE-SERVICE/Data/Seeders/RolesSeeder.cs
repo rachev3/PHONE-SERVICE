@@ -57,7 +57,7 @@ namespace PHONE_SERVICE.Data.Seeders
             var admin = await userManager.FindByEmailAsync("admin@example.com");
             var worker = await userManager.FindByEmailAsync("worker@example.com");
             var client = await userManager.FindByEmailAsync("client@example.com");
-
+            
             if (admin == null)
             {
                 var createPowerUser = await userManager.CreateAsync(adminUser, adminPassword);

@@ -1,0 +1,47 @@
+﻿@model UserPageViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Role</th>
+            <th>Promote/Demote</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Role</td>
+                <td>
+                    @if (user.Role == "Client")
+                    {
+                        <form asp-controller="User" asp-action="Promote" method="post">
+                            <input type="hidden" name="userId" value="@user.UserId" />
+                            <button type="submit" class="btn btn-success">Promote</button>
+                        </form>
+                    }
+                    else if (user.Role == "Worker")
+                    {
+                        <form asp-controller="User" asp-action="Demote" method="post">
+                            <input type="hidden" name="userId" value="@user.UserId" />
+                            <button type="submit" class="btn btn-warning">Demote</button>
+                        </form>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

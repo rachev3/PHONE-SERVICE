@@ -12,8 +12,8 @@ using PHONE_SERVICE.Data;
 namespace PHONE_SERVICE.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231208142201_User")]
-    partial class User
+    [Migration("20231214112627_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,14 +194,9 @@ namespace PHONE_SERVICE.Migrations
                     b.Property<int>("RepairType")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("RepairId");
 
                     b.HasIndex("PhoneModelId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Repairs");
                 });
@@ -213,6 +208,9 @@ namespace PHONE_SERVICE.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RepairRequestId"), 1L, 1);
+
+                    b.Property<string>("ClientUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -238,14 +236,18 @@ namespace PHONE_SERVICE.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("WorkerUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("RepairRequestId");
 
+                    b.HasIndex("ClientUserId")
+                        .IsUnique()
+                        .HasFilter("[ClientUserId] IS NOT NULL");
+
                     b.HasIndex("PhoneModelId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("WorkerUserId");
 
                     b.ToTable("RepairRequests");
                 });
@@ -386,32 +388,31 @@ namespace PHONE_SERVICE.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PHONE_SERVICE.Data.DTO.User", "User")
-                        .WithMany("Repairs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.Navigation("PhoneModel");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.RepairRequest", b =>
                 {
+                    b.HasOne("PHONE_SERVICE.Data.DTO.User", "ClientUser")
+                        .WithOne("ClientRepairRequest")
+                        .HasForeignKey("PHONE_SERVICE.Data.DTO.RepairRequest", "ClientUserId");
+
                     b.HasOne("PHONE_SERVICE.Data.DTO.PhoneModel", "PhoneModel")
                         .WithMany("RepairRequests")
                         .HasForeignKey("PhoneModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PHONE_SERVICE.Data.DTO.User", "User")
-                        .WithMany("RepairRequests")
-                        .HasForeignKey("UserId")
+                    b.HasOne("PHONE_SERVICE.Data.DTO.User", "WorkerUser")
+                        .WithMany("WorkerRepairRequests")
+                        .HasForeignKey("WorkerUserId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ClientUser");
 
                     b.Navigation("PhoneModel");
 
-                    b.Navigation("User");
+                    b.Navigation("WorkerUser");
                 });
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.PhoneModel", b =>
@@ -423,9 +424,10 @@ namespace PHONE_SERVICE.Migrations
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.User", b =>
                 {
-                    b.Navigation("RepairRequests");
+                    b.Navigation("ClientRepairRequest")
+                        .IsRequired();
 
-                    b.Navigation("Repairs");
+                    b.Navigation("WorkerRepairRequests");
                 });
 #pragma warning restore 612, 618
         }

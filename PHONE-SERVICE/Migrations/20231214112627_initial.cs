@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PHONE_SERVICE.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,6 +28,9 @@ namespace PHONE_SERVICE.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -108,8 +111,8 @@ namespace PHONE_SERVICE.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -153,8 +156,8 @@ namespace PHONE_SERVICE.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -177,6 +180,8 @@ namespace PHONE_SERVICE.Migrations
                     RepairRequestType = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RepairType = table.Column<int>(type: "int", nullable: false),
+                    ClientUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    WorkerUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PhoneModelId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -186,6 +191,17 @@ namespace PHONE_SERVICE.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RepairRequests", x => x.RepairRequestId);
+                    table.ForeignKey(
+                        name: "FK_RepairRequests_AspNetUsers_ClientUserId",
+                        column: x => x.ClientUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_RepairRequests_AspNetUsers_WorkerUserId",
+                        column: x => x.WorkerUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_RepairRequests_PhoneModels_PhoneModelId",
                         column: x => x.PhoneModelId,
@@ -255,9 +271,21 @@ namespace PHONE_SERVICE.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RepairRequests_ClientUserId",
+                table: "RepairRequests",
+                column: "ClientUserId",
+                unique: true,
+                filter: "[ClientUserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RepairRequests_PhoneModelId",
                 table: "RepairRequests",
                 column: "PhoneModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RepairRequests_WorkerUserId",
+                table: "RepairRequests",
+                column: "WorkerUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Repairs_PhoneModelId",

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Models.UserModels;
 
@@ -9,11 +10,13 @@ namespace PHONE_SERVICE.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
 
@@ -72,6 +75,41 @@ namespace PHONE_SERVICE.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Dashboard()
+        {
+            var usersWithRoles = new UserPageViewModel();
+
+            foreach (var user in await userManager.Users.ToListAsync())
+            {
+                var userRoles = await userManager.GetRolesAsync(user);
+                usersWithRoles.Users.Add(new UserViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Role = userRoles[0]
+                });
+            }
+            return View(usersWithRoles);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Promote(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            await userManager.RemoveFromRoleAsync(user,"Client");
+            await userManager.AddToRoleAsync(user, "Worker");
+            return RedirectToAction("Dashboard");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Demote(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            await userManager.RemoveFromRoleAsync(user, "Worker");
+            await userManager.AddToRoleAsync(user, "Client");
+            return RedirectToAction("Dashboard");
         }
     }
 }
