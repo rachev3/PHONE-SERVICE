@@ -20,20 +20,30 @@ namespace PHONE_SERVICE.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>()
-            .HasOne(u => u.ClientRepairRequest)
+            .HasMany(u => u.ClientRepairRequests)
             .WithOne(rr => rr.ClientUser)
-            .HasForeignKey<RepairRequest>(rr => rr.ClientUserId);
+            .HasForeignKey(rr => rr.ClientUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+            
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.WorkerRepairRequests)
                 .WithOne(rr => rr.WorkerUser)
-                .HasForeignKey(rr => rr.WorkerUserId);
+                .HasForeignKey(rr => rr.WorkerUserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<RepairRequest>()
                 .HasOne(r=>r.WorkerUser)
                 .WithMany(r=>r.WorkerRepairRequests)
                 .HasForeignKey(r=>r.WorkerUserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RepairRequest>()
+               .HasOne(r => r.ClientUser)
+               .WithMany(r => r.ClientRepairRequests)
+               .HasForeignKey(r => r.ClientUserId)
+               .OnDelete(DeleteBehavior.NoAction);
+
 
         }
     }

@@ -3,6 +3,7 @@ using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Services;
 using PHONE_SERVICE.Models.RepairModels;
 using PHONE_SERVICE.Models.RepairRequestModels;
+using System.Security.Claims;
 
 namespace PHONE_SERVICE.Controllers
 {
@@ -25,7 +26,28 @@ namespace PHONE_SERVICE.Controllers
 
             return View("Index", viewModel);
         }
+        [HttpGet]
+        public async Task<IActionResult> ClientRepairRequests()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+            var data = await repairRequestService.GetAll();
+            var filtered = data.Where(x => x.ClientUserId == userId);
+            var repairRequests = filtered.Select(x => new RepairRequestViewModel(x)).ToList();
+            var viewModel = new RepairRequestPageViewModel(repairRequests);
+            return View(viewModel);
+        }
+        [HttpGet]
+        public async Task<IActionResult> WorkerRepairRequests()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var data = await repairRequestService.GetAll();
+            var filtered = data.Where(x => x.WorkerUserId == userId);
+            var repairRequests = filtered.Select(x => new RepairRequestViewModel(x)).ToList();
+            var viewModel = new RepairRequestPageViewModel(repairRequests);
+            return View(viewModel);
+        }
         [HttpGet]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
