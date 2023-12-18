@@ -1,0 +1,16 @@
+﻿@model UserPageViewModel
+
+<form method="post" action="@Url.Action("Index")" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="username" class="form-control" placeholder="Username">
+        <input type="text" name="firstName" class="form-control" placeholder="FirstName">
+        <input type="text" name="lastName" class="form-control" placeholder="LastName">
+        <select name="role" class="form-control">
+            <option value="">Select Role</option>
+            <option value="Worker">Worker</option>
+            <option value="Client">Client</option>
+        </select>
+        <button type="submit" class="btn btn-outline-primary" asp-action="Index">Search</button>
+        <button type="button" class="btn btn-outline-secondary" onclick="clearSearch()">Clear</button>
+    </div>
+</form>

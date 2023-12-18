@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Services;
@@ -12,11 +13,13 @@ namespace PHONE_SERVICE.Controllers
     {
         private readonly IRepairRequestService repairRequestService;
         private readonly IPhoneModelService phoneModelService;
+        private readonly UserManager<User> userManager;
 
-        public RepairRequestController(IRepairRequestService repairRequestService, IPhoneModelService phoneModelService)
+        public RepairRequestController(IRepairRequestService repairRequestService, IPhoneModelService phoneModelService, UserManager<User> userManager)
         {
             this.repairRequestService = repairRequestService;
             this.phoneModelService = phoneModelService;
+            this.userManager = userManager;
         }
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Index()
@@ -78,7 +81,16 @@ namespace PHONE_SERVICE.Controllers
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Create(RepairRequestCreateViewModel repairRequest)
         {
+
+            var user = await userManager.FindByEmailAsync(repairRequest.ClientEmail);
+
+
             var dbo = new RepairRequest(repairRequest);
+            dbo.WorkerUserId = repairRequest.WorkerId;
+            if (user != null)
+            {
+                dbo.ClientUserId = user.Id;
+            }
 
             await repairRequestService.Add(dbo);
 
@@ -121,7 +133,7 @@ namespace PHONE_SERVICE.Controllers
             return RedirectToAction("Index");
         }
 
-       
+
 
         [HttpPost]
         [Authorize(Roles = "Admin, Worker")]

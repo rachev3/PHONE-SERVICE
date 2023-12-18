@@ -1,4 +1,5 @@
-﻿@model RepairRequestCreateViewModel
+﻿@using System.Security.Claims;
+@model RepairRequestCreateViewModel
 
 <h2>Add RepairRequest</h2>
 <form asp-action="Create">
@@ -62,5 +63,11 @@
         <label asp-for="Price" class="form-label"></label>
         <input asp-for="Price" class="form-control" />
     </div>
+    <div class="form-control">
+        <label asp-for="ClientEmail" class="form-label"></label>
+        <input asp-for="ClientEmail" class="form-control" />
+    </div>
+
+    <input type="hidden" asp-for="WorkerId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)"/>
     <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Create</button>
 </form>

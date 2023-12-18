@@ -11,13 +11,12 @@ namespace PHONE_SERVICE.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly RoleManager<IdentityRole> roleManager;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
         }
 
         [HttpGet]
@@ -26,14 +25,76 @@ namespace PHONE_SERVICE.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        //need optimization
+        //When searching capital latters matter
+        public async Task<IActionResult> Index(string? username, string? firstName, string? lastName, string? role)
+        {
+            var users = await userManager.Users.ToListAsync();
+
+            if (username != null) users = users.Where(u => u.UserName.Contains(username)).ToList();
+            if (firstName != null) users = users.Where(u => u.FirstName.Contains(firstName)).ToList();
+            if (lastName != null) users = users.Where(u => u.LastName.Contains(lastName)).ToList();
+
+            if (role != null)
+            {
+                var usersToKeep = new List<User>();
+                foreach (var user in users)
+                {
+                    var userRole = await userManager.GetRolesAsync(user);
+                    if (userRole.Contains(role))
+                    {
+                        usersToKeep.Add(user);
+                    }
+                }
+                users = usersToKeep;
+            }
+
+            var pageViewModel = new UserPageViewModel();
+            foreach (var user in users)
+            {
+                var userRoles = await userManager.GetRolesAsync(user);
+                pageViewModel.Users.Add(new UserViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Role = userRoles[0]
+                });
+            }
+
+            return View("Dashboard", pageViewModel);
+        }
         [HttpGet]
-        
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Dashboard()
+        {
+            var usersWithRoles = new UserPageViewModel();
+
+            foreach (var user in await userManager.Users.ToListAsync())
+            {
+                var userRoles = await userManager.GetRolesAsync(user);
+                usersWithRoles.Users.Add(new UserViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Role = userRoles[0]
+                });
+            }
+            return View(usersWithRoles);
+        }
+        [HttpGet]
+
         public IActionResult Register()
         {
             return View();
         }
         [HttpPost]
-       
+
         public async Task<IActionResult> Register(UserRegisterViewModel model)
         {
             User newUser = new(model);
@@ -80,32 +141,12 @@ namespace PHONE_SERVICE.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Dashboard()
-        {
-            var usersWithRoles = new UserPageViewModel();
-
-            foreach (var user in await userManager.Users.ToListAsync())
-            {
-                var userRoles = await userManager.GetRolesAsync(user);
-                usersWithRoles.Users.Add(new UserViewModel
-                {
-                    UserId = user.Id,
-                    UserName = user.UserName,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Role = userRoles[0]
-                });
-            }
-            return View(usersWithRoles);
-        }
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Promote(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
-            await userManager.RemoveFromRoleAsync(user,"Client");
+            await userManager.RemoveFromRoleAsync(user, "Client");
             await userManager.AddToRoleAsync(user, "Worker");
             return RedirectToAction("Dashboard");
         }
