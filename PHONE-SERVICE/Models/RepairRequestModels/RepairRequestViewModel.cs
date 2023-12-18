@@ -22,6 +22,7 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
             Rating = repairRequest.Rating;
             Price = repairRequest.Price;
             PhoneModelId =  repairRequest.PhoneModelId;
+            WorkerId = repairRequest.WorkerUserId;
         }
 
         public int RepairRequestId { get; set; }
@@ -34,5 +35,6 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
         public RepairRequestStatus Status { get; set; }
         public int Rating { get; set; }
         public double Price { get; set; }
+        public string WorkerId { get; set; }
     }
 }

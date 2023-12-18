@@ -1,5 +1,8 @@
 ﻿@model RepairRequestPageViewModel
-
+@{
+    var claims = User.Claims.ToList();
+    var userId = claims[0].Value;
+}
 <h2>RepairRequest List</h2>
 <table class="table">
     <thead>
@@ -27,7 +30,7 @@
                 <td>@repairRequest.Rating</td>
                 <td>@repairRequest.Price</td>
 
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Worker") && userId == repairRequest.WorkerId)
                 {
                     <td>
                         <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Edit</a>
