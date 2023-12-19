@@ -1,0 +1,54 @@
+﻿@model RepairRequestCreateViewModel
+
+<h2>Edit RepairRequest</h2>
+<form asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="Status" class="control-label"></label>
+        <select asp-for="Status" class="form-control">
+            <option value="">Select Type</option>
+            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestStatus)))
+            {
+                <option value="@value">@value</option>
+            }
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="WorkerId" class="control-label"></label>
+        <select asp-for="WorkerId" class="form-control">
+            <option value="">Select Worker</option>
+            @foreach (var value in Model.Workers)
+            {
+                <option value="@value.Id">@value.FirstName @value.LastName</option>
+            }
+        </select>
+        <span asp-validation-for="WorkerId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RepairRequestType" class="control-label"></label>
+        <input asp-for="RepairRequestType" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="DateOnly" class="form-label"></label>
+        <input asp-for="DateOnly" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="RepairType" class="control-label"></label>
+        <input asp-for="RepairType" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="Descripion" class="form-label"></label>
+        <input asp-for="Descripion" class="form-control" readonly/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Rating" class="form-label"></label>
+        <input asp-for="Rating" class="form-control" readonly/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" readonly/>
+    </div>
+    <input type="hidden" asp-for="RepairRequestId" />
+    <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Update</button>
+</form>
+

@@ -29,7 +29,12 @@
                 <td>@repairRequest.Status</td>
                 <td>@repairRequest.Rating</td>
                 <td>@repairRequest.Price</td>
-
+                @if(User.IsInRole("Admin") && repairRequest.Status == PHONE_SERVICE.Data.Enums.RepairRequestStatus.PendingConfirmation)
+                {
+                    <td>
+                        <a asp-action="Asign" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Asign</a>
+                    </td>
+                }
                 @if (User.IsInRole("Worker") && userId == repairRequest.WorkerId)
                 {
                     <td>
