@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PHONE_SERVICE.Data;
 
@@ -11,9 +12,10 @@ using PHONE_SERVICE.Data;
 namespace PHONE_SERVICE.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220102957_ManyToMany2")]
+    partial class ManyToMany2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,10 +193,6 @@ namespace PHONE_SERVICE.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PhoneModelId");
-
-                    b.HasIndex("RepairId");
-
                     b.ToTable("PhoneModelsRepair");
                 });
 
@@ -205,6 +203,9 @@ namespace PHONE_SERVICE.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RepairId"), 1L, 1);
+
+                    b.Property<int>("PhoneModelId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -343,6 +344,21 @@ namespace PHONE_SERVICE.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("PhoneModelRepair", b =>
+                {
+                    b.Property<int>("PhoneModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RepairsRepairId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PhoneModelId", "RepairsRepairId");
+
+                    b.HasIndex("RepairsRepairId");
+
+                    b.ToTable("PhoneModelRepair");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -394,21 +410,6 @@ namespace PHONE_SERVICE.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PHONE_SERVICE.Data.DTO.PhoneModelRepair", b =>
-                {
-                    b.HasOne("PHONE_SERVICE.Data.DTO.PhoneModel", null)
-                        .WithMany("PhoneModelRepairs")
-                        .HasForeignKey("PhoneModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PHONE_SERVICE.Data.DTO.Repair", null)
-                        .WithMany("PhoneModelRepair")
-                        .HasForeignKey("RepairId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.RepairRequest", b =>
                 {
                     b.HasOne("PHONE_SERVICE.Data.DTO.User", "ClientUser")
@@ -434,16 +435,24 @@ namespace PHONE_SERVICE.Migrations
                     b.Navigation("WorkerUser");
                 });
 
-            modelBuilder.Entity("PHONE_SERVICE.Data.DTO.PhoneModel", b =>
+            modelBuilder.Entity("PhoneModelRepair", b =>
                 {
-                    b.Navigation("PhoneModelRepairs");
+                    b.HasOne("PHONE_SERVICE.Data.DTO.PhoneModel", null)
+                        .WithMany()
+                        .HasForeignKey("PhoneModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("RepairRequests");
+                    b.HasOne("PHONE_SERVICE.Data.DTO.Repair", null)
+                        .WithMany()
+                        .HasForeignKey("RepairsRepairId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("PHONE_SERVICE.Data.DTO.Repair", b =>
+            modelBuilder.Entity("PHONE_SERVICE.Data.DTO.PhoneModel", b =>
                 {
-                    b.Navigation("PhoneModelRepair");
+                    b.Navigation("RepairRequests");
                 });
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.User", b =>

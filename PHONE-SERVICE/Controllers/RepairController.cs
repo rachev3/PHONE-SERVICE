@@ -71,7 +71,6 @@ namespace PHONE_SERVICE.Controllers
             var dto = await repairService.GetById(repair.RepairId);
 
             dto.RepairType = repair.RepairType;
-            dto.PhoneModel = repair.PhoneModel;
             dto.Price = repair.Price;
 
             await repairService.Update(repair.RepairId, dto);

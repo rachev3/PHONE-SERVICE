@@ -64,7 +64,7 @@ namespace PHONE_SERVICE.Controllers
 
             dto.Name = phoneModel.Name;
             dto.PhoneBrand = phoneModel.PhoneBrand;
-            dto.Repairs = phoneModel.Repairs;
+
             dto.RepairRequests = phoneModel.RepairRequests;
 
             await phoneModelService.Update(phoneModel.PhoneModelId, dto);

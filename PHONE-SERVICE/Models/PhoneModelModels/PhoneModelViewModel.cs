@@ -14,7 +14,7 @@ namespace PHONE_SERVICE.Models.PhoneModelModels
             PhoneModelId = phoneModel.PhoneModelId;
             Name = phoneModel.Name;
             PhoneBrand = phoneModel.PhoneBrand;
-            Repairs = phoneModel.Repairs;
+
             RepairRequests = phoneModel.RepairRequests;
         }
         public int PhoneModelId { get; set; }

@@ -14,6 +14,7 @@ namespace PHONE_SERVICE.Data
         public DbSet<PhoneModel> PhoneModels { get; set; }
         public DbSet<Repair> Repairs { get; set; }
         public DbSet<RepairRequest> RepairRequests { get; set; }
+        public DbSet<PhoneModelRepair> PhoneModelsRepair { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
