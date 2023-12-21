@@ -1,8 +1,6 @@
-﻿using Humanizer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Services;
 using PHONE_SERVICE.Models.RepairModels;
@@ -55,40 +53,7 @@ namespace PHONE_SERVICE.Controllers
             await repairRequestService.Update(repairRequestId, dto);
             return Json(new { success = true });
         }
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Asign(int id)
-        {
-            var repairRequest = await repairRequestService.GetById(id);
-            var workerUsers = await userManager.GetUsersInRoleAsync("Worker");
-           
-            RepairRequestCreateViewModel repairViewModel = new(repairRequest, workerUsers);
 
-            if (repairRequest == null)
-            {
-                return View("404");
-            }
-
-            return View("Asign", repairViewModel);
-        }
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Asign(RepairRequestCreateViewModel model)
-        {
-            var repairRequest = await repairRequestService.GetById(model.RepairRequestId);
-
-            if (repairRequest == null)
-            {
-                return View("404");
-            }
-
-            repairRequest.Status = model.Status;
-            repairRequest.WorkerUserId = model.WorkerId;
-
-            await repairRequestService.Update(repairRequest.RepairRequestId, repairRequest);
-
-            return RedirectToAction("Index");
-        }
         [HttpGet]
         [Authorize(Roles = "Worker")]
         public async Task<IActionResult> WorkerRepairRequests()

@@ -15,37 +15,7 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
             PhoneModels = phoneModels;
 
         }
-        public RepairRequestCreateViewModel(RepairRequest repairRequest)
-        {
-            RepairRequestId = repairRequest.RepairRequestId;
-            RepairRequestType = repairRequest.RepairRequestType;
-            DateOnly = repairRequest.DateOnly;
-            RepairType = repairRequest.RepairType;
-            PhoneModel = repairRequest.PhoneModel;
-            Descripion = repairRequest.Description;
-            Status = repairRequest.Status;
-            Rating = repairRequest.Rating;
-            Price = repairRequest.Price;
-            PhoneModelId = repairRequest.PhoneModelId;
-            WorkerId = repairRequest.WorkerUserId;
-            ClientId = repairRequest.ClientUserId;
-        }
-        public RepairRequestCreateViewModel(RepairRequest repairRequest, IList<User> workers)
-        {
-            RepairRequestId = repairRequest.RepairRequestId;
-            RepairRequestType = repairRequest.RepairRequestType;
-            DateOnly = repairRequest.DateOnly;
-            RepairType = repairRequest.RepairType;
-            PhoneModel = repairRequest.PhoneModel;
-            Descripion = repairRequest.Description;
-            Status = repairRequest.Status;
-            Rating = repairRequest.Rating;
-            Price = repairRequest.Price;
-            PhoneModelId = repairRequest.PhoneModelId;
-            WorkerId = repairRequest.WorkerUserId;
-            ClientId = repairRequest.ClientUserId;
-            Workers = workers.ToList();
-        }
+
         public RepairRequestCreateViewModel(RepairRequest repairRequest, List<PhoneModel> phoneModels)
         {
             RepairRequestId = repairRequest.RepairRequestId;
@@ -75,7 +45,6 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
         public int Rating { get; set; }
         public double Price { get; set; }
         public string? WorkerId { get; set; }
-        public List<User> Workers { get; set; }
         public string? ClientId { get; set; }
         public string ClientEmail { get; set; }
     }
