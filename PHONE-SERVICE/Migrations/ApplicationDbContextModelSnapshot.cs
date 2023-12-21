@@ -175,29 +175,6 @@ namespace PHONE_SERVICE.Migrations
                     b.ToTable("PhoneModels");
                 });
 
-            modelBuilder.Entity("PHONE_SERVICE.Data.DTO.PhoneModelRepair", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("PhoneModelId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RepairId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PhoneModelId");
-
-                    b.HasIndex("RepairId");
-
-                    b.ToTable("PhoneModelsRepair");
-                });
-
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.Repair", b =>
                 {
                     b.Property<int>("RepairId")
@@ -206,6 +183,9 @@ namespace PHONE_SERVICE.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RepairId"), 1L, 1);
 
+                    b.Property<int>("PhoneModelId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -213,6 +193,8 @@ namespace PHONE_SERVICE.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("RepairId");
+
+                    b.HasIndex("PhoneModelId");
 
                     b.ToTable("Repairs");
                 });
@@ -394,19 +376,15 @@ namespace PHONE_SERVICE.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PHONE_SERVICE.Data.DTO.PhoneModelRepair", b =>
+            modelBuilder.Entity("PHONE_SERVICE.Data.DTO.Repair", b =>
                 {
-                    b.HasOne("PHONE_SERVICE.Data.DTO.PhoneModel", null)
-                        .WithMany("PhoneModelRepairs")
+                    b.HasOne("PHONE_SERVICE.Data.DTO.PhoneModel", "PhoneModel")
+                        .WithMany("Repairs")
                         .HasForeignKey("PhoneModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PHONE_SERVICE.Data.DTO.Repair", null)
-                        .WithMany("PhoneModelRepair")
-                        .HasForeignKey("RepairId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("PhoneModel");
                 });
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.RepairRequest", b =>
@@ -436,14 +414,9 @@ namespace PHONE_SERVICE.Migrations
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.PhoneModel", b =>
                 {
-                    b.Navigation("PhoneModelRepairs");
-
                     b.Navigation("RepairRequests");
-                });
 
-            modelBuilder.Entity("PHONE_SERVICE.Data.DTO.Repair", b =>
-                {
-                    b.Navigation("PhoneModelRepair");
+                    b.Navigation("Repairs");
                 });
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.User", b =>

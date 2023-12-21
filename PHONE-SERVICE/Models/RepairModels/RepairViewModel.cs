@@ -14,6 +14,7 @@ namespace PHONE_SERVICE.Models.RepairModels
         {
             RepairId = repair.RepairId;
             RepairType = repair.RepairType;
+            PhoneModel = repair.PhoneModel;
             Price = repair.Price;
         }
         public int RepairId { get; set; }

@@ -15,20 +15,21 @@ namespace PHONE_SERVICE.Data.DTO
         public Repair(RepairCreateViewModel repair)
         {
             RepairType = repair.RepairType;
-
+            PhoneModel = repair.PhoneModel;
             Price = repair.Price;
-
+            PhoneModelId = repair.PhoneModelId;
         }
         public Repair(RepairViewModel repair)
         {
             RepairType = repair.RepairType;
-
+            PhoneModel = repair.PhoneModel;
             Price = repair.Price;
         }
         [Key]
         public int RepairId { get; set; }
         public RepairType RepairType { get; set; }
-        public virtual List<PhoneModelRepair>? PhoneModelRepair { get; set; }
+        public int PhoneModelId { get; set; }
+        public virtual PhoneModel? PhoneModel { get; set; }
 
         public double Price { get; set; }
 

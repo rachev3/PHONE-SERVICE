@@ -16,7 +16,6 @@ namespace PHONE_SERVICE.Data.Services
             await dbContext.SaveChangesAsync();
         }
 
-       
         public async Task Delete(int id)
         {
             var result = await dbContext.PhoneModels.FirstOrDefaultAsync(pm => pm.PhoneModelId == id);
@@ -32,7 +31,7 @@ namespace PHONE_SERVICE.Data.Services
 
         public async Task<PhoneModel> GetById(int id)
         {
-            var result = await dbContext.PhoneModels.FirstOrDefaultAsync(pm => pm.PhoneModelId == id);
+            var result = await dbContext.PhoneModels.FirstOrDefaultAsync(pm=>pm.PhoneModelId==id);
             return result;
         }
 

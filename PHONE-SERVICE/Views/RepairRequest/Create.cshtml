@@ -4,27 +4,19 @@
 <h2>Add RepairRequest</h2>
 <form asp-action="Create">
     <div class="form-group">
-        <label asp-for="DateOnly" class="form-label"></label>
-        <input asp-for="DateOnly" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="ClientEmail" class="form-label"></label>
-        <input asp-for="ClientEmail" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Price" class="form-label"></label>
-        <input asp-for="Price" class="form-control" readonly/>
-    </div>
-    <div class="form-group">
-        <label asp-for="PhoneModelId" class="control-label"></label>
-        <select asp-for="PhoneModelId" class="form-control">
+        <label asp-for="RepairRequestType" class="control-label"></label>
+        <select asp-for="RepairRequestType" class="form-control">
             <option value="">Select Type</option>
-            @foreach (var value in Model.PhoneModels)
+            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
-                <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>
+                <option value="@value">@value</option>
             }
         </select>
-        <span asp-validation-for="PhoneModelId" class="text-danger"></span>
+        <span asp-validation-for="RepairRequestType" class="text-danger"></span>
+    </div>
+    <div class="form-control">
+        <label asp-for="DateOnly" class="form-label"></label>
+        <input asp-for="DateOnly" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="RepairType" class="control-label"></label>
@@ -38,22 +30,44 @@
         <span asp-validation-for="RepairType" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="RepairRequestType" class="control-label"></label>
-        <select asp-for="RepairRequestType" class="form-control">
+        <label asp-for="PhoneModelId" class="control-label"></label>
+        <select asp-for="PhoneModelId" class="form-control">
             <option value="">Select Type</option>
-            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
+            @foreach (var value in Model.PhoneModels)
+            {
+                <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>
+            }
+        </select>
+        <span asp-validation-for="PhoneModelId" class="text-danger"></span>
+    </div>
+    <div class="form-control">
+        <label asp-for="Descripion" class="form-label"></label>
+        <input asp-for="Descripion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Status" class="control-label"></label>
+        <select asp-for="Status" class="form-control">
+            <option value="">Select Type</option>
+            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestStatus)))
             {
                 <option value="@value">@value</option>
             }
         </select>
-        <span asp-validation-for="RepairRequestType" class="text-danger"></span>
+        <span asp-validation-for="Status" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Descripion" class="form-label"></label>
-        <input asp-for="Descripion" class="form-control" />
+    <div class="form-control">
+        <label asp-for="Rating" class="form-label"></label>
+        <input asp-for="Rating" class="form-control" />
     </div>
-    <input type="hidden" asp-for="WorkerId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Create</button>
+    <div class="form-control">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
     </div>
+    <div class="form-control">
+        <label asp-for="ClientEmail" class="form-label"></label>
+        <input asp-for="ClientEmail" class="form-control" />
+    </div>
+
+    <input type="hidden" asp-for="WorkerId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)"/>
+    <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Create</button>
 </form>
