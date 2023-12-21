@@ -11,11 +11,13 @@ namespace PHONE_SERVICE.Controllers
     {
         private readonly IRepairService repairService;
         private readonly IPhoneModelService phoneModelService;
+        private readonly IPhoneModelRepairService phoneModelRepairService;
 
-        public RepairController(IRepairService repairService, IPhoneModelService phoneModelService)
+        public RepairController(IRepairService repairService, IPhoneModelService phoneModelService, IPhoneModelRepairService phoneModelRepairService)
         {
             this.repairService = repairService;
             this.phoneModelService = phoneModelService;
+            this.phoneModelRepairService = phoneModelRepairService;
         }
 
         public async Task<IActionResult> Index()
@@ -42,9 +44,13 @@ namespace PHONE_SERVICE.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(RepairCreateViewModel repair)
         {
-            var dbo = new Repair(repair);
+            var dboRepair = new Repair(repair);
 
-            await repairService.Add(dbo);
+            await repairService.Add(dboRepair);
+            var dboPhoneModelRepair = new PhoneModelRepair();
+            dboPhoneModelRepair.RepairId = dboRepair.RepairId;
+            dboPhoneModelRepair.PhoneModelId = repair.PhoneModelId;
+            await phoneModelRepairService.Add(dboPhoneModelRepair);
 
             return RedirectToAction("Index");
         }
