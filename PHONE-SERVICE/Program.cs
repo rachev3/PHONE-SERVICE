@@ -22,7 +22,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPhoneModelService, PhoneModelService>();
 builder.Services.AddScoped<IRepairRequestService, RepairRequestService>();
 builder.Services.AddScoped<IRepairService, RepairService>();
-builder.Services.AddScoped<IPhoneModelRepairService, PhoneModelRepairService>();
+
 
 var app = builder.Build();
 

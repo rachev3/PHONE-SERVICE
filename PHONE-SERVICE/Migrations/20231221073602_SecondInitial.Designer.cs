@@ -12,8 +12,8 @@ using PHONE_SERVICE.Data;
 namespace PHONE_SERVICE.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231214112627_initial")]
-    partial class initial
+    [Migration("20231221073602_SecondInitial")]
+    partial class SecondInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -241,9 +241,7 @@ namespace PHONE_SERVICE.Migrations
 
                     b.HasKey("RepairRequestId");
 
-                    b.HasIndex("ClientUserId")
-                        .IsUnique()
-                        .HasFilter("[ClientUserId] IS NOT NULL");
+                    b.HasIndex("ClientUserId");
 
                     b.HasIndex("PhoneModelId");
 
@@ -394,8 +392,9 @@ namespace PHONE_SERVICE.Migrations
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.RepairRequest", b =>
                 {
                     b.HasOne("PHONE_SERVICE.Data.DTO.User", "ClientUser")
-                        .WithOne("ClientRepairRequest")
-                        .HasForeignKey("PHONE_SERVICE.Data.DTO.RepairRequest", "ClientUserId");
+                        .WithMany("ClientRepairRequests")
+                        .HasForeignKey("ClientUserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("PHONE_SERVICE.Data.DTO.PhoneModel", "PhoneModel")
                         .WithMany("RepairRequests")
@@ -406,7 +405,7 @@ namespace PHONE_SERVICE.Migrations
                     b.HasOne("PHONE_SERVICE.Data.DTO.User", "WorkerUser")
                         .WithMany("WorkerRepairRequests")
                         .HasForeignKey("WorkerUserId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("ClientUser");
 
@@ -424,8 +423,7 @@ namespace PHONE_SERVICE.Migrations
 
             modelBuilder.Entity("PHONE_SERVICE.Data.DTO.User", b =>
                 {
-                    b.Navigation("ClientRepairRequest")
-                        .IsRequired();
+                    b.Navigation("ClientRepairRequests");
 
                     b.Navigation("WorkerRepairRequests");
                 });

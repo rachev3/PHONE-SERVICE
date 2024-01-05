@@ -32,7 +32,7 @@ namespace PHONE_SERVICE.Data.Services
 
         public async Task<Repair> GetById(int id)
         {
-            var result = await dbContext.Repairs.FirstOrDefaultAsync(r => r.RepairId == id);
+            var result = await dbContext.Repairs.Include(x=>x.PhoneModel).FirstOrDefaultAsync(r => r.RepairId == id);
             return result;
         }
 

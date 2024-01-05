@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PHONE_SERVICE.Migrations
 {
-    public partial class initial : Migration
+    public partial class SecondInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -200,8 +200,7 @@ namespace PHONE_SERVICE.Migrations
                         name: "FK_RepairRequests_AspNetUsers_WorkerUserId",
                         column: x => x.WorkerUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RepairRequests_PhoneModels_PhoneModelId",
                         column: x => x.PhoneModelId,
@@ -273,9 +272,7 @@ namespace PHONE_SERVICE.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_RepairRequests_ClientUserId",
                 table: "RepairRequests",
-                column: "ClientUserId",
-                unique: true,
-                filter: "[ClientUserId] IS NOT NULL");
+                column: "ClientUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RepairRequests_PhoneModelId",

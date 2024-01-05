@@ -14,7 +14,7 @@
         {
             <tr>
                 <td>@repair.RepairType</td>
-                <td></td>
+                <td>@repair.PhoneModel.PhoneBrand @repair.PhoneModel.Name</td>
                 <td>@repair.Price</td>
                 @if (User.IsInRole("Admin"))
                 {
