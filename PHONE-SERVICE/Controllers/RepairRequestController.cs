@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data.DTO;
+using PHONE_SERVICE.Data.Enums;
 using PHONE_SERVICE.Data.Services;
 using PHONE_SERVICE.Models.RepairModels;
 using PHONE_SERVICE.Models.RepairRequestModels;
@@ -25,6 +27,22 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Index()
         {
             var data = await repairRequestService.GetAll();
+            var repairRequests = data.Select(x => new RepairRequestViewModel(x)).ToList();
+            var viewModel = new RepairRequestPageViewModel(repairRequests);
+
+            return View("Index", viewModel);
+        }
+        [Authorize(Roles = "Admin, Worker")]
+        public async Task<IActionResult> Search(RepairRequestType? requestType, RepairRequestStatus? status)
+        {
+            
+
+
+            var data = await repairRequestService.GetAll();
+
+            if (requestType != null) data = data.Where(d => d.RepairRequestType == requestType).ToList();
+            if (status != null) data = data.Where(d => d.Status == status).ToList();
+
             var repairRequests = data.Select(x => new RepairRequestViewModel(x)).ToList();
             var viewModel = new RepairRequestPageViewModel(repairRequests);
 
