@@ -9,7 +9,7 @@
     <thead>
         <tr>
             <th>RepairRequestType</th>
-            <th>Date</th>
+            <th><a asp-action="SortByDate">Date</a></th>
             <th>RepairType</th>
             <th>PhoneModel</th>
             <th>Description</th>
@@ -31,7 +31,7 @@
                 <td>@repairRequest.Rating</td>
                 <td>@repairRequest.Price</td>
 
-                @if (User.IsInRole("Worker") && userId == repairRequest.WorkerId)
+                @if (User.IsInRole("Worker") && userId == repairRequest.WorkerId || User.IsInRole("Admin"))
                 {
                     <td>
                         <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Edit</a>

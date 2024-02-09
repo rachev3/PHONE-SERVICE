@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@* <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -72,6 +72,135 @@
             &copy; 2023 - PHONE_SERVICE - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+ *@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PHONE_SERVICE</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PHONE_SERVICE.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Add custom styles for the logo */
+        .navbar-brand img {
+            max-height: 75px; /* Adjust the height as needed */
+            max-width: 100%; /* Make sure the width doesn't exceed its container */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <div class="container-fluid">
+
+                @*  <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PHONE_SERVICE</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button> *@
+
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/Phone Service.png" alt="Your Logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark text-center" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home fa-lg d-block mb-2"></i>
+                                Home
+                            </a>
+                        </li>
+                        @if (!User.IsInRole("Worker") && !User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    <i class="fas fa-shield-alt fa-lg d-block mb-2"></i>
+                                    Privacy
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="RepairRequest" asp-action="Index">
+                                    <i class="fas fa-tools fa-lg d-block mb-2"></i> Repair Requests
+                                </a>
+                            </li>
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark text-center" asp-area="" asp-controller="PhoneModel" asp-action="Index">
+                                <i class="fas fa-mobile-alt fa-lg d-block mb-2"></i>
+                                Phone Models
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link text-dark text-center" asp-area="" asp-controller="Repair" asp-action="Index">
+                                <i class="fas fa-wrench fa-lg d-block mb-2"></i>
+                                Repairs
+                            </a>
+                        </li>
+
+
+                        @if (User.IsInRole("Worker"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="RepairRequest" asp-action="WorkerRepairRequests">
+                                    <i class="fas fa-cogs fa-lg d-block mb-2"></i> Worker Repair Requests
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Client"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="RepairRequest" asp-action="ClientRepairRequests">
+                                    <i class="fas fa-wrench fa-lg d-block mb-2"></i> Client Repair Requests
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="User" asp-action="Dashboard">
+                                    <i class="fas fa-tachometer-alt fa-lg d-block md-2"></i> Admin Dashboard
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="navbar-nav ms-auto">
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-4">
+        <div class="container text-center">
+            &copy; 2023 - PHONE_SERVICE - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

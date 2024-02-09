@@ -4,6 +4,10 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
 {
     public class RepairRequestPageViewModel
     {
+        public RepairRequestPageViewModel()
+        {
+            
+        }
         public RepairRequestPageViewModel(List<RepairRequestViewModel> repairRequests)
         {
             RepairRequests = repairRequests;

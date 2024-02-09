@@ -32,12 +32,10 @@ namespace PHONE_SERVICE.Controllers
 
             return View("Index", viewModel);
         }
+
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Search(RepairRequestType? requestType, RepairRequestStatus? status)
         {
-            
-
-
             var data = await repairRequestService.GetAll();
 
             if (requestType != null) data = data.Where(d => d.RepairRequestType == requestType).ToList();
@@ -48,6 +46,18 @@ namespace PHONE_SERVICE.Controllers
 
             return View("Index", viewModel);
         }
+
+        [Authorize(Roles = "Admin, Worker")]
+        public async Task<IActionResult> SortByDate(RepairRequestPageViewModel pageViewModel)
+        {
+            if (pageViewModel.RepairRequests != null)
+            {
+                // Sort only if the RepairRequests collection is not null
+                pageViewModel.RepairRequests = pageViewModel.RepairRequests.OrderBy(rr => rr.DateOnly).ToList();
+            }
+            return View("Index", pageViewModel);
+        }
+
         [HttpGet]
         [Authorize(Roles = "Client")]
         public async Task<IActionResult> ClientRepairRequests()
@@ -100,8 +110,33 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Create(RepairRequestCreateViewModel repairRequest)
         {
 
-            var user = await userManager.FindByEmailAsync(repairRequest.ClientEmail);
+            var user = await userManager.Users
+                       .Include(u => u.ClientRepairRequests)
+                       .FirstOrDefaultAsync(u => u.Email == repairRequest.ClientEmail);
 
+            bool hasUncompletedRequests = false;
+            if (user == null)
+            {
+
+                return BadRequest("User not found");
+            }
+            hasUncompletedRequests = user.ClientRepairRequests.Any(req => req.Status != RepairRequestStatus.Completed);
+
+            if (hasUncompletedRequests == true)
+            {
+                throw new ArgumentException("CANT");
+            }
+
+            repairRequest.Status = RepairRequestStatus.PendingConfirmation;
+
+            if (repairRequest.RepairRequestType == RepairRequestType.Fast)
+            {
+                repairRequest.Price *= 1.5;
+            }
+            else if (repairRequest.RepairRequestType == RepairRequestType.Express)
+            {
+                repairRequest.Price *= 2;
+            }
 
             var dbo = new RepairRequest(repairRequest);
             dbo.WorkerUserId = repairRequest.WorkerId;

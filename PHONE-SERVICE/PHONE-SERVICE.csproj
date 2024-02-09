@@ -16,4 +16,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.25" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\images\Phone Service.png" />
+  </ItemGroup>
+
 </Project>
