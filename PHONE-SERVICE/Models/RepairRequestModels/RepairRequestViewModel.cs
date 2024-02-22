@@ -14,7 +14,7 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
         {
             RepairRequestId = repairRequest.RepairRequestId;
             RepairRequestType = repairRequest.RepairRequestType;
-            DateOnly = repairRequest.DateOnly;
+            Date = repairRequest.Date;
             RepairType = repairRequest.RepairType;
             PhoneModel = repairRequest.PhoneModel;
             Descripion = repairRequest.Description;
@@ -27,7 +27,7 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
 
         public int RepairRequestId { get; set; }
         public RepairRequestType RepairRequestType { get; set; }
-        public DateOnly DateOnly { get; set; }
+        public DateTime Date { get; set; }
         public RepairType RepairType { get; set; }
         public int PhoneModelId { get; set; }
         public PhoneModel PhoneModel { get; set; }

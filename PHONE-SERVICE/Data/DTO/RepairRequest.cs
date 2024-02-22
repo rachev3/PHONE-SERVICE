@@ -15,7 +15,7 @@ namespace PHONE_SERVICE.Data.DTO
         public RepairRequest(RepairRequestCreateViewModel repairRequest)
         {
             RepairRequestType = repairRequest.RepairRequestType;
-            DateOnly = repairRequest.DateOnly;
+            Date = repairRequest.Date;
             RepairType = repairRequest.RepairType;
             PhoneModel = repairRequest.PhoneModel;
             Description = repairRequest.Descripion;
@@ -30,14 +30,8 @@ namespace PHONE_SERVICE.Data.DTO
 
         //User
 
-        public DateTime Date
-        {
-            get => new DateTime(DateOnly.Year, DateOnly.Month, DateOnly.Day);
-            set => DateOnly = new DateOnly(value.Year, value.Month, value.Day);
-        }
-
-        [NotMapped]
-        public DateOnly DateOnly { get; set; }
+        public DateTime Date { get; set; }
+    
         public RepairType RepairType { get; set; }
         public string? ClientUserId { get; set; }
         [ForeignKey(nameof(ClientUserId))]

@@ -44,18 +44,41 @@ namespace PHONE_SERVICE.Controllers
             var repairRequests = data.Select(x => new RepairRequestViewModel(x)).ToList();
             var viewModel = new RepairRequestPageViewModel(repairRequests);
 
+            viewModel.Status = status;
+            viewModel.RequestType = requestType;
+
+
+
             return View("Index", viewModel);
         }
 
         [Authorize(Roles = "Admin, Worker")]
-        public async Task<IActionResult> SortByDate(RepairRequestPageViewModel pageViewModel)
+        public async Task<IActionResult> SortByDate(string sortOrder, RepairRequestType? type, RepairRequestStatus? status)
         {
-            if (pageViewModel.RepairRequests != null)
+            var data = await repairRequestService.GetAll();
+
+            if (type != null) data = data.Where(d => d.RepairRequestType == type).ToList();
+            if (status != null) data = data.Where(d => d.Status == status).ToList();
+
+            ViewData["DateSortParam"] = string.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+
+            switch (sortOrder)
             {
-                // Sort only if the RepairRequests collection is not null
-                pageViewModel.RepairRequests = pageViewModel.RepairRequests.OrderBy(rr => rr.DateOnly).ToList();
+                case "date_desc":
+                    data = data.OrderBy(i => i.Date).ToList();
+                    break;
+                default:
+                    data = data.OrderByDescending(i => i.Date).ToList();
+                    break;
             }
-            return View("Index", pageViewModel);
+
+            var repairRequests = data.Select(x => new RepairRequestViewModel(x)).ToList();
+            var viewModel = new RepairRequestPageViewModel(repairRequests);
+
+            viewModel.Status = status;
+            viewModel.RequestType = type;
+
+            return View("Index", viewModel);
         }
 
         [HttpGet]
@@ -172,7 +195,7 @@ namespace PHONE_SERVICE.Controllers
             var dto = await repairRequestService.GetById(repairRequest.RepairRequestId);
 
             dto.RepairRequestType = repairRequest.RepairRequestType;
-            dto.DateOnly = repairRequest.DateOnly;
+            //dto.DateOnly = repairRequest.DateOnly;
             dto.RepairType = repairRequest.RepairType;
             dto.PhoneModel = repairRequest.PhoneModel;
             dto.Description = repairRequest.Descripion;

@@ -13,7 +13,7 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
             RepairRequests = repairRequests;
         }
         public List<RepairRequestViewModel> RepairRequests { get; set; }
-        public RepairRequestStatus Status { get; set; }
-        public RepairRequestType RequestType { get; set; }
+        public RepairRequestStatus? Status { get; set; }
+        public RepairRequestType? RequestType { get; set; }
     }
 }

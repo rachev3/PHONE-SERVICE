@@ -1,23 +1,23 @@
 ﻿@model RepairRequestPageViewModel
 
 <form method="post" action="@Url.Action("Search")" class="mb-3">
-    <div class="input-group"> 
+    <div class="input-group">
         <select name="requestType" class="form-control">
-            <option value="">Select Type</option>
+            <option value="">@Model.RequestType</option>
             @foreach (var option in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
                 <option value="@option">@option</option>
             }
         </select>
         <select name="status" class="form-control">
-            <option value="">Select Status</option>
+            <option value="">@Model.Status</option>
             @foreach (var option in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestStatus)))
             {
                 <option value="@option">@option</option>
             }
         </select>
 
-@*         <input type="text" name="repairType" class="form-control" placeholder="RepairType">
+        @*         <input type="text" name="repairType" class="form-control" placeholder="RepairType">
         <input type="text" name="status" class="form-control" placeholder="RepairStatus"> *@
 
         <button type="submit" class="btn btn-outline-primary" asp-action="Search">Search</button>

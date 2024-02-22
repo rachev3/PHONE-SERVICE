@@ -9,7 +9,7 @@
     <thead>
         <tr>
             <th>RepairRequestType</th>
-            <th><a asp-action="SortByDate">Date</a></th>
+            <th><a asp-action="SortByDate" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-status="@Model.Status" asp-route-type="@Model.RequestType">Date</a></th>
             <th>RepairType</th>
             <th>PhoneModel</th>
             <th>Description</th>
@@ -23,7 +23,7 @@
         {
             <tr>
                 <td>@repairRequest.RepairRequestType</td>
-                <td>@repairRequest.DateOnly</td>
+                <td>@repairRequest.Date</td>
                 <td>@repairRequest.RepairType</td>
                 <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
                 <td>@repairRequest.Descripion</td>

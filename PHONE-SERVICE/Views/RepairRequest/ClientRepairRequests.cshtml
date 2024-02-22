@@ -19,12 +19,12 @@
         {
             <tr>
                 <td>@repairRequest.RepairRequestType</td>
-                <td>@repairRequest.DateOnly</td>
+                <td>@repairRequest.Date</td>
                 <td>@repairRequest.RepairType</td>
                 <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
                 <td>@repairRequest.Descripion</td>
                 <td>@repairRequest.Status</td>
-                <td>@repairRequest.Rating</td>
+                <td class="jsRating">@repairRequest.Rating</td>
                 <td>@repairRequest.Price</td>
                 @if (repairRequest.Status == PHONE_SERVICE.Data.Enums.RepairRequestStatus.Completed)
                 {
@@ -48,6 +48,7 @@
     <script>
         function toggleRatingScale(repairRequestId) {
             var ratingScale = document.getElementById('rating-container-' + repairRequestId).getElementsByClassName('rating-scale')[0];
+            
             ratingScale.style.display = (ratingScale.style.display === 'none' || ratingScale.style.display === '') ? 'block' : 'none';
         }
 
@@ -57,7 +58,8 @@
         }
 
         function submitRating(repairRequestId) {
-            var ratingValue = document.getElementById('rating-' + repairRequestId).value;
+            var ratingElement = document.getElementById('rating-' + repairRequestId);
+            var ratingValue = ratingElement.value;
             // You can now send the ratingValue to the controller using Ajax
             $.ajax({
                 type: 'POST',
@@ -68,6 +70,8 @@
                     console.log('Rating submitted successfully');
                     // Hide the rating scale after submitting
                     toggleRatingScale(repairRequestId);
+                    var columnRating = ratingElement.closest('tr').querySelector('.jsRating');
+                    columnRating.innerHTML = ratingValue;
                 },
                 error: function (error) {
                     // Optionally, handle the error
