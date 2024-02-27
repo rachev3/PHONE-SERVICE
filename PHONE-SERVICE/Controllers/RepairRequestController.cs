@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Enums;
 using PHONE_SERVICE.Data.Services;
-using PHONE_SERVICE.Models.RepairModels;
 using PHONE_SERVICE.Models.RepairRequestModels;
 using System.Security.Claims;
 
@@ -23,6 +22,7 @@ namespace PHONE_SERVICE.Controllers
             this.phoneModelService = phoneModelService;
             this.userManager = userManager;
         }
+
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Index()
         {
@@ -60,11 +60,11 @@ namespace PHONE_SERVICE.Controllers
             if (type != null) data = data.Where(d => d.RepairRequestType == type).ToList();
             if (status != null) data = data.Where(d => d.Status == status).ToList();
 
-            ViewData["DateSortParam"] = string.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewData["DateSortParam"] = string.IsNullOrEmpty(sortOrder) ? "sort" : "";
 
             switch (sortOrder)
             {
-                case "date_desc":
+                case "sort":
                     data = data.OrderBy(i => i.Date).ToList();
                     break;
                 default:
@@ -91,6 +91,7 @@ namespace PHONE_SERVICE.Controllers
             var filtered = data.Where(x => x.ClientUserId == userId);
             var repairRequests = filtered.Select(x => new RepairRequestViewModel(x)).ToList();
             var viewModel = new RepairRequestPageViewModel(repairRequests);
+
             return View(viewModel);
         }
         [HttpPost]
@@ -115,6 +116,7 @@ namespace PHONE_SERVICE.Controllers
             var filtered = data.Where(x => x.WorkerUserId == userId);
             var repairRequests = filtered.Select(x => new RepairRequestViewModel(x)).ToList();
             var viewModel = new RepairRequestPageViewModel(repairRequests);
+
             return View(viewModel);
         }
         [HttpGet]
@@ -122,7 +124,7 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Create()
         {
             //if there are 0 phoneModels???
-            var phoneModels = phoneModelService.GetAll().Result;
+            var phoneModels = await phoneModelService.GetAll();
             var viewModel = new RepairRequestCreateViewModel(phoneModels);
 
             return View("Create", viewModel);
@@ -147,9 +149,10 @@ namespace PHONE_SERVICE.Controllers
 
             if (hasUncompletedRequests == true)
             {
-                throw new ArgumentException("CANT");
+                return BadRequest("This user already has 1 request.");
             }
 
+            //move this in service
             repairRequest.Status = RepairRequestStatus.PendingConfirmation;
 
             if (repairRequest.RepairRequestType == RepairRequestType.Fast)
@@ -163,6 +166,7 @@ namespace PHONE_SERVICE.Controllers
 
             var dbo = new RepairRequest(repairRequest);
             dbo.WorkerUserId = repairRequest.WorkerId;
+
             if (user != null)
             {
                 dbo.ClientUserId = user.Id;
@@ -177,7 +181,8 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var repairRequest = await repairRequestService.GetById(id);
-            var phoneModels = phoneModelService.GetAll().Result;
+            var phoneModels = await phoneModelService.GetAll();
+
             RepairRequestCreateViewModel repairViewModel = new(repairRequest, phoneModels);
 
             if (repairRequest == null)
@@ -194,8 +199,11 @@ namespace PHONE_SERVICE.Controllers
         {
             var dto = await repairRequestService.GetById(repairRequest.RepairRequestId);
 
+            var worker = await userManager.Users
+              .FirstOrDefaultAsync(u => u.Email == repairRequest.WorkerEmail);
+
             dto.RepairRequestType = repairRequest.RepairRequestType;
-            //dto.DateOnly = repairRequest.DateOnly;
+            dto.Date = repairRequest.Date;
             dto.RepairType = repairRequest.RepairType;
             dto.PhoneModel = repairRequest.PhoneModel;
             dto.Description = repairRequest.Descripion;
@@ -203,6 +211,7 @@ namespace PHONE_SERVICE.Controllers
             dto.Rating = repairRequest.Rating;
             dto.Price = repairRequest.Price;
             dto.PhoneModelId = repairRequest.PhoneModelId;
+            dto.WorkerUserId = worker.Id;
 
             await repairRequestService.Update(repairRequest.RepairRequestId, dto);
 

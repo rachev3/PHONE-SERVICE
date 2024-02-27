@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Services;
-using PHONE_SERVICE.Models.PhoneModelModels;
 using PHONE_SERVICE.Models.RepairModels;
 
 namespace PHONE_SERVICE.Controllers
@@ -32,7 +31,8 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Create()
         {
             //if there are 0 phoneModels???
-            var phoneModels = phoneModelService.GetAll().Result;
+            var phoneModels = await phoneModelService.GetAll();
+
             var viewModel = new RepairCreateViewModel(phoneModels);
             
             return View("Create", viewModel);
@@ -42,6 +42,11 @@ namespace PHONE_SERVICE.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(RepairCreateViewModel repair)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(repair);
+            }
+
             var dboRepair = new Repair(repair);
 
             await repairService.Add(dboRepair);
@@ -53,13 +58,14 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var repair = await repairService.GetById(id);
-            var phoneModels = phoneModelService.GetAll().Result;
-            RepairCreateViewModel repairViewModel = new(repair,phoneModels);
 
             if (repair == null)
             {
                 return View("404");
             }
+
+            var phoneModels = await phoneModelService.GetAll();
+            RepairCreateViewModel repairViewModel = new(repair,phoneModels);
 
             return View("Edit", repairViewModel);
         }
@@ -84,12 +90,13 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var repair = await repairService.GetById(id);
-            RepairViewModel repairViewModel = new(repair);
 
             if (repair == null)
             {
                 return View("404");
             }
+
+            RepairViewModel repairViewModel = new(repair);
 
             return View("Delete", repairViewModel);
         }

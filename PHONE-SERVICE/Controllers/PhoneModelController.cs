@@ -35,8 +35,13 @@ namespace PHONE_SERVICE.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(PhoneModelViewModel phoneModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(phoneModel);
+            }
+
             var dbo = new PhoneModel(phoneModel);
-           
+
             await phoneModelService.Add(dbo);
 
             return RedirectToAction("Index");
@@ -46,12 +51,13 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var phoneModel = await phoneModelService.GetById(id);
-            PhoneModelViewModel phoneModelViewModel = new(phoneModel);
 
             if (phoneModel == null)
             {
                 return View("404");
             }
+
+            PhoneModelViewModel phoneModelViewModel = new(phoneModel);
 
             return View("Edit", phoneModelViewModel);
         }
@@ -77,12 +83,13 @@ namespace PHONE_SERVICE.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var phoneModel = await phoneModelService.GetById(id);
-            PhoneModelViewModel phoneModelView = new(phoneModel);
 
             if (phoneModel == null)
             {
                 return View("404");
             }
+
+            PhoneModelViewModel phoneModelView = new(phoneModel);
 
             return View("Delete", phoneModelView);
         }
