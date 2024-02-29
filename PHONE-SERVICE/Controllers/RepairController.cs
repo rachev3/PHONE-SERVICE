@@ -46,7 +46,7 @@ namespace PHONE_SERVICE.Controllers
             {
                 return View(repair);
             }
-            //need to add all phone model to the view or not ot redirectToAction
+
             var dboRepair = new Repair(repair);
 
             await repairService.Add(dboRepair);

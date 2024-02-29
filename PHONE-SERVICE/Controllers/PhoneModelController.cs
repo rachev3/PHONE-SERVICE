@@ -35,7 +35,10 @@ namespace PHONE_SERVICE.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(PhoneModelViewModel phoneModel)
         {
-        
+            if (!ModelState.IsValid)
+            {
+                return View(phoneModel);
+            }
 
             var dbo = new PhoneModel(phoneModel);
 
