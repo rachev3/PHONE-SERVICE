@@ -45,7 +45,6 @@ namespace PHONE_SERVICE.Models.RepairRequestModels
         public int Rating { get; set; }
         public double Price { get; set; }
         public string? WorkerId { get; set; }
-        public string? WorkerEmail { get; set; }
         public string? ClientId { get; set; }
         public string ClientEmail { get; set; }
     }
