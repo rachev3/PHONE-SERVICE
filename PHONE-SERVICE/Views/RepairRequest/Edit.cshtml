@@ -2,9 +2,9 @@
 
 <h2>Edit RepairRequest</h2>
 <form asp-action="Edit">
-    <div class="form-group">
-        <label asp-for="RepairRequestType" class="control-label"></label>
-        <select asp-for="RepairRequestType" class="form-control">
+    <div class="mb-2">
+        <label asp-for="RepairRequestType" class="form-label">Repair Request Type</label>
+        <select asp-for="RepairRequestType" class="form-select">
             <option value="">Select Type</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
@@ -13,13 +13,13 @@
         </select>
         <span asp-validation-for="RepairRequestType" class="text-danger"></span>
     </div>
-    <div class="form-control">
-        <label asp-for="Date" class="form-label"></label>
+    <div class="mb-2">
+        <label asp-for="Date" class="form-label">Date</label>
         <input asp-for="Date" class="form-control" />
     </div>
-    <div class="form-group">
-        <label asp-for="RepairType" class="control-label"></label>
-        <select asp-for="RepairType" class="form-control">
+    <div class="mb-2">
+        <label asp-for="RepairType" class="form-label">Repair Type</label>
+        <select asp-for="RepairType" class="form-select">
             <option value="">Select Type</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
             {
@@ -28,9 +28,9 @@
         </select>
         <span asp-validation-for="RepairType" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="PhoneModelId" class="control-label"></label>
-        <select asp-for="PhoneModelId" class="form-control">
+    <div class="mb-2">
+        <label asp-for="PhoneModelId" class="form-label">Phone Model</label>
+        <select asp-for="PhoneModelId" class="form-select">
             <option value="">Select Type</option>
             @foreach (var value in Model.PhoneModels)
             {
@@ -39,13 +39,13 @@
         </select>
         <span asp-validation-for="PhoneModelId" class="text-danger"></span>
     </div>
-    <div class="form-control">
-        <label asp-for="Descripion" class="form-label"></label>
+    <div class="mb-2">
+        <label asp-for="Descripion" class="form-label">Description</label>
         <input asp-for="Descripion" class="form-control" />
     </div>
-    <div class="form-group">
-        <label asp-for="Status" class="control-label"></label>
-        <select asp-for="Status" class="form-control">
+    <div class="mb-2">
+        <label asp-for="Status" class="form-label">Status</label>
+        <select asp-for="Status" class="form-select">
             <option value="">Select Type</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestStatus)))
             {
@@ -54,15 +54,14 @@
         </select>
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
-    <div class="form-control">
-        <label asp-for="Rating" class="form-label"></label>
+    <div class="mb-2">
+        <label asp-for="Rating" class="form-label">Rating</label>
         <input asp-for="Rating" class="form-control" />
     </div>
-    <div class="form-control">
-        <label asp-for="Price" class="form-label"></label>
+    <div class="mb-2">
+        <label asp-for="Price" class="form-label">Price</label>
         <input asp-for="Price" class="form-control" />
     </div>
     <input type="hidden" asp-for="RepairRequestId" />
     <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Update</button>
 </form>
-

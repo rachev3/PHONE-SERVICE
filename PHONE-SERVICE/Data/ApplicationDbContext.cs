@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data.DTO;
-using System.Security.Cryptography.X509Certificates;
 
 namespace PHONE_SERVICE.Data
 {

@@ -1,43 +1,44 @@
 ﻿@model RepairRequestPageViewModel
 
-<h2>RepairRequest List</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>RepairRequestType</th>
-            <th>Date</th>
-            <th>RepairType</th>
-            <th>PhoneModel</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Rating</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var repairRequest in Model.RepairRequests)
-        {
+<h2>Repair Request List</h2>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
             <tr>
-                <td>@repairRequest.RepairRequestType</td>
-                <td>@repairRequest.Date</td>
-                <td>@repairRequest.RepairType</td>
-                <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
-                <td>@repairRequest.Descripion</td>
-                <td>@repairRequest.Status</td>
-                <td>@repairRequest.Rating</td>
-                <td>@repairRequest.Price</td>
+                <th>Repair Request Type</th>
+                <th>Date</th>
+                <th>Repair Type</th>
+                <th>Phone Model</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var repairRequest in Model.RepairRequests)
+            {
+                <tr>
+                    <td>@repairRequest.RepairRequestType</td>
+                    <td>@repairRequest.Date</td>
+                    <td>@repairRequest.RepairType</td>
+                    <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
+                    <td>@repairRequest.Descripion</td>
+                    <td>@repairRequest.Status</td>
+                    <td>@repairRequest.Rating</td>
+                    <td>@repairRequest.Price</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Edit</a>
+                        <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this Repair Request?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Edit</a>
-                    <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post"
-                          onsubmit="return confirm('Are you sure you want to delete this Repair Request?');">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-
-            </tr>                                                                                                                       
-        }
-    </tbody>
-</table>
-
-<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Add New RepairRequest</a>          
+<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Add New Repair Request</a>

@@ -2,15 +2,24 @@
 
 <form method="post" action="@Url.Action("Index")" class="mb-3">
     <div class="input-group">
-        <input type="text" name="username" class="form-control" placeholder="Username">
-        <input type="text" name="firstName" class="form-control" placeholder="FirstName">
-        <input type="text" name="lastName" class="form-control" placeholder="LastName">
-        <select name="role" class="form-control">
+        <input type="text" name="Username" asp-for="Username" class="form-control" placeholder="Username">
+        <input type="text" name="FirstName" asp-for="FirstName" class="form-control" placeholder="First Name">
+        <input type="text" name="LastName" asp-for="LastName" class="form-control" placeholder="Last Name">
+        <select name="Role" asp-for="Role" class="form-select">
             <option value="">Select Role</option>
-            <option value="Worker">Worker</option>
-            <option value="Client">Client</option>
+            <option value="Worker" selected="@(Model.Role == "Worker")">Worker</option>
+            <option value="Client" selected="@(Model.Role == "Client")">Client</option>
         </select>
-        <button type="submit" class="btn btn-outline-primary" asp-action="Index">Search</button>
-        <button type="button" class="btn btn-outline-secondary" onclick="clearSearch()">Clear</button>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
     </div>
 </form>
+
+<script>
+    function clearForm() {
+        document.getElementsByName("Username")[0].value = '';
+        document.getElementsByName("FirstName")[0].value = '';
+        document.getElementsByName("LastName")[0].value = '';
+        document.getElementsByName("Role")[0].selectedIndex = 0;
+    }
+</script>

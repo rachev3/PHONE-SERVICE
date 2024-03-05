@@ -38,9 +38,22 @@ namespace PHONE_SERVICE.Data.Services
 
         public async Task<Repair> Update(int id, Repair repair)
         {
-            dbContext.Update(repair);
+            var existingRepair = await dbContext.Repairs.FindAsync(id);
+
+            if (existingRepair == null)
+            {
+                throw new ArgumentException("Repair not found");
+            }
+
+            existingRepair.RepairType = repair.RepairType;
+            existingRepair.PhoneModelId = repair.PhoneModelId;
+            existingRepair.Price = repair.Price;
+
+            dbContext.Entry(existingRepair).State = EntityState.Modified;
+
             await dbContext.SaveChangesAsync();
-            return repair;
+
+            return existingRepair;
         }
     }
 }

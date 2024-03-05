@@ -3,48 +3,64 @@
     var claims = User.Claims.ToList();
     var userId = claims[0].Value;
 }
-<h2>RepairRequest List</h2>
-<partial name="_SearchBar" />
-<table class="table">
-    <thead>
-        <tr>
-            <th>RepairRequestType</th>
-            <th><a asp-action="SortByDate" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-status="@Model.Status" asp-route-type="@Model.RequestType">Date</a></th>
-            <th>RepairType</th>
-            <th>PhoneModel</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Rating</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var repairRequest in Model.RepairRequests)
-        {
+<div class="container mt-5">
+    <h2>RepairRequest List</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <partial name="_SearchBar" />
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
             <tr>
-                <td>@repairRequest.RepairRequestType</td>
-                <td>@repairRequest.Date</td>
-                <td>@repairRequest.RepairType</td>
-                <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
-                <td>@repairRequest.Descripion</td>
-                <td>@repairRequest.Status</td>
-                <td>@repairRequest.Rating</td>
-                <td>@repairRequest.Price</td>
-
-                @if (User.IsInRole("Worker") && userId == repairRequest.WorkerId || User.IsInRole("Admin"))
+                <th>RepairRequestType</th>
+                <th>
+                    <a asp-action="SortByDate" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-status="@Model.Status" asp-route-type="@Model.RequestType" class="text-decoration-none text-dark">
+                        Date
+                    </a>
+                </th>
+                <th>RepairType</th>
+                <th>PhoneModel</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Price</th>
+                @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
                 {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Edit</a>
-                        <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post"
-                              onsubmit="return confirm('Are you sure you want to delete this Repair Request?');">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
+                    <th>Actions</th>
                 }
-
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var repairRequest in Model.RepairRequests)
+            {
+                <tr>
+                    <td>@repairRequest.RepairRequestType</td>
+                    <td>@repairRequest.Date</td>
+                    <td>@repairRequest.RepairType</td>
+                    <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
+                    <td>@repairRequest.Descripion</td>
+                    <td>@repairRequest.Status</td>
+                    <td>@repairRequest.Rating</td>
+                    <td>@repairRequest.Price</td>
+                    @if (User.IsInRole("Worker") && userId == repairRequest.WorkerId || User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary me-2">Edit</a>
+                                <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post" onsubmit="return confirm('Are you sure you want to delete this Repair Request?');" class="me-2">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    }
 
-<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Add New RepairRequest</a>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
+    {
+        <a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Add New RepairRequest</a>
+    }
+</div>

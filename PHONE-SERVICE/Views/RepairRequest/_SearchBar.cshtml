@@ -3,24 +3,59 @@
 <form method="post" action="@Url.Action("Search")" class="mb-3">
     <div class="input-group">
         <select name="requestType" class="form-control">
-            <option value="">@Model.RequestType</option>
+            @if (Model.RequestType == null)
+            {
+                <option selected value="">Select Type</option>
+            }
+            else
+            {
+                <option value="">Select Type</option>
+            }
             @foreach (var option in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
-                <option value="@option">@option</option>
+                @if (option.Equals(Model.RequestType))
+                {
+                    <option selected value="@option">@option</option>
+                }
+                else
+                {
+                    <option value="@option">@option</option>
+                }
             }
         </select>
         <select name="status" class="form-control">
-            <option value="">@Model.Status</option>
+            @if (Model.Status == null)
+            {
+                <option selected value="">Select Status</option>
+            }
+            else
+            {
+                <option value="">Select Status</option>
+            }
             @foreach (var option in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestStatus)))
             {
-                <option value="@option">@option</option>
+                @if (option.Equals(Model.Status))
+                {
+                    <option selected value="@option">@option</option>
+                }
+                else
+                {
+                    <option value="@option">@option</option>
+                }
             }
         </select>
 
-        @*         <input type="text" name="repairType" class="form-control" placeholder="RepairType">
-        <input type="text" name="status" class="form-control" placeholder="RepairStatus"> *@
-
         <button type="submit" class="btn btn-outline-primary" asp-action="Search">Search</button>
-        <button type="button" class="btn btn-outline-secondary" onclick="clearSearch()">Clear</button>
+
+        <button type="button" class="btn btn-outline-secondary" onclick="clearSelections()">Clear</button>
     </div>
 </form>
+
+<script>
+    function clearSelections() {
+        // Clear selected options in both select elements
+        document.querySelector('select[name="requestType"]').value = '';
+        document.querySelector('select[name="status"]').value = '';
+    }
+</script>
+

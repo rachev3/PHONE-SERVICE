@@ -1,35 +1,47 @@
 ﻿@model PhoneModelPageViewModel
 
-<h2>PhoneModel List</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>PhoneBrand</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var phoneModel in Model.PhoneModels)
-        {
-            <tr>
-                <td>@phoneModel.PhoneBrand</td>
-                <td>@phoneModel.Name</td>
+<div class="container mt-5">
+    <div class="text-center">
+        <h2>Models</h2>
+    </div>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="text-start mb-3">
+            <a href="@Url.Action("Create", "PhoneModel")" class="btn btn-success">Add New PhoneModel</a>
+        </div>
+    }
+
+    <table class="table table-bordered table-hover mt-3" style="background-color: #f4f4f4; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+        <thead class="thead-light">
+            <tr class="text-center">
+                <th>Name</th>
+                <th>PhoneBrand</th>
                 @if (User.IsInRole("Admin"))
                 {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@phoneModel.PhoneModelId" class="btn btn-primary">Edit</a>
-                        <form asp-action="DeleteConfirm" asp-route-id="@phoneModel.PhoneModelId" method="post"
-                              onsubmit="return confirm('Are you sure you want to delete this movie?');">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-
-                    </td>
+                    <th>Actions</th>
                 }
             </tr>
-        }
-    </tbody>
-</table>
-@if (User.IsInRole("Admin"))
-{
-    <a asp-action="Create" asp-controller="PhoneModel" class="btn btn-success">Add New PhoneModel</a>
-}
+        </thead>
+        <tbody>
+            @foreach (var phoneModel in Model.PhoneModels)
+            {
+                <tr style="border-top: 1px solid rgba(0, 0, 0, 0.1);">
+                    <td>@phoneModel.Name</td>
+                    <td>@phoneModel.PhoneBrand</td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td class="d-flex">
+                            <div class="btn-group" role="group">
+                                <a href="@Url.Action("Edit", new { id = phoneModel.PhoneModelId })" class="btn btn-primary">Edit</a>
+                                <form asp-action="DeleteConfirm" asp-route-id="@phoneModel.PhoneModelId" method="post" onsubmit="return confirm('Are you sure you want to delete this phone model?');">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

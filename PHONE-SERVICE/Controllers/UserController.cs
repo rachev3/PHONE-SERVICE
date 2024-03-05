@@ -29,21 +29,21 @@ namespace PHONE_SERVICE.Controllers
         [Authorize(Roles = "Admin")]
         //need optimization
         //When searching capital latters matter
-        public async Task<IActionResult> Index(string? username, string? firstName, string? lastName, string? role)
+        public async Task<IActionResult> Index(UserPageViewModel model)
         {
             var users = await userManager.Users.ToListAsync();
 
-            if (username != null) users = users.Where(u => u.UserName.Contains(username)).ToList();
-            if (firstName != null) users = users.Where(u => u.FirstName.Contains(firstName)).ToList();
-            if (lastName != null) users = users.Where(u => u.LastName.Contains(lastName)).ToList();
+            if (model.Username != null) users = users.Where(u => u.UserName.Contains(model.Username)).ToList();
+            if (model.FirstName != null) users = users.Where(u => u.FirstName.Contains(model.FirstName)).ToList();
+            if (model.LastName != null) users = users.Where(u => u.LastName.Contains(model.LastName)).ToList();
 
-            if (role != null)
+            if (model.Role != null)
             {
                 var usersToKeep = new List<User>();
                 foreach (var user in users)
                 {
                     var userRole = await userManager.GetRolesAsync(user);
-                    if (userRole.Contains(role))
+                    if (userRole.Contains(model.Role))
                     {
                         usersToKeep.Add(user);
                     }

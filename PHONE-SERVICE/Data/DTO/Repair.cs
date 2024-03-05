@@ -2,7 +2,6 @@
 using PHONE_SERVICE.Data.Enums;
 using PHONE_SERVICE.Models.RepairModels;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PHONE_SERVICE.Data.DTO
 {

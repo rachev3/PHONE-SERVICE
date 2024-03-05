@@ -74,9 +74,19 @@ namespace PHONE_SERVICE.Controllers
             dto.PhoneModel = repair.PhoneModel;
             dto.Price = repair.Price;
 
-            await repairService.Update(repair.RepairId, dto);
-
-           return RedirectToAction("Index");
+            try
+            {
+                // Update the existing Repair entity in the database
+                await repairService.Update(repair.RepairId,dto);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Handle the case where an error occurs during the update
+                // Log the exception, display an error message, etc.
+                ModelState.AddModelError("", "An error occurred while saving the changes: " + ex.Message);
+                return View(repair);
+            }
         }
 
         [HttpGet]

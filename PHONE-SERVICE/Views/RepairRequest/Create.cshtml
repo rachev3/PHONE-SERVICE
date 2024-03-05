@@ -2,57 +2,73 @@
 @model RepairRequestCreateViewModel
 
 <h2>Add RepairRequest</h2>
-<form asp-action="Create">
-    <div class="form-group">
-        <label asp-for="Date" class="form-label"></label>
-        <input type="date" asp-for="Date" class="form-control" />
+<form asp-action="Create" id="repairRequestForm">
+    <div class="mb-3">
+        <label for="Date" class="form-label">Date</label>
+        <input type="date" id="Date" asp-for="Date" class="form-control" required />
+        <div class="invalid-feedback">Please provide a valid date.</div>
     </div>
-    <div class="form-group">
-        <label asp-for="ClientEmail" class="form-label"></label>
-        <input asp-for="ClientEmail" class="form-control" />
+    <div class="mb-3">
+        <label for="ClientEmail" class="form-label">Client Email</label>
+        <input type="email" id="ClientEmail" asp-for="ClientEmail" class="form-control" required />
+        <div class="invalid-feedback">Please provide a valid email address.</div>
     </div>
-    <div class="form-group">
-        <label asp-for="PhoneModelId" class="control-label"></label>
-        <select asp-for="PhoneModelId" class="form-control">
+    <div class="mb-3">
+        <label for="PhoneModelId" class="form-label">Phone Model</label>
+        <select id="PhoneModelId" asp-for="PhoneModelId" class="form-control" required>
             <option value="">Select Type</option>
             @foreach (var value in Model.PhoneModels)
             {
                 <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>
             }
         </select>
-        <span asp-validation-for="PhoneModelId" class="text-danger"></span>
+        <div class="invalid-feedback">Please select a phone model.</div>
     </div>
-    <div class="form-group">
-        <label asp-for="RepairType" class="control-label"></label>
-        <select asp-for="RepairType" class="form-control">
+    <div class="mb-3">
+        <label for="RepairType" class="form-label">Repair Type</label>
+        <select id="RepairType" asp-for="RepairType" class="form-control" required>
             <option value="">Select Type</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
             {
                 <option value="@value">@value</option>
             }
         </select>
-        <span asp-validation-for="RepairType" class="text-danger"></span>
+        <div class="invalid-feedback">Please select a repair type.</div>
     </div>
-    <div class="form-group">
-        <label asp-for="RepairRequestType" class="control-label"></label>
-        <select asp-for="RepairRequestType" class="form-control">
+    <div class="mb-3">
+        <label for="RepairRequestType" class="form-label">Repair Request Type</label>
+        <select id="RepairRequestType" asp-for="RepairRequestType" class="form-control" required>
             <option value="">Select Type</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
                 <option value="@value">@value</option>
             }
         </select>
-        <span asp-validation-for="RepairRequestType" class="text-danger"></span>
+        <div class="invalid-feedback">Please select a repair request type.</div>
     </div>
-    <div class="form-group">
-        <label asp-for="Descripion" class="form-label"></label>
-        <input asp-for="Descripion" class="form-control" />
+    <div class="mb-3">
+        <label for="Description" class="form-label">Description</label>
+        <input type="text" id="Description" asp-for="Descripion" class="form-control" />
     </div>
-    <div class="form-group">
-        <label asp-for="Price" class="form-label"></label>
-        <input asp-for="Price" class="form-control" />
+    <div class="mb-3">
+        <label for="Price" class="form-label">Price</label>
+        <input type="number" id="Price" asp-for="Price" class="form-control" required />
+        <div class="invalid-feedback">Please provide a valid price.</div>
     </div>
 
-    <input type="hidden" asp-for="WorkerId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)"/>
+    <input type="hidden" asp-for="WorkerId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
     <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Create</button>
 </form>
+
+@section scripts {
+    <script>
+        // Prevent form submission if any inputs are invalid
+        document.getElementById('repairRequestForm').addEventListener('submit', function (event) {
+            if (!this.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            this.classList.add('was-validated');
+        });
+    </script>
+}
