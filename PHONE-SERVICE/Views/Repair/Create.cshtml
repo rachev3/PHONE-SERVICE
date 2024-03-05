@@ -1,32 +1,10 @@
-﻿@using System.Security.Claims;
-@model RepairRequestCreateViewModel
+﻿@model RepairCreateViewModel
 
-<h2>Add RepairRequest</h2>
-<form asp-action="Create" class="needs-validation" novalidate id="repairRequestForm">
-    <div class="mb-3">
-        <label for="Date" class="form-label">Date</label>
-        <input type="date" id="Date" asp-for="Date" class="form-control" required />
-        <div class="invalid-feedback">Please provide a valid date.</div>
-    </div>
-    <div class="mb-3">
-        <label for="ClientEmail" class="form-label">Client Email</label>
-        <input type="email" id="ClientEmail" asp-for="ClientEmail" class="form-control" required />
-        <div class="invalid-feedback">Please provide a valid email address.</div>
-    </div>
-    <div class="mb-3">
-        <label for="PhoneModelId" class="form-label">Phone Model</label>
-        <select id="PhoneModelId" asp-for="PhoneModelId" class="form-control" required>
-            <option value="">Select Type</option>
-            @foreach (var value in Model.PhoneModels)
-            {
-                <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>
-            }
-        </select>
-        <div class="invalid-feedback">Please select a phone model.</div>
-    </div>
+<h2>Add Repair</h2>
+<form asp-action="Create" class="needs-validation" novalidate>
     <div class="mb-3">
         <label for="RepairType" class="form-label">Repair Type</label>
-        <select id="RepairType" asp-for="RepairType" class="form-control" required>
+        <select asp-for="RepairType" class="form-select" id="RepairType" required>
             <option value="">Select Type</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
             {
@@ -36,31 +14,25 @@
         <div class="invalid-feedback">Please select a repair type.</div>
     </div>
     <div class="mb-3">
-        <label for="RepairRequestType" class="form-label">Repair Request Type</label>
-        <select id="RepairRequestType" asp-for="RepairRequestType" class="form-control" required>
-            <option value="">Select Type</option>
-            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
+        <label for="PhoneModelId" class="form-label">Phone Model</label>
+        <select asp-for="PhoneModelId" class="form-select" id="PhoneModelId" required>
+            <option value="">Select Model</option>
+            @foreach (var value in Model.PhoneModels)
             {
-                <option value="@value">@value</option>
+                <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>
             }
         </select>
-        <div class="invalid-feedback">Please select a repair request type.</div>
-    </div>
-    <div class="mb-3">
-        <label for="Description" class="form-label">Description</label>
-        <input type="text" id="Description" asp-for="Descripion" class="form-control" />
+        <div class="invalid-feedback">Please select a phone model.</div>
     </div>
     <div class="mb-3">
         <label for="Price" class="form-label">Price</label>
-        <input type="number" id="Price" asp-for="Price" class="form-control" required />
-        <div class="invalid-feedback">Please provide a valid price.</div>
+        <input asp-for="Price" class="form-control" id="Price" required>
+        <div class="invalid-feedback">Please provide a price.</div>
     </div>
-
-    <input type="hidden" asp-for="WorkerId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
-    <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Create</button>
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
-@section scripts {
+@section Scripts {
     <script>
         // Bootstrap validation script
         (function () {

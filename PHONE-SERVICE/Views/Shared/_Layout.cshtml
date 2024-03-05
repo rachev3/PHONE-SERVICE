@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,41 +11,44 @@
     <style>
         /* Add custom styles for the logo */
         .navbar-brand img {
-            max-height: 75px; /* Adjust the height as needed */
-            max-width: 100%; /* Make sure the width doesn't exceed its container */
+            max-height: 70px; /* Adjust the height as needed */
+            width: auto; /* Allow the width to adjust according to the height */
+        }
+
+        .navbar-nav .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.75rem 1.5rem; /* Adjust padding */
+            font-size: 1.1rem; /* Adjust font size */
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="container-fluid">
-
-                @*  <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PHONE_SERVICE</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button> *@
-
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     <img src="~/images/Phone Service.png" alt="Your Logo" />
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark text-center" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home fa-lg d-block mb-2"></i>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home fa-lg"></i>
                                 Home
                             </a>
                         </li>
                         @if (!User.IsInRole("Worker") && !User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                    <i class="fas fa-shield-alt fa-lg d-block mb-2"></i>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    <i class="fas fa-shield-alt fa-lg"></i>
                                     Privacy
                                 </a>
                             </li>
@@ -55,48 +57,47 @@
                         @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="RepairRequest" asp-action="Index">
-                                    <i class="fas fa-tools fa-lg d-block mb-2"></i> Repair Requests
+                                <a class="nav-link" asp-area="" asp-controller="RepairRequest" asp-action="Index">
+                                    <i class="fas fa-tools fa-lg"></i> Repair Requests
                                 </a>
                             </li>
                         }
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark text-center" asp-area="" asp-controller="PhoneModel" asp-action="Index">
-                                <i class="fas fa-mobile-alt fa-lg d-block mb-2"></i>
+                            <a class="nav-link" asp-area="" asp-controller="PhoneModel" asp-action="Index">
+                                <i class="fas fa-mobile-alt fa-lg"></i>
                                 Phone Models
                             </a>
                         </li>
 
-                        <li>
-                            <a class="nav-link text-dark text-center" asp-area="" asp-controller="Repair" asp-action="Index">
-                                <i class="fas fa-wrench fa-lg d-block mb-2"></i>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Repair" asp-action="Index">
+                                <i class="fas fa-wrench fa-lg"></i>
                                 Repairs
                             </a>
                         </li>
 
-
                         @if (User.IsInRole("Worker"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="RepairRequest" asp-action="WorkerRepairRequests">
-                                    <i class="fas fa-cogs fa-lg d-block mb-2"></i> Worker Repair Requests
+                                <a class="nav-link" asp-area="" asp-controller="RepairRequest" asp-action="WorkerRepairRequests">
+                                    <i class="fas fa-cogs fa-lg"></i> Worker Repair Requests
                                 </a>
                             </li>
                         }
                         @if (User.IsInRole("Client"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="RepairRequest" asp-action="ClientRepairRequests">
-                                    <i class="fas fa-wrench fa-lg d-block mb-2"></i> Client Repair Requests
+                                <a class="nav-link" asp-area="" asp-controller="RepairRequest" asp-action="ClientRepairRequests">
+                                    <i class="fas fa-wrench fa-lg"></i> Client Repair Requests
                                 </a>
                             </li>
                         }
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark text-center" asp-area="" asp-controller="User" asp-action="Dashboard">
-                                    <i class="fas fa-tachometer-alt fa-lg d-block md-2"></i> Admin Dashboard
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="Dashboard">
+                                    <i class="fas fa-tachometer-alt fa-lg"></i> Admin Dashboard
                                 </a>
                             </li>
                         }
