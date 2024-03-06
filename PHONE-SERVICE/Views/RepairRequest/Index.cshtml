@@ -15,8 +15,9 @@
             <tr>
                 <th>RepairRequestType</th>
                 <th>
-                    <a asp-action="SortByDate" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-status="@Model.Status" asp-route-type="@Model.RequestType" class="text-decoration-none text-dark">
+                    <a href="@Url.Action("SortByDate", new { sortOrder = ViewData["DateSortParam"], status = Model.Status, type = Model.RequestType })" class="text-decoration-none text-dark">
                         Date
+                        <i class="fas fa-sort"></i>
                     </a>
                 </th>
                 <th>RepairType</th>
@@ -36,13 +37,14 @@
             {
                 <tr>
                     <td>@repairRequest.RepairRequestType</td>
-                    <td>@repairRequest.Date</td>
+                    <td>@repairRequest.Date.ToShortDateString()</td>
                     <td>@repairRequest.RepairType</td>
                     <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
                     <td>@repairRequest.Descripion</td>
                     <td>@repairRequest.Status</td>
                     <td>@repairRequest.Rating</td>
-                    <td>@repairRequest.Price</td>
+                    <td>@(Math.Round(repairRequest.Price, 2).ToString("F2")) лв.</td>
+
                     @if (User.IsInRole("Worker") && userId == repairRequest.WorkerId || User.IsInRole("Admin"))
                     {
                         <td>

@@ -4,11 +4,6 @@
 <h2>Add RepairRequest</h2>
 <form asp-action="Create" id="repairRequestForm">
     <div class="mb-3">
-        <label for="Date" class="form-label">Date</label>
-        <input type="date" id="Date" asp-for="Date" class="form-control" required />
-        <div class="invalid-feedback">Please provide a valid date.</div>
-    </div>
-    <div class="mb-3">
         <label for="ClientEmail" class="form-label">Client Email</label>
         <input type="email" id="ClientEmail" asp-for="ClientEmail" class="form-control" required />
         <div class="invalid-feedback">Please provide a valid email address.</div>
@@ -52,7 +47,7 @@
     </div>
     <div class="mb-3">
         <label for="Price" class="form-label">Price</label>
-        <input type="number" id="Price" asp-for="Price" class="form-control" required />
+        <input type="text" id="Price" asp-for="Price" class="form-control" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Please provide a valid price." />
         <div class="invalid-feedback">Please provide a valid price.</div>
     </div>
 

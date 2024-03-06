@@ -161,6 +161,8 @@ namespace PHONE_SERVICE.Controllers
                 repairRequest.Price *= 2;
             }
 
+            repairRequest.Date = DateTime.Now;
+
             var dbo = new RepairRequest(repairRequest);
             dbo.WorkerUserId = repairRequest.WorkerId;
             if (user != null)
