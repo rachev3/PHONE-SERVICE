@@ -5,11 +5,11 @@
         <select name="requestType" class="form-control">
             @if (Model.RequestType == null)
             {
-                <option selected value="">Select Type</option>
+                <option selected value="">Избери тип</option>
             }
             else
             {
-                <option value="">Select Type</option>
+                <option value="">Избери тип</option>
             }
             @foreach (var option in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
@@ -26,11 +26,11 @@
         <select name="status" class="form-control">
             @if (Model.Status == null)
             {
-                <option selected value="">Select Status</option>
+                <option selected value="">Избери статус</option>
             }
             else
             {
-                <option value="">Select Status</option>
+                <option value="">Избери статус</option>
             }
             @foreach (var option in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestStatus)))
             {
@@ -45,9 +45,9 @@
             }
         </select>
 
-        <button type="submit" class="btn btn-outline-primary" asp-action="Search">Search</button>
+        <button type="submit" class="btn btn-outline-primary" asp-action="Search">Търси</button>
 
-        <button type="button" class="btn btn-outline-secondary" onclick="clearSelections()">Clear</button>
+        <button type="button" class="btn btn-outline-secondary" onclick="clearSelections()">Изчисти</button>
     </div>
 </form>
 

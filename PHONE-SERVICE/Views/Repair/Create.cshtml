@@ -1,35 +1,35 @@
 ﻿@model RepairCreateViewModel
 
-<h2>Add Repair</h2>
+<h2>Добавяне на ремонт</h2>
 <form asp-action="Create" class="needs-validation" novalidate>
     <div class="mb-3">
-        <label for="RepairType" class="form-label">Repair Type</label>
+        <label for="RepairType" class="form-label">Вид поправка</label>
         <select asp-for="RepairType" class="form-select" id="RepairType" required>
-            <option value="">Select Type</option>
+            <option value="">Избери вид</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
             {
                 <option value="@value">@value</option>
             }
         </select>
-        <div class="invalid-feedback">Please select a repair type.</div>
+        <div class="invalid-feedback">Моля изберете вид на ремонта.</div>
     </div>
     <div class="mb-3">
-        <label for="PhoneModelId" class="form-label">Phone Model</label>
+        <label for="PhoneModelId" class="form-label">Телефон</label>
         <select asp-for="PhoneModelId" class="form-select" id="PhoneModelId" required>
-            <option value="">Select Model</option>
+            <option value="">Изберете модел</option>
             @foreach (var value in Model.PhoneModels)
             {
                 <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>
             }
         </select>
-        <div class="invalid-feedback">Please select a phone model.</div>
+        <div class="invalid-feedback">Моля изберете модел.</div>
     </div>
     <div class="mb-3">
-        <label for="Price" class="form-label">Price</label>
+        <label for="Price" class="form-label">Цена</label>
         <input asp-for="Price" class="form-control" id="Price" required>
-        <div class="invalid-feedback">Please provide a price.</div>
+        <div class="invalid-feedback">Моля добавете цена.</div>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Създай</button>
 </form>
 
 @section Scripts {

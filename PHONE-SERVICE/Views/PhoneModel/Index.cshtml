@@ -2,24 +2,24 @@
 
 <div class="container mt-5">
     <div class="text-center">
-        <h2>Models</h2>
+        <h2>Модели</h2>
     </div>
 
     @if (User.IsInRole("Admin"))
     {
         <div class="text-start mb-3">
-            <a href="@Url.Action("Create", "PhoneModel")" class="btn btn-success">Add New PhoneModel</a>
+            <a href="@Url.Action("Create", "PhoneModel")" class="btn btn-success">Добави нов модел</a>
         </div>
     }
 
     <table class="table table-bordered table-hover mt-3" style="background-color: #f4f4f4; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
         <thead class="thead-light">
             <tr class="text-center">
-                <th>PhoneBrand</th>
-                <th>Name</th>
+                <th>Марка</th>
+                <th>Модел</th>
                 @if (User.IsInRole("Admin"))
                 {
-                    <th>Actions</th>
+                    <th>Действия</th>
                 }
             </tr>
         </thead>
@@ -33,9 +33,9 @@
                     {
                         <td class="d-flex">
 
-                            <a href="@Url.Action("Edit", new { id = phoneModel.PhoneModelId })" class="btn btn-primary me-2">Edit</a>
-                            <form asp-action="DeleteConfirm" asp-route-id="@phoneModel.PhoneModelId" method="post" onsubmit="return confirm('Are you sure you want to delete this phone model?');">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                            <a href="@Url.Action("Edit", new { id = phoneModel.PhoneModelId })" class="btn btn-primary me-2">Редакция</a>
+                            <form asp-action="DeleteConfirm" asp-route-id="@phoneModel.PhoneModelId" method="post" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете този модел?');">
+                                <button type="submit" class="btn btn-danger">Изтрии</button>
                             </form>
 
                         </td>

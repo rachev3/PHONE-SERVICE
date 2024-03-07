@@ -1,15 +1,15 @@
 ﻿@using PHONE_SERVICE.Models.UserModels
 @model UserLoginViewModel
 @{
-    Layout = null; // Remove layout for this view
+    Layout = null; // Премахнете шаблона за тази страница
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- Include Bootstrap CSS -->
+    <title>Вход</title>
+    <!-- Включете Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -34,10 +34,10 @@
     </style>
 
     @{
-        ViewData["Title"] = "Login screen";
-        ViewData["Description"] = "Here you can login your account.";
-        ViewData["Keywords"] = "login";
-        ViewData["Author"] = "Dimitar Rachev";
+        ViewData["Title"] = "Екран за Вход";
+        ViewData["Description"] = "Тук можете да влезете в своя акаунт.";
+        ViewData["Keywords"] = "вход";
+        ViewData["Author"] = "Димитър Рачев";
     }
 
 </head>
@@ -47,9 +47,9 @@
             <div class="col-md-6 offset-md-3">
                 <div class="login-container">
                     <div class="login-logo">
-                        <img src="~/images/Phone Service.png" alt="Logo" width="200">
+                        <img src="~/images/Phone Service.png" alt="Лого" width="200">
                     </div>
-                    <h2>Login</h2>
+                    <h2>Вход</h2>
                     <form method="post" asp-action="Login">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -67,17 +67,17 @@
                             <p></p>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn btn-outline-success float-right" asp-action="Login" />
+                            <input type="submit" value="Вход" class="btn btn-outline-success float-right" asp-action="Login" />
                         </div>
                     </form>
                     <div class="mt-2">
-                        <p>Don't have an account? <a href="Register" class="text-decoration-none">Register</a></p>
+                        <p>Нямате акаунт? <a href="Register" class="text-decoration-none">Регистрирайте се</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Include Bootstrap JS (optional) -->
+    <!-- Включете Bootstrap JS (по избор) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

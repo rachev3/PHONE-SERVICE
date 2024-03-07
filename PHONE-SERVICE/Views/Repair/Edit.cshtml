@@ -1,11 +1,11 @@
 ﻿@model RepairCreateViewModel
 
-<h2>Edit Repair</h2>
+<h2>Редакция на ремонт</h2>
 <form asp-action="Edit">
     <div class="form-control">
-        <label asp-for="RepairType" class="control-label"></label>
+        <label asp-for="RepairType" class="control-label">Вид поправка</label>
         <select asp-for="RepairType" class="form-control">
-            <option value="">Select Type</option>
+            <option value="">Изберете вид</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
             {
                 <option value="@value">@value</option>
@@ -14,7 +14,7 @@
         <span asp-validation-for="RepairType" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="PhoneModelId" class="control-label"></label>
+        <label asp-for="PhoneModelId" class="control-label">Телефон</label>
         <select asp-for="PhoneModelId" class="form-control">
             @* <option value="">Select Type</option> *@
             @foreach (var value in Model.PhoneModels)
@@ -25,9 +25,9 @@
         <span asp-validation-for="PhoneModelId" class="text-danger"></span>
     </div>
     <div class="form-control">
-        <label asp-for="Price" class="form-label"></label>
+        <label asp-for="Price" class="form-label">Цена</label>
         <input asp-for="Price" class="form-control" />
     </div>
     <input type="hidden" asp-for="RepairId" />
-    <button type="submit" class="btn btn-primary" asp-controller="Repair">Update</button>
+    <button type="submit" class="btn btn-primary" asp-controller="Repair">Обнови</button>
 </form>

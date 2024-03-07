@@ -1,19 +1,19 @@
 ﻿@model RepairRequestPageViewModel
 
-<h2>Repair Request List</h2>
+<h2>Моите заявки</h2>
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
             <tr>
-                <th>Repair Request Type</th>
-                <th>Date</th>
-                <th>Repair Type</th>
-                <th>Phone Model</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Rating</th>
-                <th>Price</th>
-                <th>Actions</th>
+                <th>Тип заявка</th>
+                <th>Дата</th>
+                <th>Вид поправка</th>
+                <th>Телефон</th>
+                <th>Описание</th>
+                <th>Статус</th>
+                <th>Рейтинг</th>
+                <th>Цена</th>
+                <th>Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -29,10 +29,10 @@
                     <td>@repairRequest.Rating</td>
                     <td>@repairRequest.Price</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Редактирай</a>
                         <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post"
-                              onsubmit="return confirm('Are you sure you want to delete this Repair Request?');">
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                              onsubmit="return confirm('Сигурни ли сте, че искате да изтриете тази заявка?');">
+                            <button type="submit" class="btn btn-danger">Изтрии</button>
                         </form>
                     </td>
                 </tr>
@@ -41,4 +41,4 @@
     </table>
 </div>
 
-<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Add New Repair Request</a>
+<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Добави нова заявка</a>

@@ -1,58 +1,58 @@
 ﻿@using System.Security.Claims;
 @model RepairRequestCreateViewModel
 
-<h2>Add RepairRequest</h2>
+<h2>Добавяне на заявка</h2>
 <form asp-action="Create" id="repairRequestForm">
     <div class="mb-3">
-        <label for="ClientEmail" class="form-label">Client Email</label>
+        <label for="ClientEmail" class="form-label">Имейл на клиента</label>
         <input type="email" id="ClientEmail" asp-for="ClientEmail" class="form-control" required />
-        <div class="invalid-feedback">Please provide a valid email address.</div>
+        <div class="invalid-feedback">Моля въведете валиден имейл.</div>
     </div>
     <div class="mb-3">
-        <label for="PhoneModelId" class="form-label">Phone Model</label>
+        <label for="PhoneModelId" class="form-label">Телефон</label>
         <select id="PhoneModelId" asp-for="PhoneModelId" class="form-control" required>
-            <option value="">Select Type</option>
+            <option value="">Избери телефон</option>
             @foreach (var value in Model.PhoneModels)
             {
                 <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>
             }
         </select>
-        <div class="invalid-feedback">Please select a phone model.</div>
+        <div class="invalid-feedback">Моля, изберете телефон.</div>
     </div>
     <div class="mb-3">
-        <label for="RepairType" class="form-label">Repair Type</label>
+        <label for="RepairType" class="form-label">Вид ремонт</label>
         <select id="RepairType" asp-for="RepairType" class="form-control" required>
-            <option value="">Select Type</option>
+            <option value="">Изберете ремонт</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
             {
                 <option value="@value">@value</option>
             }
         </select>
-        <div class="invalid-feedback">Please select a repair type.</div>
+        <div class="invalid-feedback">Моля, изберете вид ремонт.</div>
     </div>
     <div class="mb-3">
-        <label for="RepairRequestType" class="form-label">Repair Request Type</label>
+        <label for="RepairRequestType" class="form-label">Тип ремонт</label>
         <select id="RepairRequestType" asp-for="RepairRequestType" class="form-control" required>
-            <option value="">Select Type</option>
+            <option value="">Избдерете тип</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
                 <option value="@value">@value</option>
             }
         </select>
-        <div class="invalid-feedback">Please select a repair request type.</div>
+        <div class="invalid-feedback">Моля, изберете тип ремонт.</div>
     </div>
     <div class="mb-3">
-        <label for="Description" class="form-label">Description</label>
+        <label for="Description" class="form-label">Описание</label>
         <input type="text" id="Description" asp-for="Descripion" class="form-control" />
     </div>
     <div class="mb-3">
-        <label for="Price" class="form-label">Price</label>
+        <label for="Price" class="form-label">Цена</label>
         <input type="text" id="Price" asp-for="Price" class="form-control" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Please provide a valid price." />
-        <div class="invalid-feedback">Please provide a valid price.</div>
+        <div class="invalid-feedback">Моля въведете цена.</div>
     </div>
 
     <input type="hidden" asp-for="WorkerId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
-    <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Create</button>
+    <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Създай</button>
 </form>
 
 @section scripts {

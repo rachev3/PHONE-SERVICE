@@ -1,7 +1,7 @@
 ﻿@model PhoneModelViewModel
 
 <div class="container mt-5">
-    <h2>Edit Phone Model</h2>
+    <h2>Редактиране на модел</h2>
     <form asp-action="Edit" method="post">
         <div class="mb-3">
             <label for="Name" class="form-label">Name</label>
@@ -19,6 +19,6 @@
             <span asp-validation-for="PhoneBrand" class="text-danger"></span>
         </div>
         <input type="hidden" asp-for="PhoneModelId" />
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Обнови</button>
     </form>
 </div>

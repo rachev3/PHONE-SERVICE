@@ -3,21 +3,21 @@
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="text-center">
-            <h2>Repairs</h2>
+            <h2>Ремонти</h2>
         </div>
         @if (User.IsInRole("Admin"))
         {
-            <a asp-action="Create" asp-controller="Repair" class="btn btn-success">Add New Repair</a>
+            <a asp-action="Create" asp-controller="Repair" class="btn btn-success">Добави нов ремонт</a>
         }
         <table class=" table table-bordered table-hover mt-3" style="background-color: #f4f4f4; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
             <thead class="thead-light">
                 <tr class="text-center">
-                    <th>RepairType</th>
-                    <th>PhoneModel</th>
-                    <th>Price</th>
+                    <th>Вид ремонт</th>
+                    <th>Телефон</th>
+                    <th>Цена</th>
                     @if (User.IsInRole("Admin"))
                     {
-                        <th>Actions</th>
+                        <th>Действия</th>
                     }
                 </tr>
             </thead>
@@ -31,10 +31,10 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <td class="d-flex">
-                                <a asp-action="Edit" asp-route-id="@repair.RepairId" class="btn btn-primary me-2">Edit</a>
+                                <a asp-action="Edit" asp-route-id="@repair.RepairId" class="btn btn-primary me-2">Редактирай</a>
                                 <form asp-action="DeleteConfirm" asp-route-id="@repair.RepairId" method="post"
-                                      onsubmit="return confirm('Are you sure you want to delete this movie?');">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                      onsubmit="return confirm('Сигурни ли сте, че искате да изтриете този ремонт?');">
+                                    <button type="submit" class="btn btn-danger">Изтрии</button>
                                 </form>
                             </td>
                         }

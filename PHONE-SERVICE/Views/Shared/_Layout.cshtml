@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PHONE_SERVICE</title>
+    <title>@ViewData["Title"] - ТЕЛЕФОНЕН СЕРВИЗ</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PHONE_SERVICE.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        /* Add custom styles for the logo */
+        /* Добавете персонализирани стилове за логото */
         .navbar-brand img {
-            max-height: 70px; /* Adjust the height as needed */
-            width: auto; /* Allow the width to adjust according to the height */
+            max-height: 70px; /* Настройте височината според нуждите */
+            width: auto; /* Позволете на ширината да се настройва според височината */
         }
 
         .navbar-nav .nav-link {
@@ -20,8 +20,8 @@
             flex-direction: column;
             align-items: center;
             gap: 0.25rem;
-            padding: 0.75rem 1.5rem; /* Adjust padding */
-            font-size: 1.1rem; /* Adjust font size */
+            padding: 0.75rem 1.5rem; /* Настройте отстъпа */
+            font-size: 1.1rem; /* Настройте размера на шрифта */
         }
     </style>
 </head>
@@ -30,7 +30,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/Phone Service.png" alt="Your Logo" />
+                    <img src="~/images/Phone Service.png" alt="Вашето Лого" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                                 <i class="fas fa-home fa-lg"></i>
-                                Home
+                                Начало
                             </a>
                         </li>
 
@@ -49,7 +49,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="RepairRequest" asp-action="Index">
-                                    <i class="fas fa-tools fa-lg"></i> Repair Requests
+                                    <i class="fas fa-tools fa-lg"></i> Заявки
                                 </a>
                             </li>
                         }
@@ -57,14 +57,14 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="PhoneModel" asp-action="Index">
                                 <i class="fas fa-mobile-alt fa-lg"></i>
-                                Phone Models
+                                Модели Телефони
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Repair" asp-action="Index">
                                 <i class="fas fa-wrench fa-lg"></i>
-                                Repairs
+                                Ремонти
                             </a>
                         </li>
 
@@ -72,7 +72,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="RepairRequest" asp-action="WorkerRepairRequests">
-                                    <i class="fas fa-cogs fa-lg"></i> Worker Repair Requests
+                                    <i class="fas fa-cogs fa-lg"></i> Моите заявки
                                 </a>
                             </li>
                         }
@@ -80,7 +80,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="RepairRequest" asp-action="ClientRepairRequests">
-                                    <i class="fas fa-wrench fa-lg"></i> Client Repair Requests
+                                    <i class="fas fa-wrench fa-lg"></i> Моите заявки
                                 </a>
                             </li>
                         }
@@ -88,7 +88,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="User" asp-action="Dashboard">
-                                    <i class="fas fa-tachometer-alt fa-lg"></i> Admin Dashboard
+                                    <i class="fas fa-tachometer-alt fa-lg"></i> Административен Панел
                                 </a>
                             </li>
                         }
@@ -111,11 +111,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <p class="text-center text-lg-start">&copy; 2023 - PHONE_SERVICE</p>
+                    <p class="text-center text-lg-start">&copy; 2023 - ТЕЛЕФОНЕН СЕРВИЗ</p>
                 </div>
                 <div class="col-lg-6">
                     <ul class="list-inline list-unstyled text-center text-lg-end">
-                        <li class="list-inline-item"><a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none text-muted">Privacy</a></li>
+                        <li class="list-inline-item"><a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none text-muted">Поверителност</a></li>
                     </ul>
                 </div>
             </div>

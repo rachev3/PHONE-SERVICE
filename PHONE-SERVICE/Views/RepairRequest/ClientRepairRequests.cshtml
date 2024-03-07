@@ -1,17 +1,17 @@
 ﻿@model RepairRequestPageViewModel
 
-<h2>RepairRequest List</h2>
+<h2>Моитие заявки</h2>
 <table class="table">
     <thead>
         <tr>
-            <th>RepairRequestType</th>
-            <th>Date</th>
-            <th>RepairType</th>
-            <th>PhoneModel</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Rating</th>
-            <th>Price</th>
+            <th>Вид заявка</th>
+            <th>Дата</th>
+            <th>Вид ремонт</th>
+            <th>Телефон</th>
+            <th>Описание</th>
+            <th>Статус</th>
+            <th>Рейтинг</th>
+            <th>Цена</th>
         </tr>
     </thead>
     <tbody>
@@ -30,12 +30,12 @@
                 {
                     <td>
                         <div class="rating" id="rating-container-@repairRequest.RepairRequestId">
-                            <button class="btn btn-primary" onclick="toggleRatingScale(@repairRequest.RepairRequestId)">Rate</button>
+                            <button class="btn btn-primary" onclick="toggleRatingScale(@repairRequest.RepairRequestId)">Оцени</button>
                             <div class="rating-scale" style="display:none;">
                                 <input type="range" min="1" max="10" value="@repairRequest.Rating" class="slider" id="rating-@repairRequest.RepairRequestId" oninput="updateRatingValue(@repairRequest.RepairRequestId)" />
                                 <span id="rating-value-@repairRequest.RepairRequestId">@repairRequest.Rating</span>
                                 <!-- The form for submitting the rating -->
-                                <button type="button" class="btn btn-success" onclick="submitRating(@repairRequest.RepairRequestId)">Submit</button>
+                                <button type="button" class="btn btn-success" onclick="submitRating(@repairRequest.RepairRequestId)">Приложи</button>
                             </div>
                         </div>
                     </td>

@@ -2,16 +2,16 @@
 
 <form method="post" action="@Url.Action("Index")" class="mb-3">
     <div class="input-group">
-        <input type="text" name="Username" asp-for="Username" class="form-control" placeholder="Username">
-        <input type="text" name="FirstName" asp-for="FirstName" class="form-control" placeholder="First Name">
-        <input type="text" name="LastName" asp-for="LastName" class="form-control" placeholder="Last Name">
+        <input type="text" name="Username" asp-for="Username" class="form-control" placeholder="Потребителско име">
+        <input type="text" name="FirstName" asp-for="FirstName" class="form-control" placeholder="Първо име">
+        <input type="text" name="LastName" asp-for="LastName" class="form-control" placeholder="Фамилно име">
         <select name="Role" asp-for="Role" class="form-select">
-            <option value="">Select Role</option>
-            <option value="Worker" selected="@(Model.Role == "Worker")">Worker</option>
-            <option value="Client" selected="@(Model.Role == "Client")">Client</option>
+            <option value="">Изберете Роля</option>
+            <option value="Worker" selected="@(Model.Role == "Worker")">Работник</option>
+            <option value="Client" selected="@(Model.Role == "Client")">Клиент</option>
         </select>
-        <button type="submit" class="btn btn-primary">Search</button>
-        <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+        <button type="submit" class="btn btn-primary">Търсене</button>
+        <button type="button" class="btn btn-secondary" onclick="clearForm()">Изчисти</button>
     </div>
 </form>
 

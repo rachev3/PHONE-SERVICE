@@ -4,7 +4,7 @@
     var userId = claims[0].Value;
 }
 <div class="container mt-5">
-    <h2>RepairRequest List</h2>
+    <h2>Всички завки</h2>
     <div class="row">
         <div class="col-md-6">
             <partial name="_SearchBar" />
@@ -13,22 +13,22 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>RepairRequestType</th>
+                <th>Тип заявка</th>
                 <th>
                     <a href="@Url.Action("SortByDate", new { sortOrder = ViewData["DateSortParam"], status = Model.Status, type = Model.RequestType })" class="text-decoration-none text-dark">
-                        Date
+                        Дата
                         <i class="fas fa-sort"></i>
                     </a>
                 </th>
-                <th>RepairType</th>
-                <th>PhoneModel</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Rating</th>
-                <th>Price</th>
+                <th>Вид поправка</th>
+                <th>Телефон</th>
+                <th>Описание</th>
+                <th>Статус</th>
+                <th>Рейтинг</th>
+                <th>Цена</th>
                 @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
                 {
-                    <th>Actions</th>
+                    <th>Действия</th>
                 }
             </tr>
         </thead>
@@ -49,9 +49,9 @@
                     {
                         <td>
                             <div class="btn-group" role="group">
-                                <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary me-2">Edit</a>
-                                <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post" onsubmit="return confirm('Are you sure you want to delete this Repair Request?');" class="me-2">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary me-2">Редактирай</a>
+                                <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете тази заявка?');" class="me-2">
+                                    <button type="submit" class="btn btn-danger">Изтрии</button>
                                 </form>
                             </div>
                         </td>
@@ -63,6 +63,6 @@
     </table>
     @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
     {
-        <a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Add New RepairRequest</a>
+        <a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Добави нова заявка</a>
     }
 </div>
