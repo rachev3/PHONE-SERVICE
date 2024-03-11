@@ -31,8 +31,7 @@ namespace PHONE_SERVICE.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
-            //if there are 0 phoneModels???
-            var phoneModels = phoneModelService.GetAll().Result;
+            var phoneModels = await phoneModelService.GetAll();
             var viewModel = new RepairCreateViewModel(phoneModels);
             
             return View("Create", viewModel);
@@ -76,14 +75,11 @@ namespace PHONE_SERVICE.Controllers
 
             try
             {
-                // Update the existing Repair entity in the database
                 await repairService.Update(repair.RepairId,dto);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // Handle the case where an error occurs during the update
-                // Log the exception, display an error message, etc.
                 ModelState.AddModelError("", "An error occurred while saving the changes: " + ex.Message);
                 return View(repair);
             }

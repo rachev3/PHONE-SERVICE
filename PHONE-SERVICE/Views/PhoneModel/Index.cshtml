@@ -35,7 +35,7 @@
 
                             <a href="@Url.Action("Edit", new { id = phoneModel.PhoneModelId })" class="btn btn-primary me-2">Редакция</a>
                             <form asp-action="DeleteConfirm" asp-route-id="@phoneModel.PhoneModelId" method="post" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете този модел?');">
-                                <button type="submit" class="btn btn-danger">Изтрии</button>
+                                <button type="submit" class="btn btn-danger">Изтрий</button>
                             </form>
 
                         </td>

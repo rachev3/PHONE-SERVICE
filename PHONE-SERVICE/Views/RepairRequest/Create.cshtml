@@ -57,7 +57,6 @@
 
 @section scripts {
     <script>
-        // Prevent form submission if any inputs are invalid
         document.getElementById('repairRequestForm').addEventListener('submit', function (event) {
             if (!this.checkValidity()) {
                 event.preventDefault();

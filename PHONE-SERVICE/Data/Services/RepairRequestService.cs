@@ -27,7 +27,7 @@ namespace PHONE_SERVICE.Data.Services
 
         public async Task<List<RepairRequest>> GetAll()
         {
-            var result = await dbContext.RepairRequests.Include(x=>x.PhoneModel).ToListAsync();
+            var result = await dbContext.RepairRequests.Include(x=>x.PhoneModel).Include(x=>x.ClientUser).ToListAsync();
             return result;
         }
 

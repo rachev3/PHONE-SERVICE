@@ -91,7 +91,7 @@ namespace PHONE_SERVICE.Controllers
 
         public IActionResult Register()
         {
-            return View();
+            return View();                                        
         }
         [HttpPost]
 

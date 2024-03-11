@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Enums;
 using PHONE_SERVICE.Data.Services;
-using PHONE_SERVICE.Models.RepairModels;
 using PHONE_SERVICE.Models.RepairRequestModels;
 using System.Security.Claims;
 
@@ -121,8 +120,8 @@ namespace PHONE_SERVICE.Controllers
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Create()
         {
-            //if there are 0 phoneModels???
-            var phoneModels = phoneModelService.GetAll().Result;
+
+            var phoneModels = await phoneModelService.GetAll();
             var viewModel = new RepairRequestCreateViewModel(phoneModels);
 
             return View("Create", viewModel);
@@ -197,7 +196,7 @@ namespace PHONE_SERVICE.Controllers
             var dto = await repairRequestService.GetById(repairRequest.RepairRequestId);
 
             dto.RepairRequestType = repairRequest.RepairRequestType;
-            //dto.DateOnly = repairRequest.DateOnly;
+            dto.Date = repairRequest.Date;
             dto.RepairType = repairRequest.RepairType;
             dto.PhoneModel = repairRequest.PhoneModel;
             dto.Description = repairRequest.Descripion;

@@ -25,7 +25,7 @@
                 <td>@repairRequest.Descripion</td>
                 <td>@repairRequest.Status</td>
                 <td class="jsRating">@repairRequest.Rating</td>
-                <td>@repairRequest.Price</td>
+                <td>@(Math.Round(repairRequest.Price, 2).ToString("F2")) лв.</td>
                 @if (repairRequest.Status == PHONE_SERVICE.Data.Enums.RepairRequestStatus.Completed)
                 {
                     <td>
@@ -34,7 +34,6 @@
                             <div class="rating-scale" style="display:none;">
                                 <input type="range" min="1" max="10" value="@repairRequest.Rating" class="slider" id="rating-@repairRequest.RepairRequestId" oninput="updateRatingValue(@repairRequest.RepairRequestId)" />
                                 <span id="rating-value-@repairRequest.RepairRequestId">@repairRequest.Rating</span>
-                                <!-- The form for submitting the rating -->
                                 <button type="button" class="btn btn-success" onclick="submitRating(@repairRequest.RepairRequestId)">Приложи</button>
                             </div>
                         </div>
@@ -60,21 +59,17 @@
         function submitRating(repairRequestId) {
             var ratingElement = document.getElementById('rating-' + repairRequestId);
             var ratingValue = ratingElement.value;
-            // You can now send the ratingValue to the controller using Ajax
             $.ajax({
                 type: 'POST',
                 url: '/RepairRequest/Rate',
                 data: { repairRequestId: repairRequestId, rating: ratingValue },
                 success: function (result) {
-                    // Optionally, handle the success result
                     console.log('Rating submitted successfully');
-                    // Hide the rating scale after submitting
                     toggleRatingScale(repairRequestId);
                     var columnRating = ratingElement.closest('tr').querySelector('.jsRating');
                     columnRating.innerHTML = ratingValue;
                 },
                 error: function (error) {
-                    // Optionally, handle the error
                     console.error('Error submitting rating', error);
                 }
             });

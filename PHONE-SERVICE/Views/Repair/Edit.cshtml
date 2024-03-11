@@ -16,7 +16,7 @@
     <div class="form-group">
         <label asp-for="PhoneModelId" class="control-label">Телефон</label>
         <select asp-for="PhoneModelId" class="form-control">
-            @* <option value="">Select Type</option> *@
+            <option value="">Избери тип</option>
             @foreach (var value in Model.PhoneModels)
             {
                 <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>

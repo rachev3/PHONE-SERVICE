@@ -27,7 +27,7 @@
                     <td>@repairRequest.Descripion</td>
                     <td>@repairRequest.Status</td>
                     <td>@repairRequest.Rating</td>
-                    <td>@repairRequest.Price</td>
+                    <td>@(Math.Round(repairRequest.Price, 2).ToString("F2")) лв.</td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@repairRequest.RepairRequestId" class="btn btn-primary">Редактирай</a>
                         <form asp-action="DeleteConfirm" asp-route-id="@repairRequest.RepairRequestId" method="post"
