@@ -10,6 +10,10 @@
             <partial name="_SearchBar" />
         </div>
     </div>
+    @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
+    {
+        <a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Добави нова заявка</a>
+    }
     <table class="table table-hover">
         <thead>
             <tr>
@@ -43,13 +47,13 @@
                     <td>
                         @{
                             string description = repairRequest.Descripion ?? ""; // If repairRequest.Description is null, use an empty string
-                            if (!string.IsNullOrEmpty(description) && description.Length > 50) // Check if the description is not null or empty before accessing its Length property
+                            if (!string.IsNullOrEmpty(description) && description.Length > 30) // Check if the description is not null or empty before accessing its Length property
                             {
-                                description = description.Substring(0, 50) + "...";
+                                description = description.Substring(0, 30) + "...";
                             }
                         }
                         @description
-                        @if (!string.IsNullOrEmpty(repairRequest.Descripion) && repairRequest.Descripion.Length > 50)
+                        @if (!string.IsNullOrEmpty(repairRequest.Descripion) && repairRequest.Descripion.Length > 30)
                         {
                             <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#descriptionModal_@repairRequest.RepairRequestId">
                                 Read more
@@ -95,8 +99,5 @@
             }
         </tbody>
     </table>
-    @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
-    {
-        <a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Добави нова заявка</a>
-    }
+
 </div>

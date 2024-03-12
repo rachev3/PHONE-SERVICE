@@ -1,6 +1,7 @@
 ﻿@model RepairRequestPageViewModel
 
 <h2>Моите заявки</h2>
+<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Добави нова заявка</a>
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead class="thead-light">
@@ -24,7 +25,40 @@
                     <td>@repairRequest.Date</td>
                     <td>@repairRequest.RepairType</td>
                     <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
-                    <td>@repairRequest.Descripion</td>
+                    <td>
+                        @{
+                            string description = repairRequest.Descripion ?? ""; // If repairRequest.Description is null, use an empty string
+                            if (!string.IsNullOrEmpty(description) && description.Length > 30) // Check if the description is not null or empty before accessing its Length property
+                            {
+                                description = description.Substring(0, 30) + "...";
+                            }
+                        }
+                        @description
+                        @if (!string.IsNullOrEmpty(repairRequest.Descripion) && repairRequest.Descripion.Length > 30)
+                        {
+                            <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#descriptionModal_@repairRequest.RepairRequestId">
+                                Read more
+                            </button>
+                            <!-- Modal -->
+                            <!-- Modal -->
+                            <div class="modal fade" id="descriptionModal_@repairRequest.RepairRequestId" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="word-wrap: break-word;">
+                                            <!-- Apply word-wrap: break-word; to break text into new lines -->
+                                            @repairRequest.Descripion
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        }
+                    </td>
                     <td>@repairRequest.Status</td>
                     <td>@repairRequest.Rating</td>
                     <td>@(Math.Round(repairRequest.Price, 2).ToString("F2")) лв.</td>
@@ -41,4 +75,4 @@
     </table>
 </div>
 
-<a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Добави нова заявка</a>
+

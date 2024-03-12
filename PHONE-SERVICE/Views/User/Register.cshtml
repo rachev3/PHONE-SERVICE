@@ -46,37 +46,39 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group mt-2">
                             <label asp-for="FirstName" class="control-label"></label>
-                            <input asp-for="FirstName" class="form-control" />
+                            <input asp-for="FirstName" class="form-control" required />
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
                             <label asp-for="LastName" class="control-label"></label>
-                            <input asp-for="LastName" class="form-control" />
+                            <input asp-for="LastName" class="form-control" required />
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
                             <label asp-for="UserName" class="control-label"></label>
-                            <input asp-for="UserName" class="form-control" />
+                            <input asp-for="UserName" class="form-control" required />
                             <span asp-validation-for="UserName" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
                             <label asp-for="Address" class="control-label"></label>
-                            <input asp-for="Address" class="form-control" />
+                            <input asp-for="Address" class="form-control" required />
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
                             <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" />
+                            <input type="email" asp-for="Email" class="form-control" required />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
                             <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" />
+                            <input type="password" asp-for="Password" class="form-control" required
+                                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                   title="Password must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters." />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
                             <label asp-for="ConfirmPassword" class="control-label"></label>
-                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <input type="password" asp-for="ConfirmPassword" class="form-control" required />
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-3">
