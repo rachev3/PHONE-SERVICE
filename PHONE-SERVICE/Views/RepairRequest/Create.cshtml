@@ -2,12 +2,15 @@
 @model RepairRequestCreateViewModel
 
 <h2>Добавяне на заявка</h2>
+
 <form asp-action="Create" id="repairRequestForm">
+
     <div class="mb-3">
         <label for="ClientEmail" class="form-label">Имейл на клиента</label>
         <input type="email" id="ClientEmail" asp-for="ClientEmail" class="form-control" required />
         <div class="invalid-feedback">Моля въведете валиден имейл.</div>
     </div>
+
     <div class="mb-3">
         <label for="PhoneModelId" class="form-label">Телефон</label>
         <select id="PhoneModelId" asp-for="PhoneModelId" class="form-control" required>
@@ -19,17 +22,15 @@
         </select>
         <div class="invalid-feedback">Моля, изберете телефон.</div>
     </div>
+
     <div class="mb-3">
         <label for="RepairType" class="form-label">Вид ремонт</label>
         <select id="RepairType" asp-for="RepairType" class="form-control" required>
             <option value="">Изберете ремонт</option>
-            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
-            {
-                <option value="@value">@value</option>
-            }
         </select>
         <div class="invalid-feedback">Моля, изберете вид ремонт.</div>
     </div>
+
     <div class="mb-3">
         <label for="RepairRequestType" class="form-label">Тип ремонт</label>
         <select id="RepairRequestType" asp-for="RepairRequestType" class="form-control" required>
@@ -41,29 +42,101 @@
         </select>
         <div class="invalid-feedback">Моля, изберете тип ремонт.</div>
     </div>
+
     <div class="mb-3">
-        <label for="Description" class="form-label">Описание</label>
-        <input type="text" id="Description" asp-for="Descripion" class="form-control" />
+        <label for="Description" class="form-label">Опсиние</label>
+        <input asp-for="Descripion" class="form-control" id="Description">
     </div>
+
     <div class="mb-3">
         <label for="Price" class="form-label">Цена</label>
-        <input type="text" id="Price" asp-for="Price" class="form-control" required pattern="[0-9]+(\.[0-9]{1,2})?" title="Please provide a valid price." />
+        <input type="text" id="Price" asp-for="Price" class="form-control" readonly />
         <div class="invalid-feedback">Моля въведете цена.</div>
     </div>
 
     <input type="hidden" asp-for="WorkerId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
     <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Създай</button>
+
 </form>
 
-@* @section scripts {
-    <script>
-        document.getElementById('repairRequestForm').addEventListener('submit', function (event) {
-            if (!this.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            this.classList.add('was-validated');
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () { // функция, която кара кода да се изпълни само след като целия HTML документ е зареден от браузъра
+
+        $('#PhoneModelId').change(function () {
+            var formData = $('#repairRequestForm').serialize(); // сериализира информацията от формата до Json
+            $.ajax({
+                url: '/RepairRequest/GetRepairTypes',     // къде изпраща данните (контролер - RepairRequest, метод - GetRepairTypes)
+                type: 'POST',     // вид заявка
+                data: formData,   // кои данни да изпрати на контролера
+                success: function (data) {    // при правилно изпълнение на завката и минаване през контролера - изпълнява тази функция, като "data" са данните пратени от контролера
+                    $('#RepairType').empty(); // изчиства ако е имало предишни
+                    data.$values.forEach(function (item) {   // за всеки запис в "data" се изпълнява функция
+                        var repairTypeString = getRepairTypeString(item.repairType); // взема вида поправка (функцията по долу преобразува данните към правилния формат)
+                        var price = item.price;  // взима цената
+
+                                                    
+                        $('#RepairType').append(   // създава опция в падащото меню със съответнаiта стойностi
+                            $('<option>')
+                                .text(repairTypeString)
+                                .attr('value', item.repairType)
+                                .attr('data-price', item.price)
+                        );
+                    });
+                    updatePrice();
+                   
+                },
+                error: function (xhr, status, error) {   // засича ако има грешка при заявката
+                    console.error('AJAX Error:', error);
+                    alert('An error occurred while processing your request. Please try again later.');
+                }
+            });
         });
-    </script>
-}
- *@
+
+        function getRepairTypeString(enumValue) {
+            switch (enumValue) {
+                case 1:
+                    return "Display Change";
+                case 2:
+                    return "Battery Change";
+                case 3:
+                    return "Decode";
+                case 4:
+                    return "Protector Change";
+                default:
+                    return "Unknown";
+            }
+        }
+
+        function updatePrice() {     // обновява цената
+            var repairTypePrice = $('#RepairType option:selected').data('price');
+            var repairRequestType = $('#RepairRequestType').val();
+            var price = repairTypePrice;
+            if (repairRequestType === 'Fast') {
+                price *= 1.5;
+            } else if (repairRequestType === 'Express') {
+                price *= 2;
+            }
+            $('#Price').val(price);
+        }
+
+        // функциите по долу се изпълняват при промяна на съответния елемент с определено id
+
+        $('#PhoneModelId').change(function () {
+            updatePrice();
+        });
+
+        $('#RepairType').change(function () {
+            updatePrice();
+        });
+
+        $('#RepairRequestType').change(function () {
+            updatePrice();
+        });
+
+
+    });
+</script>
+
+
+

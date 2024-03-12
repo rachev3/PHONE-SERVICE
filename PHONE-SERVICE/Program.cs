@@ -4,6 +4,7 @@ using PHONE_SERVICE.Data;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Seeders;
 using PHONE_SERVICE.Data.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,14 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
+
+
+
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
+
 
 builder.Services.AddScoped<IPhoneModelService, PhoneModelService>();
 builder.Services.AddScoped<IRepairRequestService, RepairRequestService>();

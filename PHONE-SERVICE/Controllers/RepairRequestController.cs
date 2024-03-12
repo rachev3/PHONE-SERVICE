@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using PHONE_SERVICE.Data.DTO;
 using PHONE_SERVICE.Data.Enums;
 using PHONE_SERVICE.Data.Services;
@@ -14,13 +15,15 @@ namespace PHONE_SERVICE.Controllers
     {
         private readonly IRepairRequestService repairRequestService;
         private readonly IPhoneModelService phoneModelService;
+        private readonly IRepairService repairService;
         private readonly UserManager<User> userManager;
 
-        public RepairRequestController(IRepairRequestService repairRequestService, IPhoneModelService phoneModelService, UserManager<User> userManager)
+        public RepairRequestController(IRepairRequestService repairRequestService, IPhoneModelService phoneModelService, UserManager<User> userManager, IRepairService repairService)
         {
             this.repairRequestService = repairRequestService;
             this.phoneModelService = phoneModelService;
             this.userManager = userManager;
+            this.repairService = repairService;
         }
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Index()
@@ -151,14 +154,6 @@ namespace PHONE_SERVICE.Controllers
 
             repairRequest.Status = RepairRequestStatus.PendingConfirmation;
 
-            if (repairRequest.RepairRequestType == RepairRequestType.Fast)
-            {
-                repairRequest.Price *= 1.5;
-            }
-            else if (repairRequest.RepairRequestType == RepairRequestType.Express)
-            {
-                repairRequest.Price *= 2;
-            }
 
             repairRequest.Date = DateTime.Now;
 
@@ -173,6 +168,34 @@ namespace PHONE_SERVICE.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> GetRepairTypes(RepairRequestCreateViewModel model)
+        {
+            var repairTypes = await repairService.GetAll();
+            var repairs = repairTypes.Where(x => x.PhoneModelId == model.PhoneModelId)
+                                     .Select(group => new
+                                     {
+                                         group.RepairType,
+                                         group.Price
+                                     })
+                                     .ToList();
+
+            return Json(repairs);
+        }
+
+
+        //public async Task<IActionResult> GetPrice(int phoneModelId, string repairType)
+        //{
+        //    // Here, you fetch the price based on the phone model id and repair type
+        //    var repairs = await repairService.GetAll();  // Get price based on phoneModelId and repairType
+        //    var price = repairs.FirstOrDefault(x => x.PhoneModelId == phoneModelId && x.RepairType.ToString() == repairType).Price;
+
+        //    return Json(price);
+        //}
+
+
+
         [HttpGet]
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Edit(int id)
