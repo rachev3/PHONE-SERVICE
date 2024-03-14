@@ -1,5 +1,9 @@
 ﻿@model RepairRequestPageViewModel
 
+@{
+    ViewData["Title"] = "Заявки на работника";
+}
+
 <h2>Моите заявки</h2>
 <a asp-action="Create" asp-controller="RepairRequest" class="btn btn-success">Добави нова заявка</a>
 <div class="table-responsive">

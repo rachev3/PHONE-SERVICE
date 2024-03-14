@@ -1,6 +1,10 @@
 ﻿@using System.Security.Claims;
 @model RepairRequestCreateViewModel
 
+@{
+    ViewData["Title"] = "Създаване на заявка";
+}
+
 <h2>Добавяне на заявка</h2>
 
 <form asp-action="Create" id="repairRequestForm">
@@ -79,8 +83,8 @@
                         $('#RepairType').append(   // създава опция в падащото меню със съответнаiта стойностi
                             $('<option>')
                                 .text(repairTypeString)
-                                .attr('value', item.repairType)
-                                .attr('data-price', item.price)
+                                .attr('value', item.repairType)  //задава стойността на опцията 
+                                .attr('data-price', item.price)  //прави допълнително поле в опциията което да отговаря на цената на ремонта
                         );
                     });
                     updatePrice();
@@ -109,8 +113,8 @@
         }
 
         function updatePrice() {     // обновява цената
-            var repairTypePrice = $('#RepairType option:selected').data('price');
-            var repairRequestType = $('#RepairRequestType').val();
+            var repairTypePrice = $('#RepairType option:selected').data('price');  // взема селектиранта опция и слага цената(зададена в променлива data) в променлива
+            var repairRequestType = $('#RepairRequestType').val();  // взема вида на заявката(стандртна, бърза, експресна) и според нея изчислява цената
             var price = repairTypePrice;
             if (repairRequestType === 'Fast') {
                 price *= 1.5;
@@ -121,7 +125,7 @@
         }
 
         // функциите по долу се изпълняват при промяна на съответния елемент с определено id
-
+      
         $('#PhoneModelId').change(function () {
             updatePrice();
         });

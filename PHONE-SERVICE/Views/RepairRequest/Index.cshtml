@@ -1,8 +1,12 @@
 ﻿@model RepairRequestPageViewModel
+
 @{
+    ViewData["Title"] = "Заявки";
+
     var claims = User.Claims.ToList();
     var userId = claims[0].Value;
 }
+
 <div class="container mt-5">
     <h2>Всички завки</h2>
     <div class="row">

@@ -34,6 +34,11 @@ namespace PHONE_SERVICE.Controllers
             return View(viewModel);
         }
 
+        public async Task<IActionResult> ClientMakeRequest()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

@@ -1,0 +1,103 @@
+﻿@model ClientMakeRequestViewModel
+
+@{
+    ViewData["Title"] = "Направи заявка";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="sticky-top pt-3">
+                <h5>Steps</h5>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action" id="choosePhoneStep">Step 1: Choosing Phone Model</a>
+                    <a href="#" class="list-group-item list-group-item-action" id="repairTypeStep">Step 2: Type of Repair</a>
+                    <a href="#" class="list-group-item list-group-item-action" id="deliveryStep">Step 3: Delivery Options</a>
+                    <a href="#" class="list-group-item list-group-item-action" id="priceContactStep">Step 4: Price and Contact Information</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="content">
+                <!-- Step 1: Choosing Phone Model -->
+                <div id="choosePhoneContent">
+                    <!-- Phone Model Form -->
+                    <h2>Step 1: Choosing Phone Model</h2>
+                    <form>
+                        <div class="mb-3">
+                            <label for="phoneBrand" class="form-label">Phone Brand</label>
+                            <select class="form-select" id="phoneBrand">
+                                <!-- Options for phone brand -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneModel" class="form-label">Phone Model</label>
+                            <select class="form-select" id="phoneModel" disabled>
+                                <!-- Options for phone model -->
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="nextToRepair">Next</button>
+                    </form>
+                </div>
+
+                <!-- Step 2: Type of Repair -->
+                <div id="repairTypeContent">
+                    <!-- Repair Type Options -->
+                    <h2>Step 2: Type of Repair</h2>
+                    <!-- Example: Cards with repair options -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Repair Option 1</h5>
+                            <p class="card-text">Description of repair option 1.</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="repairOption1">
+                                <label class="form-check-label" for="repairOption1">
+                                    Select Repair Option 1
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more cards for other repair options -->
+                    <button type="button" class="btn btn-primary" id="nextToDelivery">Next</button>
+                </div>
+
+                <!-- Step 3: Delivery Options -->
+                <div id="deliveryContent">
+                    <!-- Delivery Options -->
+                    <h2>Step 3: Delivery Options</h2>
+                    <!-- Example: Cards with delivery options -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delivery Option 1</h5>
+                            <p class="card-text">Description of delivery option 1.</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="deliveryOption1">
+                                <label class="form-check-label" for="deliveryOption1">
+                                    Select Delivery Option 1
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more cards for other delivery options -->
+                    <button type="button" class="btn btn-primary" id="nextToPrice">Next</button>
+                </div>
+
+                <!-- Step 4: Price and Contact Information -->
+                <div id="priceContactContent">
+                    <!-- Price Field and Contact Information -->
+                    <h2>Step 4: Price and Contact Information</h2>
+                    <!-- Example: Price input field and contact details -->
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="price" placeholder="Enter price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactInfo" class="form-label">Contact Information</label>
+                        <input type="text" class="form-control" id="contactInfo" placeholder="Enter contact information">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="submitForm">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
