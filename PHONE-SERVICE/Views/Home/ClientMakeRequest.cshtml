@@ -1,103 +1,312 @@
 ﻿@model ClientMakeRequestViewModel
 
-@{
-    ViewData["Title"] = "Направи заявка";
-}
+<style>
+    .step {
+        display: none;
+    }
+
+        .step.active {
+            display: block;
+        }
+
+    .step-bar {
+        margin-bottom: 20px;
+    }
+
+        .step-bar .step-item {
+            cursor: pointer;
+            margin-right: 10px;
+            padding: 8px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+            .step-bar .step-item.active {
+                background-color: #007bff;
+                color: #fff;
+                border-color: #007bff;
+            }
+
+            .step-bar .step-item.disabled {
+                opacity: 0.6;
+                pointer-events: none;
+            }
+
+    img {
+        max-height: 120px;
+        width: auto;
+    }
+</style>
 
 <div class="container">
     <div class="row">
+
         <div class="col-md-3">
             <div class="sticky-top pt-3">
-                <h5>Steps</h5>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action" id="choosePhoneStep">Step 1: Choosing Phone Model</a>
-                    <a href="#" class="list-group-item list-group-item-action" id="repairTypeStep">Step 2: Type of Repair</a>
-                    <a href="#" class="list-group-item list-group-item-action" id="deliveryStep">Step 3: Delivery Options</a>
-                    <a href="#" class="list-group-item list-group-item-action" id="priceContactStep">Step 4: Price and Contact Information</a>
+                <h5>Стъпки</h5>
+                <div class="list-group step-bar">
+                    <a href="#" class="list-group-item list-group-item-action step-item active" data-step="1">Стъпка 1: Изберете телефон</a>
+                    <a href="#" class="list-group-item list-group-item-action step-item" data-step="2">Стъпка 2: Ремонт</a>
+                    <a href="#" class="list-group-item list-group-item-action step-item" data-step="3">Стъпка 3: Тип ремонт</a>
+                    <a href="#" class="list-group-item list-group-item-action step-item" data-step="4">Стъпка 4: Информация</a>
+                </div>
+                <div class="mt-3">
+                    <h5>Сума:</h5>
+                    <p class="price"></p>
                 </div>
             </div>
         </div>
+
         <div class="col-md-9">
-            <div class="content">
-                <!-- Step 1: Choosing Phone Model -->
-                <div id="choosePhoneContent">
-                    <!-- Phone Model Form -->
-                    <h2>Step 1: Choosing Phone Model</h2>
-                    <form>
-                        <div class="mb-3">
-                            <label for="phoneBrand" class="form-label">Phone Brand</label>
-                            <select class="form-select" id="phoneBrand">
-                                <!-- Options for phone brand -->
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="phoneModel" class="form-label">Phone Model</label>
-                            <select class="form-select" id="phoneModel" disabled>
-                                <!-- Options for phone model -->
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-primary" id="nextToRepair">Next</button>
-                    </form>
-                </div>
+            <div class="row">
+                <div class="col-md-12">
 
-                <!-- Step 2: Type of Repair -->
-                <div id="repairTypeContent">
-                    <!-- Repair Type Options -->
-                    <h2>Step 2: Type of Repair</h2>
-                    <!-- Example: Cards with repair options -->
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Repair Option 1</h5>
-                            <p class="card-text">Description of repair option 1.</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="repairOption1">
-                                <label class="form-check-label" for="repairOption1">
-                                    Select Repair Option 1
-                                </label>
+                    <div id="step-content1" class="step active">
+                        <form id="choosePhone">
+                            <div id="choosePhoneContent" class="container">
+                                <h2>Избор на телефон</h2>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="PhoneBrand" class="form-label">Марка на телефона</label>
+                                        <select asp-for="Phone.PhoneBrand" class="form-select" id="PhoneBrand" required>
+                                            <option value="">Изберете марка</option>
+                                            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.PhoneBrand)))
+                                            {
+                                                <option value="@value">@value</option>
+                                            }
+                                        </select>
+                                        <div class="invalid-feedback">Моля изберете марка на телефон.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phoneModel" class="form-label">Модел на телефона</label>
+                                        <select asp-for="Phone.Name" class="form-select" id="phoneModel">
+                                            <option value="">Изберете телефон</option>
+                                        </select>
+                                        <div class="invalid-feedback">Моля изберете модел на телефона.</div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <!-- Add more cards for other repair options -->
-                    <button type="button" class="btn btn-primary" id="nextToDelivery">Next</button>
-                </div>
 
-                <!-- Step 3: Delivery Options -->
-                <div id="deliveryContent">
-                    <!-- Delivery Options -->
-                    <h2>Step 3: Delivery Options</h2>
-                    <!-- Example: Cards with delivery options -->
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Delivery Option 1</h5>
-                            <p class="card-text">Description of delivery option 1.</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="deliveryOption1">
-                                <label class="form-check-label" for="deliveryOption1">
-                                    Select Delivery Option 1
-                                </label>
+                    <div id="step-content2" class="step">
+                        <div id="chooseRepair" class="container">
+                            <h2>Избор на ремонт</h2>
+
+                            <div class="row">
                             </div>
+
                         </div>
                     </div>
-                    <!-- Add more cards for other delivery options -->
-                    <button type="button" class="btn btn-primary" id="nextToPrice">Next</button>
-                </div>
 
-                <!-- Step 4: Price and Contact Information -->
-                <div id="priceContactContent">
-                    <!-- Price Field and Contact Information -->
-                    <h2>Step 4: Price and Contact Information</h2>
-                    <!-- Example: Price input field and contact details -->
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
-                        <input type="text" class="form-control" id="price" placeholder="Enter price">
+                    <div id="step-content3" class="step">
+                        <div id="chooseTypeRepairReq" class="container">
+                            <h2>Избор на тип ремонт</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="RepairRequestType" class="form-label">Тип на ремонта</label>
+                                    <select id="RepairRequestType" asp-for="RepairRequestType" class="form-control" required>
+                                        <option value="">Изберете тип</option>
+                                        @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
+                                        {
+
+                                            <option value="@value">@value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="contactInfo" class="form-label">Contact Information</label>
-                        <input type="text" class="form-control" id="contactInfo" placeholder="Enter contact information">
+
+                    <div id="step-content4" class="step">
+                        <div id="priceContactStep" class="container">
+                            <h2>Стъпка 4: Информация</h2>
+                            <p>Очакваната цена за Вашата заявка за ремонт е: <span class="price">0</span></p>
+                            <p>Готови ли сте да направите заявка? Свържете се с наш служител.</p>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-primary" id="submitForm">Submit</button>
+
                 </div>
             </div>
         </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-secondary previous">Предишна</button>
+                    <button class="btn btn-primary next">Следваща</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var stepButtons = $('.step-item');
+        var steps = $('.step');
+        var currentStepIndex = 0;
+
+        function showStep(stepIndex) {
+            steps.removeClass('active');
+            steps.eq(stepIndex).addClass('active');
+
+            stepButtons.removeClass('active');
+            stepButtons.eq(stepIndex).addClass('active');
+
+            stepButtons.removeClass('disabled');
+            stepButtons.slice(stepIndex + 1).addClass('disabled');
+        }
+
+        showStep(currentStepIndex);
+
+        function goToStep(stepIndex) {
+            if (stepIndex >= 0 && stepIndex < steps.length) {
+                currentStepIndex = stepIndex;
+                showStep(currentStepIndex);
+            }
+        }
+
+        $('.next').click(function () {
+            goToStep(currentStepIndex + 1);
+
+            if (currentStepIndex == 1) {
+                console.log('opaa')
+                var formData = $('#choosePhone').serialize();
+                $.ajax({
+                    url: '/Home/GetRepairTypes',
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+
+                        $('#chooseRepair .row').empty();
+
+                        data.$values.forEach(function (item) {
+                            var repairTypeString = getRepairTypeString(item.repairType);
+                            var price = item.price;
+
+                            var radioBtn = $('<input>')
+                                .attr('type', 'radio')
+                                .attr('name', 'repairType')
+                                .attr('value', item.repairType)
+                                .attr('data-price', item.price);
+
+                            var image = $('<img>')
+                                .attr('src', '/images/' + repairTypeString + '.png')
+                                .addClass('img-fluid')
+                                .attr('alt', repairTypeString);
+
+                            var par = $('<p>')
+                                .text(repairTypeString);
+
+                            var label = $('<label>')
+                                .addClass('d-block')
+                                .append(radioBtn)
+                                .append(image);
+
+                            var colDiv = $('<div>')
+                                .addClass('col-md-6')
+                                .append(label)
+                                .append(par);
+
+                            $('#chooseRepair .row').append(colDiv);
+                        });
+
+                        updatePrice();
+                    },
+                    error: function (xhr, status, error) {
+                        $('#chooseRepair .row').empty();
+                        console.error('AJAX Error:', error);
+                        alert('Възникна грешка при обработката на Вашата заявка. Моля опитайте отново по-късно.');
+                    }
+                });
+            }
+        });
+
+        $('.previous').click(function () {
+            goToStep(currentStepIndex - 1);
+        });
+
+        stepButtons.click(function () {
+            var index = $(this).index();
+            if (!$(this).hasClass('disabled')) {
+                goToStep(index);
+            }
+        });
+
+        $('#PhoneBrand').change(function () {
+            var phonebrand = $(this).val();
+            $.ajax({
+                url: '/Home/GetPhoneModels',
+                type: 'POST',
+                data: { phonebrand: phonebrand },
+                success: function (data) {
+                    $('#phoneModel').empty();
+                    $('#phoneModel').append(
+                        $('<option>')
+                            .text('Изберете телефон')
+                            .attr('value', '')
+                    );
+                    data.$values.forEach(function (item) {
+                        $('#phoneModel').append(
+                            $('<option>')
+                                .text(item)
+                                .attr('value', item)
+                        );
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                    alert('Възникна грешка при обработката на Вашата заявка. Моля опитайте отново по-късно.');
+                }
+            });
+        });
+
+        function getRepairTypeString(enumValue) {
+            switch (enumValue) {
+                case 1:
+                    return "Display Change";
+                case 2:
+                    return "Battery Change";
+                case 3:
+                    return "Decode";
+                case 4:
+                    return "Protector Change";
+                default:
+                    return "Unknown";
+            }
+        }
+
+        function updatePrice() {
+
+            var repairTypePrice = $('input[name="repairType"]:checked').data('price');
+            var repairRequestType = $('#RepairRequestType').val();
+            var price = repairTypePrice;
+
+            if (repairRequestType === 'Fast') {
+                price *= 1.5;
+            } else if (repairRequestType === 'Express') {
+                price *= 2;
+            }
+
+            $('.price').text(price);
+            $('#updatedPrice').val(price);
+        }
+
+        $(document).on('click', 'input[name="repairType"]', function () {
+            updatePrice();
+        });
+
+
+        $('#RepairRequestType').change(function () {
+            updatePrice();
+        });
+
+    });
+
+</script>

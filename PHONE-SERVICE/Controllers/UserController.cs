@@ -27,8 +27,6 @@ namespace PHONE_SERVICE.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        //need optimization
-        //When searching capital latters matter
         public async Task<IActionResult> Index(UserPageViewModel model)
         {
             var users = await userManager.Users.ToListAsync();

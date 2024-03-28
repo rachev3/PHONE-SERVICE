@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PHONE_SERVICE.Data.DTO;
+using PHONE_SERVICE.Models.HomeModels;
 
 namespace PHONE_SERVICE.Data.Services
 {
@@ -29,6 +30,11 @@ namespace PHONE_SERVICE.Data.Services
             return result;
         }
 
+        public async Task<PhoneModel> GetByBrandName(ClientMakeRequestViewModel model)
+        {
+            var result = await dbContext.PhoneModels.Include(x=>x.Repairs).FirstOrDefaultAsync(x => x.PhoneBrand == model.Phone.PhoneBrand && x.Name == model.Phone.Name);
+            return result;
+        }
         public async Task<PhoneModel> GetById(int id)
         {
             var result = await dbContext.PhoneModels.FirstOrDefaultAsync(pm=>pm.PhoneModelId==id);

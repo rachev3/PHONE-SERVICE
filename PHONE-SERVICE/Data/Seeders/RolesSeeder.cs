@@ -13,7 +13,6 @@ namespace PHONE_SERVICE.Data.Seeders
 
             foreach (var roleName in roleNames)
             {
-                // Create the roles and seed them to the database
                 var roleExist = await roleManager.RoleExistsAsync(roleName);
 
                 if (!roleExist)

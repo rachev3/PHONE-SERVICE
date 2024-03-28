@@ -184,18 +184,6 @@ namespace PHONE_SERVICE.Controllers
             return Json(repairs);
         }
 
-
-        //public async Task<IActionResult> GetPrice(int phoneModelId, string repairType)
-        //{
-        //    // Here, you fetch the price based on the phone model id and repair type
-        //    var repairs = await repairService.GetAll();  // Get price based on phoneModelId and repairType
-        //    var price = repairs.FirstOrDefault(x => x.PhoneModelId == phoneModelId && x.RepairType.ToString() == repairType).Price;
-
-        //    return Json(price);
-        //}
-
-
-
         [HttpGet]
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Edit(int id)

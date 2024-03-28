@@ -1,4 +1,5 @@
-﻿@model RepairRequestPageViewModel
+﻿@using PHONE_SERVICE.Data.Enums;
+@model RepairRequestPageViewModel
 
 @{
     ViewData["Title"] = "Заявки";
@@ -6,6 +7,12 @@
     var claims = User.Claims.ToList();
     var userId = claims[0].Value;
 }
+<style>
+    img {
+        max-height: 25px;
+        width: auto;
+    }
+</style>
 
 <div class="container mt-5">
     <h2>Всички завки</h2>
@@ -44,14 +51,31 @@
             @foreach (var repairRequest in Model.RepairRequests)
             {
                 <tr>
-                    <td>@repairRequest.RepairRequestType</td>
+                    <td>
+                        @if(repairRequest.RepairRequestType == RepairRequestType.Standard)
+                        {
+                            <img src="~/images/standard.png" class="img-fluid" alt="Standard Delivery">
+
+                        }
+                        else if(repairRequest.RepairRequestType == RepairRequestType.Fast)
+                        {
+                            <img src="~/images/fast.png" class="img-fluid" alt="Standard Delivery">
+
+                        }
+                        else if(repairRequest.RepairRequestType == RepairRequestType.Express)
+                        {
+                            <img src="~/images/express.png" class="img-fluid" alt="Standard Delivery">
+
+                        }
+                        @repairRequest.RepairRequestType
+                    </td>
                     <td>@repairRequest.Date.ToShortDateString()</td>
                     <td>@repairRequest.RepairType</td>
                     <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
                     <td>
                         @{
-                            string description = repairRequest.Descripion ?? ""; // If repairRequest.Description is null, use an empty string
-                            if (!string.IsNullOrEmpty(description) && description.Length > 30) // Check if the description is not null or empty before accessing its Length property
+                            string description = repairRequest.Descripion ?? ""; 
+                            if (!string.IsNullOrEmpty(description) && description.Length > 30) 
                             {
                                 description = description.Substring(0, 30) + "...";
                             }
@@ -62,8 +86,6 @@
                             <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#descriptionModal_@repairRequest.RepairRequestId">
                                 Read more
                             </button>
-                            <!-- Modal -->
-                            <!-- Modal -->
                             <div class="modal fade" id="descriptionModal_@repairRequest.RepairRequestId" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
@@ -72,7 +94,6 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body" style="word-wrap: break-word;">
-                                            <!-- Apply word-wrap: break-word; to break text into new lines -->
                                             @repairRequest.Descripion
                                         </div>
                                     </div>

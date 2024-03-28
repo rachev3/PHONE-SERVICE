@@ -28,8 +28,6 @@ namespace PHONE_SERVICE.Data.DTO
         public int RepairRequestId { get; set; }
         public RepairRequestType RepairRequestType { get; set; }
 
-        //User
-
         public DateTime Date { get; set; }
     
         public RepairType RepairType { get; set; }

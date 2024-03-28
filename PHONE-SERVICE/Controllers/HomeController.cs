@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PHONE_SERVICE.Data.Enums;
 using PHONE_SERVICE.Data.Services;
 using PHONE_SERVICE.Models;
 using PHONE_SERVICE.Models.HomeModels;
@@ -11,12 +12,14 @@ namespace PHONE_SERVICE.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IRepairService repairService;
         private readonly IRepairRequestService repairRequestService;
+        private readonly IPhoneModelService phoneModelService;
 
-        public HomeController(ILogger<HomeController> logger, IRepairService repairService, IRepairRequestService repairRequestService)
+        public HomeController(ILogger<HomeController> logger, IRepairService repairService, IRepairRequestService repairRequestService, IPhoneModelService phoneModelService)
         {
             _logger = logger;
             this.repairService = repairService;
             this.repairRequestService = repairRequestService;
+            this.phoneModelService = phoneModelService;
         }
 
         public async Task<IActionResult> Index()
@@ -26,19 +29,46 @@ namespace PHONE_SERVICE.Controllers
             requests =  requests.OrderByDescending(x=>x.Rating).ToList();
 
             HomePageViewModel viewModel = new HomePageViewModel();
-            viewModel.BatteryChange = data.Where(x=>x.RepairType == Data.Enums.RepairType.BatteryChange).ToList();
-            viewModel.ProtectorChange = data.Where(x => x.RepairType == Data.Enums.RepairType.ProtectorChange).ToList();
-            viewModel.DisplayChange = data.Where(x => x.RepairType == Data.Enums.RepairType.DisplayChange).ToList();
-            viewModel.Decode = data.Where(x => x.RepairType == Data.Enums.RepairType.Decode).ToList();
+            viewModel.BatteryChange = data.Where(x=>x.RepairType == RepairType.BatteryChange).ToList();
+            viewModel.ProtectorChange = data.Where(x => x.RepairType == RepairType.ProtectorChange).ToList();
+            viewModel.DisplayChange = data.Where(x => x.RepairType == RepairType.DisplayChange).ToList();
+            viewModel.Decode = data.Where(x => x.RepairType == RepairType.Decode).ToList();
             viewModel.Rated = requests;
+
             return View(viewModel);
         }
 
         public async Task<IActionResult> ClientMakeRequest()
         {
-            return View();
+            ClientMakeRequestViewModel viewModel = new ClientMakeRequestViewModel();
+            return View(viewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GetPhoneModels(string phonebrand)
+        {
+            var phoneModels = await phoneModelService.GetAll();
+            phoneModels = phoneModels.Where(x => x.PhoneBrand.ToString() == phonebrand).ToList();
+            var names = phoneModels.Select(phoneModels => phoneModels.Name).ToList();   
+
+            return Json(names);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetRepairTypes(ClientMakeRequestViewModel model)
+        {
+            var phoneModel = await phoneModelService.GetByBrandName(model);
+            var repairTypes = await repairService.GetAll();
+            var repairs = repairTypes.Where(x => x.PhoneModelId == phoneModel.PhoneModelId)
+                                     .Select(group => new
+                                     {
+                                         group.RepairType,
+                                         group.Price
+                                     })
+                                     .ToList();
+
+            return Json(repairs);
+        }
         public IActionResult Privacy()
         {
             return View();
