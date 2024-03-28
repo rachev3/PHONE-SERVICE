@@ -45,39 +45,39 @@
                     <form method="post" asp-action="Register">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group mt-2">
-                            <label asp-for="FirstName" class="control-label"></label>
+                            <label asp-for="FirstName" class="control-label">Първо име</label>
                             <input asp-for="FirstName" class="form-control" required />
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
-                            <label asp-for="LastName" class="control-label"></label>
+                            <label asp-for="LastName" class="control-label">Фамилия</label>
                             <input asp-for="LastName" class="form-control" required />
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
-                            <label asp-for="UserName" class="control-label"></label>
+                            <label asp-for="UserName" class="control-label">Потребителско име</label>
                             <input asp-for="UserName" class="form-control" required />
                             <span asp-validation-for="UserName" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
-                            <label asp-for="Address" class="control-label"></label>
+                            <label asp-for="Address" class="control-label">Адрес</label>
                             <input asp-for="Address" class="form-control" required />
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
-                            <label asp-for="Email" class="control-label"></label>
+                            <label asp-for="Email" class="control-label">Email</label>
                             <input type="email" asp-for="Email" class="form-control" required />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
-                            <label asp-for="Password" class="control-label"></label>
+                            <label asp-for="Password" class="control-label">Парола</label>
                             <input type="password" asp-for="Password" class="form-control" required
                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                    title="Password must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters." />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group mt-2">
-                            <label asp-for="ConfirmPassword" class="control-label"></label>
+                            <label asp-for="ConfirmPassword" class="control-label">Потвърди парола</label>
                             <input type="password" asp-for="ConfirmPassword" class="form-control" required />
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>

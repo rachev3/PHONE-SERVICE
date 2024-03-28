@@ -8,11 +8,11 @@
     <h2>Редактиране на модел</h2>
     <form asp-action="Edit" method="post">
         <div class="mb-3">
-            <label for="Name" class="form-label">Name</label>
+            <label for="Name" class="form-label">Име</label>
             <input type="text" id="Name" name="Name" asp-for="Name" class="form-control" />
         </div>
         <div class="mb-3">
-            <label for="PhoneBrand" class="form-label">Phone Brand</label>
+            <label for="PhoneBrand" class="form-label">Марка телефон</label>
             <select id="PhoneBrand" name="PhoneBrand" asp-for="PhoneBrand" class="form-select">
                 <option value="">Select Brand</option>
                 @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.PhoneBrand)))

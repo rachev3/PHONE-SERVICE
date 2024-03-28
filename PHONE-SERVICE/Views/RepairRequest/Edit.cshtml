@@ -7,8 +7,8 @@
 <h2>Редакция на завка</h2>
 <form asp-action="Edit">
     <div class="mb-2">
-        <label asp-for="RepairRequestType" class="form-label">Тип завка</label>
-        <select asp-for="RepairRequestType" class="form-select">
+        <label asp-for="RepairRequestType" class="form-label">Тип заявка</label>
+        <select asp-for="RepairRequestType" class="form-select" disabled>
             <option value="">Избери тип</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
@@ -19,11 +19,11 @@
     </div>
     <div class="mb-2">
         <label asp-for="Date" class="form-label">Дата</label>
-        <input asp-for="Date" class="form-control" />
+        <input asp-for="Date" class="form-control" disabled />
     </div>
     <div class="mb-2">
         <label asp-for="RepairType" class="form-label">Вид поправка</label>
-        <select asp-for="RepairType" class="form-select">
+        <select asp-for="RepairType" class="form-select" disabled>
             <option value="">Избери вид</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
             {
@@ -34,7 +34,7 @@
     </div>
     <div class="mb-2">
         <label asp-for="PhoneModelId" class="form-label">Телефон</label>
-        <select asp-for="PhoneModelId" class="form-select">
+        <select asp-for="PhoneModelId" class="form-select" disabled>
             <option value="">Избери телефон</option>
             @foreach (var value in Model.PhoneModels)
             {
@@ -60,11 +60,11 @@
     </div>
     <div class="mb-2">
         <label asp-for="Rating" class="form-label">Рейтинг</label>
-        <input asp-for="Rating" class="form-control" />
+        <input asp-for="Rating" class="form-control" disabled />
     </div>
     <div class="mb-2">
         <label asp-for="Price" class="form-label">Цена</label>
-        <input asp-for="Price" class="form-control" />
+        <input asp-for="Price" class="form-control" disabled />
     </div>
     <input type="hidden" asp-for="RepairRequestId" />
     <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Редактирай</button>
