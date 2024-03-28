@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PHONE_SERVICE.Data.Enums;
 using PHONE_SERVICE.Data.Services;
 using PHONE_SERVICE.Models;
@@ -38,6 +39,7 @@ namespace PHONE_SERVICE.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin, Worker, Client")]
         public async Task<IActionResult> ClientMakeRequest()
         {
             ClientMakeRequestViewModel viewModel = new ClientMakeRequestViewModel();

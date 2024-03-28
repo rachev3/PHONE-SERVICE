@@ -34,20 +34,23 @@
                     @if (repairRequest.RepairRequestType == RepairRequestType.Standard)
                     {
                         <img src="~/images/standard.png" class="img-fluid" alt="Standard Delivery">
+                        <text> (14 дни)</text>
 
                     }
                     else if (repairRequest.RepairRequestType == RepairRequestType.Fast)
                     {
-                        <img src="~/images/fast.png" class="img-fluid" alt="Standard Delivery">
+                        <img src="~/images/fast.png" class="img-fluid" alt="Fast Delivery">
+                        <text> (7 дни)</text>
 
                     }
                     else if (repairRequest.RepairRequestType == RepairRequestType.Express)
                     {
-                        <img src="~/images/express.png" class="img-fluid" alt="Standard Delivery">
+                        <img src="~/images/express.png" class="img-fluid" alt="Express Delivery">
+                        <text> (3 дни)</text>
 
                     }
                     @repairRequest.RepairRequestType</td>
-                <td>@repairRequest.Date</td>
+                <td>@repairRequest.Date.ToShortDateString()</td>
                 <td>@repairRequest.RepairType</td>
                 <td>@repairRequest.PhoneModel.PhoneBrand @repairRequest.PhoneModel.Name</td>
                 <td>

@@ -41,7 +41,20 @@
             <option value="">Избдерете тип</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
             {
-                <option value="@value">@value</option>
+                var displayValue = value.ToString();
+                if (displayValue == PHONE_SERVICE.Data.Enums.RepairRequestType.Standard.ToString())
+                {
+                    displayValue += " (14 дни)";
+                }
+                else if (displayValue == PHONE_SERVICE.Data.Enums.RepairRequestType.Fast.ToString())
+                {
+                    displayValue += " (7 дни)";
+                }
+                else
+                {
+                    displayValue += " (3 дни)";
+                }
+                <option value="@value">@displayValue</option>
             }
         </select>
         <div class="invalid-feedback">Моля, изберете тип ремонт.</div>
@@ -74,7 +87,16 @@
                 type: 'POST',     // вид заявка
                 data: formData,   // кои данни да изпрати на контролера
                 success: function (data) {    // при правилно изпълнение на завката и минаване през контролера - изпълнява тази функция, като "data" са данните пратени от контролера
-                    $('#RepairType').empty(); // изчиства ако е имало предишни
+
+                    $('#RepairType').empty();
+
+                    $('#RepairType').append(   
+                        $('<option>')
+                            .text('Избери ремонт')
+                           
+                          
+                    );
+
                     data.$values.forEach(function (item) {   // за всеки запис в "data" се изпълнява функция
                         var repairTypeString = getRepairTypeString(item.repairType); // взема вида поправка (функцията по долу преобразува данните към правилния формат)
                         var price = item.price;  // взима цената

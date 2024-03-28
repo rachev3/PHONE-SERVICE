@@ -12,8 +12,8 @@ using PHONE_SERVICE.Data;
 namespace PHONE_SERVICE.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231221073602_SecondInitial")]
-    partial class SecondInitial
+    [Migration("20240328114835_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

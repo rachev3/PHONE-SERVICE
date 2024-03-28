@@ -44,13 +44,15 @@
                                 Начало
                             </a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ClientMakeRequest">
-                                <i class="fas fa-home fa-lg"></i>
-                                Направи заявка
-                            </a>
-                        </li>
+                        @if (User.IsInRole("Client"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ClientMakeRequest">
+                                    <i class="fas fa-plus fa-lg"></i>
+                                    Направи заявка
+                                </a>
+                            </li>
+                        }
 
                         @if (User.IsInRole("Worker") || User.IsInRole("Admin"))
                         {
@@ -87,7 +89,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="RepairRequest" asp-action="ClientRepairRequests">
-                                    <i class="fas fa-wrench fa-lg"></i> Моите заявки
+                                    <i class="fas fa-cogs fa-lg"></i> Моите заявки
                                 </a>
                             </li>
                         }

@@ -8,40 +8,20 @@
 <form asp-action="Edit">
     <div class="mb-2">
         <label asp-for="RepairRequestType" class="form-label">Тип заявка</label>
-        <select asp-for="RepairRequestType" class="form-select" disabled>
-            <option value="">Избери тип</option>
-            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
-            {
-                <option value="@value">@value</option>
-            }
-        </select>
-        <span asp-validation-for="RepairRequestType" class="text-danger"></span>
+        <input asp-for="RepairRequestType" class="form-control" readonly />
     </div>
     <div class="mb-2">
         <label asp-for="Date" class="form-label">Дата</label>
-        <input asp-for="Date" class="form-control" disabled />
+        <input asp-for="Date" class="form-control" readonly value="@Model.Date.ToString("yyyy-MM-dd HH:mm")" />
     </div>
     <div class="mb-2">
         <label asp-for="RepairType" class="form-label">Вид поправка</label>
-        <select asp-for="RepairType" class="form-select" disabled>
-            <option value="">Избери вид</option>
-            @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
-            {
-                <option value="@value">@value</option>
-            }
-        </select>
-        <span asp-validation-for="RepairType" class="text-danger"></span>
+        <input asp-for="RepairType" class="form-control" readonly />
     </div>
+
     <div class="mb-2">
-        <label asp-for="PhoneModelId" class="form-label">Телефон</label>
-        <select asp-for="PhoneModelId" class="form-select" disabled>
-            <option value="">Избери телефон</option>
-            @foreach (var value in Model.PhoneModels)
-            {
-                <option value="@value.PhoneModelId">@value.PhoneBrand @value.Name</option>
-            }
-        </select>
-        <span asp-validation-for="PhoneModelId" class="text-danger"></span>
+        <label asp-for="PhoneModel" class="form-label">Телефон</label>
+        <input value="@Model.PhoneModel.PhoneBrand @Model.PhoneModel.Name" asp-for="PhoneModel" class="form-control" readonly />
     </div>
     <div class="mb-2">
         <label asp-for="Descripion" class="form-label">Описание</label>
@@ -60,12 +40,13 @@
     </div>
     <div class="mb-2">
         <label asp-for="Rating" class="form-label">Рейтинг</label>
-        <input asp-for="Rating" class="form-control" disabled />
+        <input asp-for="Rating" class="form-control" readonly />
     </div>
     <div class="mb-2">
         <label asp-for="Price" class="form-label">Цена</label>
-        <input asp-for="Price" class="form-control" disabled />
+        <input asp-for="Price" class="form-control" readonly value="@Model.Price.ToString("0.00")" />
     </div>
     <input type="hidden" asp-for="RepairRequestId" />
+    <input type="hidden" asp-for="PhoneModelId" />
     <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Редактирай</button>
 </form>

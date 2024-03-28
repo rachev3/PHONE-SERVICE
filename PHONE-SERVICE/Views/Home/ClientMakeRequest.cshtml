@@ -52,7 +52,7 @@
                 </div>
                 <div class="mt-3">
                     <h5>Сума:</h5>
-                    <p class="price"></p>
+                    <p class="price">0 лв.</p>
                 </div>
             </div>
         </div>
@@ -110,8 +110,20 @@
                                         <option value="">Изберете тип</option>
                                         @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestType)))
                                         {
-
-                                            <option value="@value">@value</option>
+                                            var displayValue = value.ToString();
+                                            if (displayValue == PHONE_SERVICE.Data.Enums.RepairRequestType.Standard.ToString())
+                                            {
+                                                displayValue += " (14 дни)";
+                                            }
+                                            else if (displayValue == PHONE_SERVICE.Data.Enums.RepairRequestType.Fast.ToString())
+                                            {
+                                                displayValue += " (7 дни)";
+                                            }
+                                            else
+                                            {
+                                                displayValue += " (3 дни)";
+                                            }
+                                            <option value="@value">@displayValue</option>
                                         }
                                     </select>
                                 </div>
@@ -285,15 +297,18 @@
         function updatePrice() {    // обновява цената
             var repairTypePrice = $('input[name="repairType"]:checked').data('price');
             var repairRequestType = $('#RepairRequestType').val();
-            var price = repairTypePrice;
+            var price = 0;
+            if (repairTypePrice != null) {
 
+                price = repairTypePrice;
+            }
             if (repairRequestType === 'Fast') {
                 price *= 1.5;
             } else if (repairRequestType === 'Express') {
                 price *= 2;
             }
 
-            $('.price').text(price);
+            $('.price').text(price + " лв.");
             $('#updatedPrice').val(price);
         }
 
