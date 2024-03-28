@@ -7,11 +7,11 @@ namespace PHONE_SERVICE.Data.Seeders
     {
         public static async Task Initialize(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            string[] roleNames = { "Admin", "Worker", "Client" };
+            string[] roleNames = { "Admin", "Worker", "Client" };   // списък с роли
 
             IdentityResult roleResult;
 
-            foreach (var roleName in roleNames)
+            foreach (var roleName in roleNames)      // добавя ролите ако не съществуват
             {
                 var roleExist = await roleManager.RoleExistsAsync(roleName);
 
@@ -57,6 +57,8 @@ namespace PHONE_SERVICE.Data.Seeders
             var worker = await userManager.FindByEmailAsync("worker@example.com");
             var client = await userManager.FindByEmailAsync("client@example.com");
             
+            //проверява дали съшествуват такива потребители и ги създава ако не съществуват
+
             if (admin == null)
             {
                 var createPowerUser = await userManager.CreateAsync(adminUser, adminPassword);

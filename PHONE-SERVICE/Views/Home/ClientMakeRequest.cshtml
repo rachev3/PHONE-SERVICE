@@ -146,13 +146,13 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function () {     // функция, която кара кода да се изпълни само след като целия HTML документ е зареден от браузъра
 
         var stepButtons = $('.step-item');
         var steps = $('.step');
         var currentStepIndex = 0;
 
-        function showStep(stepIndex) {
+        function showStep(stepIndex) {  // взема сегашната стъпа и я прави активна и другите неактивни
             steps.removeClass('active');
             steps.eq(stepIndex).addClass('active');
 
@@ -165,18 +165,17 @@
 
         showStep(currentStepIndex);
 
-        function goToStep(stepIndex) {
+        function goToStep(stepIndex) {  // премества на следващата стъпка
             if (stepIndex >= 0 && stepIndex < steps.length) {
                 currentStepIndex = stepIndex;
                 showStep(currentStepIndex);
             }
         }
 
-        $('.next').click(function () {
+        $('.next').click(function () {   // при натискане на бутона следваща
             goToStep(currentStepIndex + 1);
 
-            if (currentStepIndex == 1) {
-                console.log('opaa')
+            if (currentStepIndex == 1) {  // ако е стъпка 2
                 var formData = $('#choosePhone').serialize();
                 $.ajax({
                     url: '/Home/GetRepairTypes',
@@ -212,7 +211,7 @@
                             var colDiv = $('<div>')
                                 .addClass('col-md-6')
                                 .append(label)
-                                .append(par);
+                                .append(par)
 
                             $('#chooseRepair .row').append(colDiv);
                         });
@@ -228,11 +227,11 @@
             }
         });
 
-        $('.previous').click(function () {
+        $('.previous').click(function () {   // при натискане на бутон предишна
             goToStep(currentStepIndex - 1);
         });
 
-        stepButtons.click(function () {
+        stepButtons.click(function () {   // при натискане на менюто
             var index = $(this).index();
             if (!$(this).hasClass('disabled')) {
                 goToStep(index);
@@ -282,8 +281,8 @@
             }
         }
 
-        function updatePrice() {
 
+        function updatePrice() {    // обновява цената
             var repairTypePrice = $('input[name="repairType"]:checked').data('price');
             var repairRequestType = $('#RepairRequestType').val();
             var price = repairTypePrice;
@@ -298,11 +297,12 @@
             $('#updatedPrice').val(price);
         }
 
+        // Обновяване на цената при избор на типа ремонт
         $(document).on('click', 'input[name="repairType"]', function () {
             updatePrice();
         });
 
-
+        // Обновяване на цената при промяна на типа на заявката
         $('#RepairRequestType').change(function () {
             updatePrice();
         });
