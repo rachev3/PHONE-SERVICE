@@ -6,14 +6,15 @@
 
 <div class="container mt-5">
     <h2>Редактиране на модел</h2>
-    <form asp-action="Edit" method="post">
+    <form asp-action="Edit" method="post" class="needs-validation" novalidate>
         <div class="mb-3">
             <label for="Name" class="form-label">Име</label>
-            <input type="text" id="Name" name="Name" asp-for="Name" class="form-control" />
+            <input type="text" id="Name" name="Name" asp-for="Name" required class="form-control" />
+            <div class="invalid-feedback">Моля въведете име.</div>
         </div>
         <div class="mb-3">
             <label for="PhoneBrand" class="form-label">Марка телефон</label>
-            <select id="PhoneBrand" name="PhoneBrand" asp-for="PhoneBrand" class="form-select">
+            <select id="PhoneBrand" name="PhoneBrand" asp-for="PhoneBrand" required class="form-select">
                 <option value="">Select Brand</option>
                 @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.PhoneBrand)))
                 {
@@ -21,8 +22,32 @@
                 }
             </select>
             <span asp-validation-for="PhoneBrand" class="text-danger"></span>
+            <div class="invalid-feedback">Моля изберете марка телефон.</div>
         </div>
         <input type="hidden" asp-for="PhoneModelId" />
         <button type="submit" class="btn btn-primary">Обнови</button>
     </form>
 </div>
+
+@section Scripts {
+    <script>
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}
+

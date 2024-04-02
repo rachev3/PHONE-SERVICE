@@ -6,10 +6,10 @@
 
 <div class="container mt-5">
     <h2>Редакция на ремонт</h2>
-    <form asp-action="Edit" method="post">
+    <form asp-action="Edit" method="post" class="needs-validation" novalidate>
         <div class="mb-3">
             <label asp-for="RepairType" class="form-label">Вид поправка</label>
-            <select asp-for="RepairType" class="form-select">
+            <select asp-for="RepairType" required class="form-select">
                 <option value="">Изберете вид</option>
                 @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairType)))
                 {
@@ -17,10 +17,11 @@
                 }
             </select>
             <span asp-validation-for="RepairType" class="text-danger"></span>
+            <div class="invalid-feedback">Моля изберете вид на ремонта.</div>
         </div>
         <div class="mb-3">
             <label asp-for="PhoneModelId" class="form-label">Телефон</label>
-            <select asp-for="PhoneModelId" class="form-select">
+            <select asp-for="PhoneModelId" required class="form-select">
                 <option value="">Избери телефон</option>
                 @foreach (var value in Model.PhoneModels)
                 {
@@ -28,12 +29,49 @@
                 }
             </select>
             <span asp-validation-for="PhoneModelId" class="text-danger"></span>
+            <div class="invalid-feedback">Моля изберете модел.</div>
         </div>
         <div class="mb-3">
             <label asp-for="Price" class="form-label">Цена</label>
-            <input asp-for="Price" class="form-control" />
+            <input asp-for="Price" class="form-control" inputmode="numeric" pattern="[0-9]*" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+            <div class="invalid-feedback">Моля добавете цена (само числа се приемат).</div>
         </div>
         <input type="hidden" asp-for="RepairId" />
         <button type="submit" class="btn btn-primary">Обнови</button>
     </form>
 </div>
+
+@section Scripts {
+    <script>
+
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                            
+                            // Display custom validation feedback for Price input
+                            var priceInput = form.querySelector('#Price');
+                            var priceFeedback = form.querySelector('#PriceFeedback');
+                            if (priceInput && priceFeedback) {
+                                if (priceInput.validity.valueMissing) {
+                                    priceFeedback.textContent = 'Моля добавете цена.';
+                                } else if (priceInput.validity.patternMismatch) {
+                                    priceFeedback.textContent = 'Моля въведете само числова стойност.';
+                                }
+                            }
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}

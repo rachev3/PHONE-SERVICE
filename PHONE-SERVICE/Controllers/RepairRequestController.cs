@@ -149,7 +149,7 @@ namespace PHONE_SERVICE.Controllers
 
             if (hasUncompletedRequests == true)
             {
-                throw new ArgumentException("CANT");
+                return BadRequest("Клиентът вече има направена заявка.");
             }
 
             repairRequest.Status = RepairRequestStatus.PendingConfirmation;

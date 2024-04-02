@@ -28,7 +28,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Тип заявка</th>
+                <th class="col-4">Тип заявка</th>
                 <th>
                     <a href="@Url.Action("SortByDate", new { sortOrder = ViewData["DateSortParam"], status = Model.Status, type = Model.RequestType })" class="text-decoration-none text-dark">
                         Дата
@@ -37,7 +37,7 @@
                 </th>
                 <th>Вид поправка</th>
                 <th>Телефон</th>
-                <th>Описание</th>
+                <th class="col-2">Описание</th>
                 <th>Статус</th>
                 <th>Рейтинг</th>
                 <th>Цена</th>
@@ -79,13 +79,13 @@
                     <td>
                         @{
                             string description = repairRequest.Descripion ?? ""; 
-                            if (!string.IsNullOrEmpty(description) && description.Length > 30) 
+                            if (!string.IsNullOrEmpty(description) && description.Length > 20) 
                             {
-                                description = description.Substring(0, 30) + "...";
+                                description = description.Substring(0, 20) + "...";
                             }
                         }
                         @description
-                        @if (!string.IsNullOrEmpty(repairRequest.Descripion) && repairRequest.Descripion.Length > 30)
+                        @if (!string.IsNullOrEmpty(repairRequest.Descripion) && repairRequest.Descripion.Length > 20)
                         {
                             <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#descriptionModal_@repairRequest.RepairRequestId">
                                Виж повече

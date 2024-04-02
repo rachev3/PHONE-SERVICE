@@ -5,7 +5,7 @@
 }
 
 <h2>Редакция на завка</h2>
-<form asp-action="Edit">
+<form asp-action="Edit" class="needs-validation" novalidate>
     <div class="mb-2">
         <label asp-for="RepairRequestType" class="form-label">Тип заявка</label>
         <input asp-for="RepairRequestType" class="form-control" readonly />
@@ -29,7 +29,7 @@
     </div>
     <div class="mb-2">
         <label asp-for="Status" class="form-label">Статус</label>
-        <select asp-for="Status" class="form-select">
+        <select asp-for="Status" class="form-select" required>
             <option value="">Избери статус</option>
             @foreach (var value in Enum.GetValues(typeof(PHONE_SERVICE.Data.Enums.RepairRequestStatus)))
             {
@@ -37,6 +37,7 @@
             }
         </select>
         <span asp-validation-for="Status" class="text-danger"></span>
+        <div class="invalid-feedback">Моля изберете статус.</div>
     </div>
     <div class="mb-2">
         <label asp-for="Rating" class="form-label">Рейтинг</label>
@@ -50,3 +51,26 @@
     <input type="hidden" asp-for="PhoneModelId" />
     <button type="submit" class="btn btn-primary" asp-controller="RepairRequest">Редактирай</button>
 </form>
+
+@section Scripts {
+    <script>
+
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}

@@ -127,7 +127,7 @@ namespace PHONE_SERVICE.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, "Невалиден опит за влизане.");
             }
 
             return View(model);

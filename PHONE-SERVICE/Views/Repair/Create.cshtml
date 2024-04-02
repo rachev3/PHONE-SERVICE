@@ -30,8 +30,8 @@
     </div>
     <div class="mb-3">
         <label for="Price" class="form-label">Цена</label>
-        <input asp-for="Price" class="form-control" id="Price" required>
-        <div class="invalid-feedback">Моля добавете цена.</div>
+        <input asp-for="Price" class="form-control" id="Price" inputmode="numeric" pattern="[0-9]+(\.[0-9]+)?" required>
+        <div class="invalid-feedback">Моля добавете цена (само числа се приемат).</div>
     </div>
     <button type="submit" class="btn btn-primary">Създай</button>
 </form>
