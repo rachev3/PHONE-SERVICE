@@ -72,21 +72,6 @@ namespace PHONE_SERVICE.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var phoneModel = await phoneModelService.GetById(id);
-            PhoneModelViewModel phoneModelView = new(phoneModel);
-
-            if (phoneModel == null)
-            {
-                return View("404");
-            }
-
-            return View("Delete", phoneModelView);
-        }
-
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirm(int id)

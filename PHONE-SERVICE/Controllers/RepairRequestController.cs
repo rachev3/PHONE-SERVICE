@@ -18,13 +18,15 @@ namespace PHONE_SERVICE.Controllers
         private readonly IRepairService repairService;
         private readonly UserManager<User> userManager;
 
-        public RepairRequestController(IRepairRequestService repairRequestService, IPhoneModelService phoneModelService, UserManager<User> userManager, IRepairService repairService)
+        public RepairRequestController(IRepairRequestService repairRequestService, 
+            IPhoneModelService phoneModelService, UserManager<User> userManager, IRepairService repairService)
         {
             this.repairRequestService = repairRequestService;
             this.phoneModelService = phoneModelService;
             this.userManager = userManager;
             this.repairService = repairService;
         }
+
         [Authorize(Roles = "Admin, Worker")]
         public async Task<IActionResult> Index()
         {
@@ -95,6 +97,7 @@ namespace PHONE_SERVICE.Controllers
             var viewModel = new RepairRequestPageViewModel(repairRequests);
             return View(viewModel);
         }
+
         [HttpPost]
         [Authorize(Roles = "Client")]
         public async Task<IActionResult> Rate(int repairRequestId, int rating)

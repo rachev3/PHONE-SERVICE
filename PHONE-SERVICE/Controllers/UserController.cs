@@ -25,6 +25,7 @@ namespace PHONE_SERVICE.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(UserPageViewModel model)
@@ -65,6 +66,7 @@ namespace PHONE_SERVICE.Controllers
 
             return View("Dashboard", pageViewModel);
         }
+
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Dashboard()
@@ -85,14 +87,15 @@ namespace PHONE_SERVICE.Controllers
             }
             return View(usersWithRoles);
         }
+
         [HttpGet]
 
         public IActionResult Register()
         {
             return View();                                        
         }
-        [HttpPost]
 
+        [HttpPost]
         public async Task<IActionResult> Register(UserRegisterViewModel model)
         {
             User newUser = new(model);
@@ -109,6 +112,7 @@ namespace PHONE_SERVICE.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
         [HttpGet]
         public IActionResult Login()
         {

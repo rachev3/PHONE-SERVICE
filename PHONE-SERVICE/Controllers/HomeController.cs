@@ -10,14 +10,13 @@ namespace PHONE_SERVICE.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+
         private readonly IRepairService repairService;
         private readonly IRepairRequestService repairRequestService;
         private readonly IPhoneModelService phoneModelService;
 
-        public HomeController(ILogger<HomeController> logger, IRepairService repairService, IRepairRequestService repairRequestService, IPhoneModelService phoneModelService)
+        public HomeController(IRepairService repairService, IRepairRequestService repairRequestService, IPhoneModelService phoneModelService)
         {
-            _logger = logger;
             this.repairService = repairService;
             this.repairRequestService = repairRequestService;
             this.phoneModelService = phoneModelService;

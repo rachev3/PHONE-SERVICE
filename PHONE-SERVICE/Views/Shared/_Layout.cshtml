@@ -38,12 +38,14 @@
 
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
+
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                                 <i class="fas fa-home fa-lg"></i>
                                 Начало
                             </a>
                         </li>
+
                         @if (User.IsInRole("Client"))
                         {
                             <li class="nav-item">
@@ -85,6 +87,7 @@
                                 </a>
                             </li>
                         }
+
                         @if (User.IsInRole("Client"))
                         {
                             <li class="nav-item">
@@ -93,6 +96,7 @@
                                 </a>
                             </li>
                         }
+
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -101,11 +105,14 @@
                                 </a>
                             </li>
                         }
+
                     </ul>
                 </div>
+
                 <div class="navbar-nav ms-auto">
                     <partial name="_LoginPartial" />
                 </div>
+
             </div>
         </nav>
     </header>

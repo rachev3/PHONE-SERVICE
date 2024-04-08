@@ -85,21 +85,6 @@ namespace PHONE_SERVICE.Controllers
             }
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var repair = await repairService.GetById(id);
-            RepairViewModel repairViewModel = new(repair);
-
-            if (repair == null)
-            {
-                return View("404");
-            }
-
-            return View("Delete", repairViewModel);
-        }
-
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirm(int id)
