@@ -24,6 +24,9 @@ Phone Service Management System is a comprehensive web application built with AS
 - **Razor Views** - View Engine
 - **Bootstrap** - Frontend Styling
 
+## 🖼️
+
+
 ## 📁 Project Structure
 
 ```
@@ -49,48 +52,6 @@ PHONE-SERVICE/
 └── Migrations/        # Database Migrations
 ```
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **.NET 6.0 SDK**
-- **Microsoft SQL Server**
-- **Visual Studio 2022** (recommended) or VS Code
-
-### Installation
-
-1️⃣ Clone the Repository
-
-```bash
-git clone [your-repository-url]
-cd PHONE-SERVICE
-```
-
-2️⃣ Update Connection String
-Edit `appsettings.json`:
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Your_SQL_Server_Connection_String"
-  }
-}
-```
-
-3️⃣ Apply Database Migrations
-
-```bash
-Update-Database
-```
-
-4️⃣ Build and Run
-
-```bash
-dotnet build
-dotnet run
-```
-
-The application will be available at `https://localhost:5001` or `http://localhost:5000`
 
 ## 🔐 Authentication & Authorization
 
@@ -160,3 +121,46 @@ The system implements a robust role-based authentication system using ASP.NET Co
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **.NET 6.0 SDK**
+- **Microsoft SQL Server**
+- **Visual Studio 2022** (recommended) or VS Code
+
+### Installation
+
+1️⃣ Clone the Repository
+
+```bash
+git clone [your-repository-url]
+cd PHONE-SERVICE
+```
+
+2️⃣ Update Connection String
+Edit `appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Your_SQL_Server_Connection_String"
+  }
+}
+```
+
+3️⃣ Apply Database Migrations
+
+```bash
+Update-Database
+```
+
+4️⃣ Build and Run
+
+```bash
+dotnet build
+dotnet run
+```
+
+The application will be available at `https://localhost:5001` or `http://localhost:5000`
